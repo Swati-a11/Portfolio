@@ -2,38 +2,53 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, BookOpen, CheckCircle, Clock } from 'lucide-react';
 
-const DSA = () => {
+const DSA = ({ isDarkMode }) => {
   const topics = [
     { 
       name: "Arrays", 
       status: "In Progress", 
       icon: CheckCircle, 
-      color: "border-emerald-500/20 bg-emerald-500/[0.01] text-emerald-400" 
+      color: isDarkMode 
+        ? "border-emerald-500/20 bg-emerald-500/[0.01] text-emerald-400" 
+        : "border-emerald-500/20 bg-emerald-50/70 text-emerald-700" 
     },
     { 
       name: "Strings", 
       status: "Coming up", 
       icon: Clock, 
-      color: "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
+      color: isDarkMode 
+        ? "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
+        : "border-black/5 bg-slate-50 text-black/40" 
     },
     { 
       name: "Linked Lists", 
       status: "Coming up", 
       icon: Clock, 
-      color: "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
+      color: isDarkMode 
+        ? "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
+        : "border-black/5 bg-slate-50 text-black/40" 
     },
     { 
       name: "Trees & Graphs", 
       status: "Coming up", 
       icon: Clock, 
-      color: "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
+      color: isDarkMode 
+        ? "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
+        : "border-black/5 bg-slate-50 text-black/40" 
     },
   ];
+
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/70';
+  const strongColor = isDarkMode ? 'text-white' : 'text-black';
+  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-black/5 bg-slate-50';
+  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-emerald-600';
 
   return (
     <section 
       id="dsa" 
-      className="py-24 px-6 md:px-12 bg-[#0a0a0a] text-[#e8e4d9] overflow-hidden border-t border-white/5"
+      className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -42,7 +57,7 @@ const DSA = () => {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-4xl mx-auto"
       >
-        <span className="text-xs uppercase tracking-[0.2em] text-[#e8e4d9]/45 block mb-6">
+        <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
           / Problem Solving
         </span>
 
@@ -50,8 +65,8 @@ const DSA = () => {
           Solving problems, one line at a time.
         </h2>
 
-        <p className="text-base md:text-lg font-light text-[#e8e4d9]/70 leading-relaxed mb-12 max-w-2xl">
-          I solve DSA problems daily in C++ — currently <strong className="font-semibold text-white">50+ problems solved</strong> and counting. Following <strong className="font-semibold text-white">Striver's A2Z DSA Sheet</strong> systematically.
+        <p className={`text-base md:text-lg font-light leading-relaxed mb-12 max-w-2xl transition-colors duration-500 ${textNormal}`}>
+          I solve DSA problems daily in C++ — currently <strong className={`font-semibold ${strongColor}`}>50+ problems solved</strong> and counting. Following <strong className={`font-semibold ${strongColor}`}>Striver's A2Z DSA Sheet</strong> systematically.
         </p>
 
         {/* Progress Grid */}
@@ -64,7 +79,7 @@ const DSA = () => {
                 className={`border p-6 rounded-2xl flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 ${topic.color}`}
               >
                 <div>
-                  <h3 className="text-base font-medium tracking-wide text-white mb-4">
+                  <h3 className="text-base font-medium tracking-wide mb-4">
                     {topic.name}
                   </h3>
                   <div className="text-xs font-light flex items-center gap-1.5 mt-auto">
@@ -78,17 +93,17 @@ const DSA = () => {
         </div>
 
         {/* Platforms and Languages */}
-        <div className="flex flex-wrap items-center justify-between gap-6 p-6 rounded-2xl border border-white/5 bg-white/[0.005]">
+        <div className={`flex flex-wrap items-center justify-between gap-6 p-6 rounded-2xl border transition-colors duration-500 ${bottomBox}`}>
           <div className="flex items-center gap-3">
-            <Code size={18} className="text-white/40" />
-            <span className="text-sm font-light text-[#e8e4d9]/60">
-              Language: <strong className="font-medium text-[#e8e4d9]">C++ / Python</strong>
+            <Code size={18} className={isDarkMode ? 'text-white/40' : 'text-black/40'} />
+            <span className={`text-sm font-light ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-black/60'}`}>
+              Language: <strong className={`font-medium ${isDarkMode ? 'text-[#e8e4d9]' : 'text-black'}`}>C++ / Python</strong>
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <BookOpen size={18} className="text-white/40" />
-            <span className="text-sm font-light text-[#e8e4d9]/60">
-              Platform: <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer" className="hover:text-white underline underline-offset-4 transition-colors">LeetCode</a>
+            <BookOpen size={18} className={isDarkMode ? 'text-white/40' : 'text-black/40'} />
+            <span className={`text-sm font-light ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-black/60'}`}>
+              Platform: <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer" className={`underline underline-offset-4 transition-colors ${linkHover}`}>LeetCode</a>
             </span>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Skills = () => {
+const Skills = ({ isDarkMode }) => {
   const categories = [
     {
       title: "Frontend Tools",
@@ -21,10 +21,17 @@ const Skills = () => {
     }
   ];
 
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
+  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15 hover:bg-white/[0.02]' : 'border-black/5 bg-slate-50 hover:border-emerald-500/10 hover:bg-emerald-500/5';
+  const cardHeader = isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5';
+  const dotColor = isDarkMode ? 'bg-orange-400/40' : 'bg-emerald-500';
+  const listColor = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/70';
+
   return (
     <section 
       id="skills" 
-      className="py-24 px-6 md:px-12 bg-[#0a0a0a] text-[#e8e4d9] overflow-hidden border-t border-white/5"
+      className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -33,7 +40,7 @@ const Skills = () => {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-5xl mx-auto"
       >
-        <span className="text-xs uppercase tracking-[0.2em] text-[#e8e4d9]/45 block mb-6">
+        <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
           / Stack & Tools
         </span>
 
@@ -45,15 +52,15 @@ const Skills = () => {
           {categories.map((category, idx) => (
             <motion.div 
               key={idx} 
-              className="border border-white/5 bg-white/[0.01] p-6 rounded-2xl flex flex-col hover:border-white/15 hover:bg-white/[0.02] transition-all duration-300"
+              className={`p-6 rounded-2xl flex flex-col transition-all duration-300 border ${cardBorder}`}
             >
-              <h3 className="text-xs font-semibold tracking-widest uppercase mb-6 text-white/40 pb-2 border-b border-white/5">
+              <h3 className={`text-xs font-semibold tracking-widest uppercase mb-6 pb-2 border-b ${cardHeader}`}>
                 {category.title}
               </h3>
               <ul className="space-y-3">
                 {category.skills.map((skill, sIdx) => (
-                  <li key={sIdx} className="text-sm font-light tracking-wide text-[#e8e4d9]/70 flex items-center gap-2">
-                    <span className="w-1 h-1 rounded-full bg-orange-400/40" />
+                  <li key={sIdx} className={`text-sm font-light tracking-wide flex items-center gap-2 ${listColor}`}>
+                    <span className={`w-1 h-1 rounded-full ${dotColor}`} />
                     {skill}
                   </li>
                 ))}

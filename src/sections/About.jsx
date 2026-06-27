@@ -1,11 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const About = () => {
+const About = ({ isDarkMode }) => {
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-black/75';
+  const highlightGradient = isDarkMode 
+    ? 'from-orange-400 via-yellow-200 to-amber-400' 
+    : 'from-emerald-600 via-teal-500 to-green-600';
+
   return (
     <section 
       id="about" 
-      className="py-24 px-6 md:px-12 bg-[#0a0a0a] text-[#e8e4d9] overflow-hidden border-t border-white/5"
+      className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -15,7 +22,7 @@ const About = () => {
         className="max-w-4xl mx-auto"
       >
         {/* Section Label */}
-        <span className="text-xs uppercase tracking-[0.2em] text-[#e8e4d9]/45 block mb-6">
+        <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
           / About Me
         </span>
 
@@ -61,7 +68,7 @@ const About = () => {
                   transition: { duration: 0.6, ease: [0.215, 0.610, 0.355, 1] }
                 }
               }} 
-              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-200 to-amber-400"
+              className={`inline-block text-transparent bg-clip-text bg-gradient-to-r ${highlightGradient}`}
             >
               {word}
             </motion.span>
@@ -69,7 +76,7 @@ const About = () => {
         </motion.h2>
 
         {/* Content Paragraphs */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-sm md:text-base font-light tracking-wide text-[#e8e4d9]/80 leading-relaxed">
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-sm md:text-base font-light tracking-wide leading-relaxed transition-colors duration-500 ${textNormal}`}>
           <div className="space-y-6">
             <p>
               I specialize in crafting full-stack web applications using the MERN stack with AI integration. I'm passionate about building software that solves real problems.

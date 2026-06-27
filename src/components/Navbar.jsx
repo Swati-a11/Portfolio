@@ -1,9 +1,9 @@
 import React from 'react';
-import { Mail, Sun, Moon } from 'lucide-react';
+import { Mail, Sun, Moon, LayoutGrid, List } from 'lucide-react';
 import { Github, Linkedin } from './Icons';
 import avatar from '../assets/avatar.png';
 
-const Navbar = ({ isDarkMode, toggleTheme }) => {
+const Navbar = ({ isDarkMode, toggleTheme, isBentoLayout, toggleLayout }) => {
   const navBg = isDarkMode 
     ? 'bg-[#0a0a0a]/80 border-white/5 text-[#e8e4d9]' 
     : 'bg-white/90 border-black/5 text-black';
@@ -41,7 +41,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
         </span>
       </a>
 
-      <div className="flex gap-4 md:gap-6 items-center text-xs md:text-sm">
+      <div className="flex gap-3 md:gap-5 items-center text-xs md:text-sm">
         <a 
           href="https://github.com/Swati-a11" 
           target="_blank" 
@@ -67,6 +67,15 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
           <Mail size={15} />
           <span className="hidden sm:inline">Email</span>
         </a>
+
+        {/* Minimalist Layout toggler */}
+        <button 
+          onClick={toggleLayout}
+          className={`p-2 rounded-full transition-all duration-300 ${btnHover}`}
+          title={isBentoLayout ? "Switch to Minimal Layout" : "Switch to Bento Layout"}
+        >
+          {isBentoLayout ? <List size={16} /> : <LayoutGrid size={16} />}
+        </button>
 
         {/* Minimalist Sun/Moon theme toggler */}
         <button 

@@ -49,8 +49,12 @@ const PythonLogo = ({ size = 20 }) => (
   </svg>
 );
 
-const ExpressLogo = ({ size = 20 }) => (
-  <div className="text-[10px] font-bold tracking-tight text-[#e8e4d9] border border-white/20 px-1.5 py-0.5 rounded bg-white/5">
+const ExpressLogo = ({ size = 20, isDarkMode }) => (
+  <div className={`text-[10px] font-bold tracking-tight border px-1.5 py-0.5 rounded transition-colors duration-500 ${
+    isDarkMode 
+      ? 'text-[#e8e4d9] border-white/20 bg-white/5' 
+      : 'text-black border-black/20 bg-black/5'
+  }`}>
     EX
   </div>
 );
@@ -66,9 +70,14 @@ const items = [
   { name: 'Python', component: PythonLogo },
 ];
 
-const Marquee = () => {
+const Marquee = ({ isDarkMode }) => {
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]/70' : 'bg-white border-black/5 text-black/70';
+  const boxStyle = isDarkMode 
+    ? 'border-white/5 bg-white/[0.01] hover:border-white/10 hover:bg-white/[0.02]' 
+    : 'border-black/5 bg-slate-50 hover:border-emerald-500/20 hover:bg-emerald-500/5';
+
   return (
-    <div className="overflow-hidden whitespace-nowrap border-y border-white/5 py-4 bg-[#0a0a0a] select-none">
+    <div className={`overflow-hidden whitespace-nowrap border-y py-4 select-none transition-colors duration-500 ${bgStyle}`}>
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
@@ -81,10 +90,10 @@ const Marquee = () => {
               return (
                 <div 
                   key={idx} 
-                  className="flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/5 bg-white/[0.01] hover:border-white/10 hover:bg-white/[0.02] transition-colors duration-300"
+                  className={`flex items-center gap-3 px-5 py-2.5 rounded-full border transition-all duration-300 ${boxStyle}`}
                 >
-                  <IconComponent size={18} />
-                  <span className="text-xs font-semibold tracking-wider text-[#e8e4d9]/70 uppercase font-inter">
+                  <IconComponent size={18} isDarkMode={isDarkMode} />
+                  <span className="text-xs font-semibold tracking-wider uppercase font-inter">
                     {item.name}
                   </span>
                 </div>

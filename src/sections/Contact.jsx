@@ -3,11 +3,19 @@ import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
 import { Linkedin } from '../components/Icons';
 
-const Contact = () => {
+const Contact = ({ isDarkMode }) => {
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
+  const titleColor = isDarkMode ? 'text-[#e8e4d9]' : 'text-black';
+  const descColor = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/70';
+  const btnStyle = isDarkMode
+    ? 'border-white/10 bg-white/[0.01] hover:bg-[#e8e4d9] hover:text-[#0a0a0a]'
+    : 'border-black/10 bg-slate-50 hover:bg-black hover:text-white';
+
   return (
     <section 
       id="contact" 
-      className="py-24 px-6 md:px-12 bg-[#0a0a0a] text-[#e8e4d9] overflow-hidden border-t border-white/5"
+      className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -17,13 +25,13 @@ const Contact = () => {
         className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-12"
       >
         <div className="space-y-6">
-          <span className="text-xs uppercase tracking-[0.2em] text-[#e8e4d9]/45 block">
+          <span className={`text-xs uppercase tracking-[0.2em] block ${textMuted}`}>
             / Connect
           </span>
-          <h2 className="font-bebas text-6xl md:text-8xl lg:text-9xl leading-[0.85] tracking-tighter uppercase text-[#e8e4d9]">
+          <h2 className={`font-bebas text-6xl md:text-8xl lg:text-9xl leading-[0.85] tracking-tighter uppercase ${titleColor}`}>
             Let's<br />Talk
           </h2>
-          <p className="text-sm md:text-base font-light text-[#e8e4d9]/70 max-w-sm leading-relaxed">
+          <p className={`text-sm md:text-base font-light max-w-sm leading-relaxed ${descColor}`}>
             Got a project, question, or just want to connect?
             I'm always open to new opportunities.
           </p>
@@ -32,7 +40,7 @@ const Contact = () => {
         <div className="flex flex-col sm:flex-row md:flex-col gap-4 w-full sm:w-auto">
           <a
             href="mailto:ss08swati14singh@gmail.com"
-            className="flex items-center justify-center gap-3 px-8 py-4 rounded-full border border-[#e8e4d9]/10 bg-white/[0.01] hover:bg-[#e8e4d9] hover:text-[#0a0a0a] transition-all duration-300 font-medium text-sm tracking-wider uppercase text-center"
+            className={`flex items-center justify-center gap-3 px-8 py-4 rounded-full border transition-all duration-300 font-medium text-sm tracking-wider uppercase text-center ${btnStyle}`}
           >
             <Mail size={16} />
             Send me an email
@@ -41,7 +49,7 @@ const Contact = () => {
             href="https://www.linkedin.com/in/swati-kumari-25931a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 px-8 py-4 rounded-full border border-[#e8e4d9]/10 bg-white/[0.01] hover:bg-[#e8e4d9] hover:text-[#0a0a0a] transition-all duration-300 font-medium text-sm tracking-wider uppercase text-center"
+            className={`flex items-center justify-center gap-3 px-8 py-4 rounded-full border transition-all duration-300 font-medium text-sm tracking-wider uppercase text-center ${btnStyle}`}
           >
             <Linkedin size={16} />
             LinkedIn

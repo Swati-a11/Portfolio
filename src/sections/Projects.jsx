@@ -9,7 +9,7 @@ import dd1 from '../assets/dd1.png';
 import dd2 from '../assets/dd2.png';
 import dd3 from '../assets/dd3.png';
 
-const Projects = () => {
+const Projects = ({ isDarkMode }) => {
   const projectsList = [
     {
       title: "CourseCraft",
@@ -81,13 +81,27 @@ const Projects = () => {
     })
   };
 
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
+  const cardBg = isDarkMode ? 'bg-[#121620] border-white/5' : 'bg-[#f8fafc] border-black/5';
+  const tagColor = isDarkMode ? 'text-white/50' : 'text-black/45';
+  const titleColor = isDarkMode ? 'text-white' : 'text-black';
+  const descColor = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/60';
+  
+  const btnColor = isDarkMode ? 'bg-white text-black hover:bg-emerald-400' : 'bg-black text-white hover:bg-emerald-600';
+  const iconColor = isDarkMode ? 'fill-black' : 'fill-white';
+
+  const arrowBg = isDarkMode 
+    ? 'bg-[#16161a] border-white/10 text-[#e8e4d9]/60 hover:text-white hover:bg-[#222226]' 
+    : 'bg-white border-black/10 text-black/60 hover:text-black hover:bg-slate-50';
+
   return (
     <section 
       id="projects" 
-      className="relative py-24 px-6 md:px-12 bg-[#0a0a0a] text-[#e8e4d9] overflow-hidden border-t border-white/5"
+      className={`relative py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <div className="max-w-5xl mx-auto relative">
-        <span className="text-xs uppercase tracking-[0.2em] text-[#e8e4d9]/45 block mb-6">
+        <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
           / Selected Work
         </span>
 
@@ -101,7 +115,7 @@ const Projects = () => {
           {/* Left Navigation Arrow */}
           <button 
             onClick={handlePrev}
-            className="absolute left-[-20px] md:left-[-60px] z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#16161a] border border-white/10 flex items-center justify-center hover:bg-[#222226] hover:border-white/20 hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg text-[#e8e4d9]/60 hover:text-white"
+            className={`absolute left-[-20px] md:left-[-60px] z-20 w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg ${arrowBg}`}
             aria-label="Previous Project"
           >
             <ChevronLeft size={24} />
@@ -117,7 +131,7 @@ const Projects = () => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 bg-[#121620] border border-white/5 rounded-3xl p-8 md:p-12 items-center relative"
+                className={`w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 rounded-3xl p-8 md:p-12 items-center relative border transition-colors duration-500 ${cardBg}`}
               >
                 {/* Left Column: Details */}
                 <div className="col-span-1 md:col-span-6 flex flex-col justify-between h-full min-h-[320px]">
@@ -129,17 +143,17 @@ const Projects = () => {
                         href={activeProject.github} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#121620] hover:scale-110 hover:shadow-lg active:scale-95 transition-all duration-300"
+                        className={`w-11 h-11 rounded-full flex items-center justify-center hover:scale-110 hover:shadow-lg active:scale-95 transition-all duration-300 ${btnColor}`}
                         title="View GitHub Repository"
                       >
-                        <Github size={20} className="fill-[#121620]" />
+                        <Github size={20} className={iconColor} />
                       </a>
                       {/* Live Link */}
                       <a 
                         href={activeProject.link} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#121620] hover:scale-110 hover:shadow-lg active:scale-95 transition-all duration-300"
+                        className={`w-11 h-11 rounded-full flex items-center justify-center hover:scale-110 hover:shadow-lg active:scale-95 transition-all duration-300 ${btnColor}`}
                         title="View Live Website"
                       >
                         <LinkIcon size={20} strokeWidth={2.5} />
@@ -151,7 +165,7 @@ const Projects = () => {
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1, duration: 0.5 }}
-                      className="text-3xl md:text-5xl font-semibold tracking-tight text-white mb-4"
+                      className={`text-3xl md:text-5xl font-semibold tracking-tight mb-4 ${titleColor}`}
                     >
                       {activeProject.title}
                     </motion.h3>
@@ -161,7 +175,7 @@ const Projects = () => {
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2, duration: 0.5 }}
-                      className="text-sm font-light text-[#e8e4d9]/70 leading-relaxed mb-10"
+                      className={`text-sm font-light leading-relaxed mb-10 ${descColor}`}
                     >
                       {activeProject.description}
                     </motion.p>
@@ -177,7 +191,7 @@ const Projects = () => {
                     {activeProject.tags.map((tag, tIdx) => (
                       <span 
                         key={tIdx} 
-                        className="text-xs md:text-sm uppercase tracking-[0.15em] font-semibold text-white/50"
+                        className={`text-xs md:text-sm uppercase tracking-[0.15em] font-semibold ${tagColor}`}
                       >
                         {tag}
                       </span>
@@ -255,7 +269,7 @@ const Projects = () => {
           {/* Right Navigation Arrow */}
           <button 
             onClick={handleNext}
-            className="absolute right-[-20px] md:right-[-60px] z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#16161a] border border-white/10 flex items-center justify-center hover:bg-[#222226] hover:border-white/20 hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg text-[#e8e4d9]/60 hover:text-white"
+            className={`absolute right-[-20px] md:right-[-60px] z-20 w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg ${arrowBg}`}
             aria-label="Next Project"
           >
             <ChevronRight size={24} />
