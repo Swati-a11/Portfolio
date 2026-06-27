@@ -5,6 +5,7 @@ import { Github, Linkedin } from './components/Icons';
 import IntroAnimation from './components/IntroAnimation';
 import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Hero from './sections/Hero';
 import Marquee from './components/Marquee';
 import About from './sections/About';
@@ -64,6 +65,69 @@ const TypingLoop = ({ isDarkMode }) => {
     }`}>
       {text}
     </span>
+  );
+};
+
+// ── Manifesto animated text ── each word staggers in with blur + slide
+const MANIFESTO_LINES = [
+  "I BUILD PLATFORMS,",
+  "ACCELERATE GROWTH,",
+  "CREATE IMPACT.",
+];
+
+const ManifestoText = ({ isDarkMode }) => {
+  const wordColor = isDarkMode ? 'text-[#e8e4d9]' : 'text-black';
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.06,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const wordVariants = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+      filter: 'blur(8px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.55,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      className="overflow-hidden"
+    >
+      {MANIFESTO_LINES.map((line, lineIdx) => (
+        <div key={lineIdx} className="flex flex-wrap overflow-hidden leading-none">
+          {line.split(' ').map((word, wordIdx) => (
+            <motion.span
+              key={wordIdx}
+              variants={wordVariants}
+              className={`font-bebas text-[clamp(2.8rem,7vw,6rem)] tracking-tight uppercase mr-[0.22em] last:mr-0 ${wordColor}`}
+              style={{ display: 'inline-block' }}
+            >
+              {word}
+            </motion.span>
+          ))}
+        </div>
+      ))}
+    </motion.div>
   );
 };
 
@@ -501,6 +565,9 @@ function App() {
     }
   ];
 
+  // Sidebar state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   // Card themes for Bento Layout
   const bentoCardBg = isDarkMode 
     ? 'bg-[#121620]/45 border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.15)] text-[#e8e4d9]' 
@@ -521,6 +588,13 @@ function App() {
 
       <CustomCursor />
 
+      {/* Sidebar (always rendered, slides in/out) */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        isDarkMode={isDarkMode}
+      />
+
       {/* Intro animation */}
       {!introComplete && (
         <IntroAnimation onComplete={handleIntroComplete} />
@@ -536,7 +610,8 @@ function App() {
           isDarkMode={isDarkMode} 
           toggleTheme={toggleTheme} 
           isBentoLayout={isBentoLayout} 
-          toggleLayout={toggleLayout} 
+          toggleLayout={toggleLayout}
+          onToggleSidebar={() => setSidebarOpen(prev => !prev)}
         />
 
         {/* Hero Landing Page is always at the top of both layouts */}
@@ -555,6 +630,49 @@ function App() {
               transition={{ duration: 0.4 }}
               className="max-w-5xl mx-auto px-6 pb-16 space-y-6 select-none"
             >
+              {/* ── MANIFESTO BANNER ── Word-by-word stagger reveal ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className={`border rounded-3xl p-8 md:p-12 transition-colors duration-500 overflow-hidden relative ${bentoCardBg}`}
+              >
+                {/* Faint ambient glow behind text */}
+                <div className={`absolute -top-24 -left-24 w-72 h-72 rounded-full blur-[80px] pointer-events-none ${
+                  isDarkMode ? 'bg-emerald-500/10' : 'bg-emerald-400/8'
+                }`} />
+
+                {/* Animated headline — each word staggers in */}
+                <ManifestoText isDarkMode={isDarkMode} />
+
+                {/* Two-column body below the headline */}
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.9, duration: 0.6 }}
+                    className={`text-sm md:text-base font-light leading-relaxed ${
+                      isDarkMode ? 'text-[#e8e4d9]/65' : 'text-black/65'
+                    }`}
+                  >
+                    I specialize in crafting full-stack products for SaaS & AI startups — from LMS platforms to AI image generators. I'm passionate about building software that makes a real difference.
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 1.05, duration: 0.6 }}
+                    className={`text-sm md:text-base font-light leading-relaxed ${
+                      isDarkMode ? 'text-[#e8e4d9]/65' : 'text-black/65'
+                    }`}
+                  >
+                    Beyond coding, I love competitive programming in C++, following Striver's A2Z sheet daily — and believe sharp logic leads to elegant products.
+                  </motion.p>
+                </div>
+              </motion.div>
+
               {/* Bento Grid Row 1: GitHub Graph */}
               <motion.div 
                 whileHover={{ y: -6 }}
@@ -570,6 +688,11 @@ function App() {
                 </div>
                 <ContributionGraph isDarkMode={isDarkMode} />
               </motion.div>
+
+              {/* Bento Grid Row 1b: Skills Marquee Strip */}
+              <div className="rounded-3xl overflow-hidden">
+                <Marquee isDarkMode={isDarkMode} />
+              </div>
 
               {/* Bento Grid Row 2: Learning Strip & DSA Stats */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -628,49 +751,54 @@ function App() {
                 <BentoProjects isDarkMode={isDarkMode} />
               </motion.div>
 
-              {/* Bento Grid Row 4: Fun Facts & Capabilities */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                <motion.div 
-                  whileHover={{ y: -6 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className={`md:col-span-4 border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
-                >
-                  <FunFacts isDarkMode={isDarkMode} />
-                </motion.div>
 
-                <motion.div 
-                  whileHover={{ y: -6 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className={`md:col-span-8 border p-8 rounded-3xl flex flex-col justify-between transition-colors duration-500 ${bentoCardBg}`}
-                >
-                  <div>
-                    <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-4 ${
-                      isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+              {/* Bento Grid Row 4: Fun Facts (standalone — untouched) */}
+              <motion.div 
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
+              >
+                <FunFacts isDarkMode={isDarkMode} />
+              </motion.div>
+
+              {/* Bento Grid Row 5: Core Capabilities (full width) */}
+              <motion.div 
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
+              >
+                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${
+                  isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+                }`}>
+                  Core Capabilities
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  {categories.map((cat, idx) => (
+                    <div key={idx} className={`p-4 rounded-2xl border space-y-3 ${
+                      isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50/60 border-black/5'
                     }`}>
-                      Core Capabilities
-                    </h3>
-                    <div className="space-y-4">
-                      {categories.map((cat, idx) => (
-                        <div key={idx} className="space-y-1.5">
-                          <span className={`text-[10px] font-semibold uppercase font-mono ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>{cat.title}</span>
-                          <div className="flex flex-wrap gap-1">
-                            {cat.skills.map((skill, sIdx) => (
-                              <span 
-                                key={sIdx} 
-                                className={`text-[10px] font-medium border px-2 py-0.5 rounded-full ${
-                                  isDarkMode ? 'bg-white/[0.02] border-white/5 text-white/80' : 'bg-slate-50 border-black/5 text-black'
-                                }`}
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
+                      <span className={`text-[10px] font-bold uppercase font-mono tracking-widest block ${
+                        isDarkMode ? 'text-emerald-400' : 'text-emerald-600'
+                      }`}>{cat.title}</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {cat.skills.map((skill, sIdx) => (
+                          <span 
+                            key={sIdx} 
+                            className={`text-[11px] font-medium border px-2.5 py-1 rounded-full transition-colors duration-200 ${
+                              isDarkMode
+                                ? 'bg-white/[0.03] border-white/10 text-white/70 hover:border-emerald-500/30 hover:text-white'
+                                : 'bg-white border-black/10 text-black/70 hover:border-emerald-500/40 hover:text-emerald-700'
+                            }`}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              </div>
+                  ))}
+                </div>
+              </motion.div>
+
 
               {/* Bento Grid Row 5: Experience Timeline (Full width) */}
               <motion.div 
@@ -773,6 +901,59 @@ function App() {
               <Marquee isDarkMode={isDarkMode} />
               <About isDarkMode={isDarkMode} />
               <Skills isDarkMode={isDarkMode} />
+
+              {/* GitHub Contribution Graph — scrolling layout */}
+              <section className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}>
+                <div className="max-w-4xl mx-auto">
+                  <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40'}`}>
+                    / GitHub Activity
+                  </span>
+                  <h2 className="font-bebas text-4xl md:text-5xl mb-10 tracking-wide uppercase">
+                    Contribution Graph
+                  </h2>
+                  <div className={`border rounded-3xl p-6 md:p-8 transition-colors duration-500 ${isDarkMode ? 'bg-[#121620]/45 border-white/5' : 'bg-slate-50/60 border-black/5'}`}>
+                    <ContributionGraph isDarkMode={isDarkMode} />
+                  </div>
+                </div>
+              </section>
+
+              {/* Fun Facts — scrolling layout */}
+              <section className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}>
+                <div className="max-w-4xl mx-auto">
+                  <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40'}`}>
+                    / Off the Clock
+                  </span>
+                  <h2 className="font-bebas text-4xl md:text-5xl mb-10 tracking-wide uppercase">
+                    Casual Facts
+                  </h2>
+                  <div className={`border rounded-3xl p-8 transition-colors duration-500 ${isDarkMode ? 'bg-[#121620]/45 border-white/5' : 'bg-slate-50/60 border-black/5'}`}>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                      <div className="flex items-start gap-4">
+                        <span className="text-3xl">☕</span>
+                        <div>
+                          <p className={`text-sm font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>Powered by black tea</p>
+                          <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/55' : 'text-black/55'}`}>Every productive session begins with a cup. No exceptions.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <span className="text-3xl">⚡</span>
+                        <div>
+                          <p className={`text-sm font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>Speed-coder</p>
+                          <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/55' : 'text-black/55'}`}>I like shipping fast and iterating faster. Perfectionism is a myth.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <span className="text-3xl">🎧</span>
+                        <div>
+                          <p className={`text-sm font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>Lo-fi architecture playlist</p>
+                          <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/55' : 'text-black/55'}`}>Deep focus sessions are always accompanied by lo-fi beats.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               <Projects isDarkMode={isDarkMode} />
               <DSA isDarkMode={isDarkMode} />
               <Experience isDarkMode={isDarkMode} />

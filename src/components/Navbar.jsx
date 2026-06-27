@@ -1,9 +1,9 @@
 import React from 'react';
-import { Mail, Sun, Moon, LayoutGrid, List } from 'lucide-react';
+import { Mail, Sun, Moon, LayoutGrid, List, AlignRight } from 'lucide-react';
 import { Github, Linkedin } from './Icons';
 import avatar from '../assets/avatar.png';
 
-const Navbar = ({ isDarkMode, toggleTheme, isBentoLayout, toggleLayout }) => {
+const Navbar = ({ isDarkMode, toggleTheme, isBentoLayout, toggleLayout, onToggleSidebar }) => {
   const navBg = isDarkMode 
     ? 'bg-[#0a0a0a]/80 border-white/5 text-[#e8e4d9]' 
     : 'bg-white/90 border-black/5 text-black';
@@ -46,7 +46,7 @@ const Navbar = ({ isDarkMode, toggleTheme, isBentoLayout, toggleLayout }) => {
           href="https://github.com/Swati-a11" 
           target="_blank" 
           rel="noopener noreferrer"
-          className={`flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          className={`hidden md:flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
         >
           <Github size={15} />
           <span className="hidden sm:inline">GitHub</span>
@@ -55,14 +55,14 @@ const Navbar = ({ isDarkMode, toggleTheme, isBentoLayout, toggleLayout }) => {
           href="https://www.linkedin.com/in/swati-kumari-25931a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android" 
           target="_blank" 
           rel="noopener noreferrer"
-          className={`flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          className={`hidden md:flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
         >
           <Linkedin size={15} />
           <span className="hidden sm:inline">LinkedIn</span>
         </a>
         <a 
           href="mailto:ss08swati14singh@gmail.com"
-          className={`flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          className={`hidden md:flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
         >
           <Mail size={15} />
           <span className="hidden sm:inline">Email</span>
@@ -85,9 +85,20 @@ const Navbar = ({ isDarkMode, toggleTheme, isBentoLayout, toggleLayout }) => {
         >
           {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
         </button>
+
+        {/* Sidebar hamburger toggler */}
+        <button
+          onClick={onToggleSidebar}
+          className={`p-2 rounded-full transition-all duration-300 ${btnHover}`}
+          title="Open menu"
+          aria-label="Open sidebar"
+        >
+          <AlignRight size={16} />
+        </button>
       </div>
     </nav>
   );
 };
 
 export default Navbar;
+
