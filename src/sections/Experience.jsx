@@ -41,9 +41,29 @@ const Experience = ({ isDarkMode }) => {
           / Professional Journey
         </span>
 
-        <h2 className="font-bebas text-4xl md:text-6xl mb-16 tracking-wide uppercase">
-          Experience
-        </h2>
+        <motion.h2
+          className="font-bebas text-4xl md:text-6xl mb-16 tracking-wide uppercase"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } },
+          }}
+        >
+          {"Experience".split(' ').map((word, i) => (
+            <motion.span
+              key={i}
+              className="inline-block mr-[0.22em] last:mr-0"
+              variants={{
+                hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
+              }}
+            >
+              {word}
+            </motion.span>
+          ))}
+        </motion.h2>
 
         <div className="space-y-12">
           {experiences.map((exp, idx) => (

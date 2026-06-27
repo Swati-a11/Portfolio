@@ -272,6 +272,60 @@ const CurrentlyLearning = ({ isDarkMode }) => {
   );
 };
 
+// Animated bounce emoji — spring pop on click/tap
+const AnimatedEmoji = ({ children, delay = 0 }) => {
+  const [popped, setPopped] = useState(false);
+  return (
+    <motion.span
+      className="inline-block cursor-pointer select-none"
+      initial={{ scale: 1 }}
+      animate={popped ? { scale: [1, 1.8, 0.85, 1.3, 1], rotate: [0, -12, 12, -6, 0] } : { scale: 1 }}
+      whileHover={{ scale: 1.25, rotate: [-3, 3, -3, 0] }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+      onAnimationComplete={() => setPopped(false)}
+      onClick={() => setPopped(true)}
+      style={{ display: 'inline-block' }}
+    >
+      {children}
+    </motion.span>
+  );
+};
+
+// Animated section heading — word-by-word slow stagger
+const SectionHeading = ({ text, className = '' }) => {
+  const words = text.split(' ');
+  return (
+    <motion.h2
+      className={`font-bebas tracking-wide uppercase ${className}`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } },
+      }}
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          className="inline-block mr-[0.22em] last:mr-0"
+          variants={{
+            hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: 'blur(0px)',
+              transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.h2>
+  );
+};
+
 // Fun Facts card component
 const FunFacts = ({ isDarkMode }) => {
   const textMuted = isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5';
@@ -284,15 +338,15 @@ const FunFacts = ({ isDarkMode }) => {
       </h3>
       <div className="space-y-4 flex-grow flex flex-col justify-around">
         <div className="flex items-center gap-3">
-          <span className="text-xl">☕</span>
+          <AnimatedEmoji><span className="text-xl">☕</span></AnimatedEmoji>
           <span className={`text-xs leading-tight ${textNormal}`}>Powered by black tea</span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xl">⚡</span>
+          <AnimatedEmoji><span className="text-xl">⚡</span></AnimatedEmoji>
           <span className={`text-xs leading-tight ${textNormal}`}>Speed-coder</span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xl">🎧</span>
+          <AnimatedEmoji><span className="text-xl">🎧</span></AnimatedEmoji>
           <span className={`text-xs leading-tight ${textNormal}`}>Lo-fi architecture playlist enthusiast</span>
         </div>
       </div>
@@ -903,12 +957,16 @@ function App() {
               {/* GitHub Contribution Graph — scrolling layout */}
               <section className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}>
                 <div className="max-w-4xl mx-auto">
-                  <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40'}`}>
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.7 }}
+                    className={`text-xs uppercase tracking-[0.2em] block mb-6 ${isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40'}`}
+                  >
                     / GitHub Activity
-                  </span>
-                  <h2 className="font-bebas text-4xl md:text-5xl mb-10 tracking-wide uppercase">
-                    Contribution Graph
-                  </h2>
+                  </motion.span>
+                  <SectionHeading text="Contribution Graph" className="text-4xl md:text-5xl mb-10" />
                   <div className={`border rounded-3xl p-6 md:p-8 transition-colors duration-500 ${isDarkMode ? 'bg-[#121620]/45 border-white/5' : 'bg-slate-50/60 border-black/5'}`}>
                     <ContributionGraph isDarkMode={isDarkMode} />
                   </div>
@@ -918,30 +976,34 @@ function App() {
               {/* Fun Facts — scrolling layout */}
               <section className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}>
                 <div className="max-w-4xl mx-auto">
-                  <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40'}`}>
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.7 }}
+                    className={`text-xs uppercase tracking-[0.2em] block mb-6 ${isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40'}`}
+                  >
                     / Off the Clock
-                  </span>
-                  <h2 className="font-bebas text-4xl md:text-5xl mb-10 tracking-wide uppercase">
-                    Casual Facts
-                  </h2>
+                  </motion.span>
+                  <SectionHeading text="Casual Facts" className="text-4xl md:text-5xl mb-10" />
                   <div className={`border rounded-3xl p-8 transition-colors duration-500 ${isDarkMode ? 'bg-[#121620]/45 border-white/5' : 'bg-slate-50/60 border-black/5'}`}>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                       <div className="flex items-start gap-4">
-                        <span className="text-3xl">☕</span>
+                        <AnimatedEmoji><span className="text-3xl">☕</span></AnimatedEmoji>
                         <div>
                           <p className={`text-sm font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>Powered by black tea</p>
                           <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/55' : 'text-black/55'}`}>Every productive session begins with a cup. No exceptions.</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <span className="text-3xl">⚡</span>
+                        <AnimatedEmoji><span className="text-3xl">⚡</span></AnimatedEmoji>
                         <div>
                           <p className={`text-sm font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>Speed-coder</p>
                           <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/55' : 'text-black/55'}`}>I like shipping fast and iterating faster. Perfectionism is a myth.</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <span className="text-3xl">🎧</span>
+                        <AnimatedEmoji><span className="text-3xl">🎧</span></AnimatedEmoji>
                         <div>
                           <p className={`text-sm font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>Lo-fi architecture playlist</p>
                           <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/55' : 'text-black/55'}`}>Deep focus sessions are always accompanied by lo-fi beats.</p>

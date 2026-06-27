@@ -28,9 +28,29 @@ const Contact = ({ isDarkMode }) => {
           <span className={`text-xs uppercase tracking-[0.2em] block ${textMuted}`}>
             / Connect
           </span>
-          <h2 className={`font-bebas text-6xl md:text-8xl lg:text-9xl leading-[0.85] tracking-tighter uppercase ${titleColor}`}>
-            Let's<br />Talk
-          </h2>
+          <motion.h2
+            className={`font-bebas text-6xl md:text-8xl lg:text-9xl leading-[0.85] tracking-tighter uppercase ${titleColor}`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.18, delayChildren: 0.05 } },
+            }}
+          >
+            {["Let's", "Talk"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="block"
+                variants={{
+                  hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
+                  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } },
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.h2>
           <p className={`text-sm md:text-base font-light max-w-sm leading-relaxed ${descColor}`}>
             Got a project, question, or just want to connect?
             I'm always open to new opportunities.
