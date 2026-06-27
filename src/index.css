@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --font-bebas: "Bebas Neue", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+* {
+  cursor: none;
+}
+
+/* Make sure interactive elements don't get the pointer cursor style */
+a, button, [role="button"], select, input, textarea {
+  cursor: none;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #e8e4d9;
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar but keep scroll */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
