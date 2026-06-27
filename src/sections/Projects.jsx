@@ -98,7 +98,7 @@ const Projects = ({ isDarkMode }) => {
   return (
     <section 
       id="projects" 
-      className={`relative py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
+      className={`relative py-16 md:py-24 px-4 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <div className="max-w-5xl mx-auto relative">
         <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
@@ -110,19 +110,19 @@ const Projects = ({ isDarkMode }) => {
         </h2>
 
         {/* Carousel Container */}
-        <div className="relative flex items-center justify-center min-h-[500px]">
+        <div className="relative flex items-center justify-center">
           
-          {/* Left Navigation Arrow */}
+          {/* Left Arrow — hidden on mobile, absolute on md+ */}
           <button 
             onClick={handlePrev}
-            className={`absolute left-[-20px] md:left-[-60px] z-20 w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg ${arrowBg}`}
+            className={`hidden md:flex absolute left-[-60px] z-20 w-12 h-12 rounded-full border items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg ${arrowBg}`}
             aria-label="Previous Project"
           >
             <ChevronLeft size={24} />
           </button>
 
           {/* Slider Content Wrapper */}
-          <div className="w-full overflow-hidden min-h-[550px] md:min-h-[450px]">
+          <div className="w-full overflow-hidden">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={currentIdx}
@@ -131,10 +131,10 @@ const Projects = ({ isDarkMode }) => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className={`w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 rounded-3xl p-8 md:p-12 items-center relative border transition-colors duration-500 ${cardBg}`}
+                className={`w-full grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 rounded-3xl p-5 md:p-12 items-center relative border transition-colors duration-500 ${cardBg}`}
               >
                 {/* Left Column: Details */}
-                <div className="col-span-1 md:col-span-6 flex flex-col justify-between h-full min-h-[320px]">
+                <div className="col-span-1 md:col-span-6 flex flex-col justify-between h-full min-h-[240px] md:min-h-[320px]">
                   <div>
                     {/* Top Buttons Row */}
                     <div className="flex gap-4 mb-8">
@@ -200,12 +200,12 @@ const Projects = ({ isDarkMode }) => {
                 </div>
 
                 {/* Right Column: MacBook Pro Mockup */}
-                <div className="col-span-1 md:col-span-6 flex items-center justify-center py-4">
+                <div className="col-span-1 md:col-span-6 flex items-center justify-center py-2 md:py-4">
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                    className="relative w-full max-w-[460px] aspect-[16/10] select-none"
+                    className="relative w-full max-w-[320px] md:max-w-[460px] aspect-[16/10] select-none"
                   >
                     {/* Floating animation wrapper */}
                     <motion.div 
@@ -266,14 +266,24 @@ const Projects = ({ isDarkMode }) => {
             </AnimatePresence>
           </div>
 
-          {/* Right Navigation Arrow */}
+          {/* Right Arrow — hidden on mobile, absolute on md+ */}
           <button 
             onClick={handleNext}
-            className={`absolute right-[-20px] md:right-[-60px] z-20 w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg ${arrowBg}`}
+            className={`hidden md:flex absolute right-[-60px] z-20 w-12 h-12 rounded-full border items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg ${arrowBg}`}
             aria-label="Next Project"
           >
             <ChevronRight size={24} />
           </button>
+
+          {/* Mobile-only arrow row below card */}
+          <div className="md:hidden flex gap-4 justify-center mt-6 w-full">
+            <button onClick={handlePrev} className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${arrowBg}`} aria-label="Previous">
+              <ChevronLeft size={20} />
+            </button>
+            <button onClick={handleNext} className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${arrowBg}`} aria-label="Next">
+              <ChevronRight size={20} />
+            </button>
+          </div>
 
         </div>
       </div>

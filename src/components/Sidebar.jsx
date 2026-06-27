@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 280, damping: 30 }}
-            className={`fixed top-0 right-0 h-full w-72 z-[70] border-l flex flex-col py-8 px-6 transition-colors duration-500 ${bg}`}
+            className={`fixed top-0 right-0 h-full w-64 md:w-72 z-[70] border-l flex flex-col py-6 px-5 md:py-8 md:px-6 transition-colors duration-500 ${bg}`}
           >
             {/* Top row: avatar + name + close button */}
             <div className="flex items-center justify-between mb-10">

@@ -57,40 +57,31 @@ const Hero = ({ isDarkMode }) => {
   return (
     <section 
       id="hero" 
-      className={`relative min-h-screen flex flex-col justify-between px-6 pt-32 pb-12 md:px-12 overflow-hidden transition-colors duration-500 ${bgStyle}`}
+      className={`relative min-h-screen flex flex-col justify-between px-4 pt-24 pb-10 md:px-12 md:pt-32 md:pb-12 overflow-hidden transition-colors duration-500 ${bgStyle}`}
     >
       {/* Moving Background Blobs */}
       <motion.div
-        animate={{
-          x: [0, 100, 0],
-          y: [0, -50, 0],
-          scale: [1, 1.2, 1],
-        }}
+        animate={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className={`absolute top-0 left-0 w-72 h-72 md:w-96 md:h-96 rounded-full blur-3xl pointer-events-none ${blobBg}`}
+        className={`absolute top-0 left-0 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl pointer-events-none ${blobBg}`}
       />
-
       <motion.div
-        animate={{
-          x: [0, -80, 0],
-          y: [0, 60, 0],
-          scale: [1, 0.8, 1],
-        }}
+        animate={{ x: [0, -80, 0], y: [0, 60, 0], scale: [1, 0.8, 1] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className={`absolute top-0 right-0 w-72 h-72 md:w-80 md:h-80 rounded-full blur-3xl pointer-events-none ${blobBg}`}
+        className={`absolute top-0 right-0 w-48 h-48 md:w-80 md:h-80 rounded-full blur-3xl pointer-events-none ${blobBg}`}
       />
 
-      {/* Hero Body containing the giant name and overlapping avatar */}
-      <div className="relative flex-grow flex flex-col justify-center items-center py-12 md:py-16 select-none">
+      {/* Hero Body */}
+      <div className="relative flex-grow flex flex-col justify-center items-center py-8 md:py-16 select-none">
         
-        {/* Pulsing work indicator and typing loop at the top of Hero */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 mb-6 select-none z-30">
+        {/* Status badge + typing loop */}
+        <div className="flex flex-col items-center gap-2 mb-4 md:mb-6 select-none z-30">
           <div className="flex items-center gap-2">
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
             </span>
-            <span className={`text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full border font-mono ${
+            <span className={`text-[9px] md:text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border font-mono ${
               isDarkMode 
                 ? 'text-emerald-400 bg-emerald-950/40 border-emerald-500/20' 
                 : 'text-emerald-600 bg-emerald-50/70 border-emerald-500/10'
@@ -98,22 +89,21 @@ const Hero = ({ isDarkMode }) => {
               Available for Opportunities
             </span>
           </div>
-          <span className={`hidden sm:inline ${isDarkMode ? 'text-white/20' : 'text-black/20'}`}>|</span>
           <div className="text-xs md:text-sm font-light flex items-center min-h-[20px]">
             <TypingLoop isDarkMode={isDarkMode} />
           </div>
         </div>
 
-        {/* Name Background Layer (Gives nice contrast/depth) */}
-        <h1 className={`font-bebas text-[22vw] leading-[0.8] tracking-tighter text-center uppercase select-none pointer-events-none transition-opacity duration-300 ${
+        {/* Background name layer */}
+        <h1 className={`font-bebas text-[28vw] sm:text-[24vw] md:text-[22vw] leading-[0.8] tracking-tighter text-center uppercase select-none pointer-events-none transition-opacity duration-300 ${
           isDarkMode ? 'opacity-10' : 'opacity-5 text-black'
         }`}>
           <div>Swati</div>
           <div>Kumari</div>
         </h1>
  
-        {/* The overlapping Avatar Container */}
-        <div className="absolute z-20 top-1/2 -translate-y-1/2 mt-4">
+        {/* Avatar */}
+        <div className="absolute z-20 top-1/2 -translate-y-1/2 mt-2 md:mt-4">
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="relative cursor-none"
@@ -122,7 +112,7 @@ const Hero = ({ isDarkMode }) => {
           >
             <motion.div
               animate={{ backgroundColor: avatarHovered ? (isDarkMode ? '#7c3aed' : '#10b981') : (isDarkMode ? '#222' : '#f1f5f9') }}
-              className={`rounded-2xl p-4 w-44 h-52 md:w-48 md:h-56 flex items-end justify-center overflow-hidden border shadow-2xl ${avatarBorder}`}
+              className={`rounded-2xl p-3 md:p-4 w-32 h-40 md:w-48 md:h-56 flex items-end justify-center overflow-hidden border shadow-2xl ${avatarBorder}`}
             >
               <img 
                 src={avatar} 
@@ -149,18 +139,17 @@ const Hero = ({ isDarkMode }) => {
           </motion.div>
         </div>
 
-        {/* Foreground Text Overlay */}
-        <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none select-none mt-8">
-          <h1 className="font-bebas text-[22vw] leading-[0.8] tracking-tighter text-center uppercase text-white mix-blend-difference">
+        {/* Foreground text overlay */}
+        <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none select-none mt-8 md:mt-8">
+          <h1 className="font-bebas text-[28vw] sm:text-[24vw] md:text-[22vw] leading-[0.8] tracking-tighter text-center uppercase text-white mix-blend-difference">
             <div>Swati</div>
             <div>Kumari</div>
           </h1>
         </div>
-
       </div>
 
-      {/* Hero Footer text */}
-      <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 text-xs md:text-sm font-light tracking-wide pt-8 border-t z-10 transition-colors duration-500 ${footerBorder}`}>
+      {/* Hero Footer */}
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 text-xs md:text-sm font-light tracking-wide pt-6 md:pt-8 border-t z-10 transition-colors duration-500 ${footerBorder}`}>
         <div className="max-w-md">
           <p className="leading-relaxed">
             I'm currently a 4th year student at IKG Punjab Technical University,

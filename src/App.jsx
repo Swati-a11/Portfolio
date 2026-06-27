@@ -608,9 +608,7 @@ function App() {
       >
         <Navbar 
           isDarkMode={isDarkMode} 
-          toggleTheme={toggleTheme} 
-          isBentoLayout={isBentoLayout} 
-          toggleLayout={toggleLayout}
+          toggleTheme={toggleTheme}
           onToggleSidebar={() => setSidebarOpen(prev => !prev)}
         />
 
@@ -628,7 +626,7 @@ function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="max-w-5xl mx-auto px-6 pb-16 space-y-6 select-none"
+              className="max-w-5xl mx-auto px-4 md:px-6 pb-16 space-y-4 md:space-y-6 select-none"
             >
               {/* ── MANIFESTO BANNER ── Word-by-word stagger reveal ── */}
               <motion.div
