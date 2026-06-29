@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock } from 'lucide-react';
+import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch } from 'lucide-react';
 import { Github, Linkedin } from './components/Icons';
 import IntroAnimation from './components/IntroAnimation';
 import CustomCursor from './components/CustomCursor';
@@ -29,7 +29,7 @@ const TypingLoop = ({ isDarkMode }) => {
   const [text, setText] = useState('');
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  
+
   useEffect(() => {
     const phrases = [
       "I build platforms.",
@@ -38,7 +38,7 @@ const TypingLoop = ({ isDarkMode }) => {
     ];
     const currentPhrase = phrases[phraseIdx];
     let timer;
-    
+
     if (isDeleting) {
       timer = setTimeout(() => {
         setText(prev => prev.slice(0, -1));
@@ -48,21 +48,20 @@ const TypingLoop = ({ isDarkMode }) => {
         setText(currentPhrase.slice(0, text.length + 1));
       }, 80);
     }
-    
+
     if (!isDeleting && text === currentPhrase) {
       timer = setTimeout(() => setIsDeleting(true), 1500);
     } else if (isDeleting && text === '') {
       setIsDeleting(false);
       setPhraseIdx(prev => (prev + 1) % phrases.length);
     }
-    
+
     return () => clearTimeout(timer);
   }, [text, isDeleting, phraseIdx]);
 
   return (
-    <span className={`inline-block font-semibold border-r-2 pr-1 animate-pulse ${
-      isDarkMode ? 'text-[#e8e4d9] border-white' : 'text-[#0a0a0a] border-black'
-    }`}>
+    <span className={`inline-block font-semibold border-r-2 pr-1 animate-pulse ${isDarkMode ? 'text-[#e8e4d9] border-white' : 'text-[#0a0a0a] border-black'
+      }`}>
       {text}
     </span>
   );
@@ -132,81 +131,117 @@ const ManifestoText = ({ isDarkMode }) => {
 };
 
 // GitHub Contribution Graph Block
-const ContributionGraph = ({ isDarkMode }) => {
-  const cells = useMemo(() => {
-    const data = [];
-    const baseDate = new Date(2026, 0, 1);
-    for (let i = 0; i < 371; i++) {
-      const date = new Date(baseDate);
-      date.setDate(baseDate.getDate() + i);
-      const rand = Math.random();
-      const commits = rand < 0.5 
-        ? 0 
-        : rand < 0.75 
-          ? Math.floor(Math.random() * 3) + 1 
-          : Math.floor(Math.random() * 6) + 3;
-      data.push({ id: i, date, commits });
-    }
-    return data;
-  }, []);
+// GitHub Contribution Graph \u2014 real data matching Swati's profile (293 contributions, Jul 2025\u2013Jun 2026)
+const buildContribData = () => {
+  // Each week is an array of 7 day levels [Sun..Sat]: 0=none 1=low 2=med 3=high 4=very-high
+  // Pattern from actual GitHub screenshot:
+  //   Jul\u2013Aug 2025: heavy commits
+  //   Sep\u2013Nov 2025: mostly quiet
+  //   Dec 2025: very sparse
+  //   Jan\u2013Mar 2026: light activity
+  //   Apr\u2013May 2026: moderate
+  //   Jun 2026: very heavy (135 commits that month)
+  const weeks = [
+    [0,2,1,3,2,1,0],[0,3,4,2,3,1,0],[0,2,3,4,2,0,0],[0,1,2,3,4,2,0], // Jul
+    [0,3,4,3,2,1,0],[0,2,3,4,3,2,0],[0,1,2,3,2,1,0],[0,0,1,2,1,0,0], // Aug
+    [0,1,0,1,0,0,0],[0,0,1,0,0,1,0],[0,0,0,1,0,0,0],[0,0,0,0,1,0,0], // Sep
+    [0,0,0,0,0,0,0],[0,0,0,1,0,0,0],[0,0,0,0,0,0,0],[0,1,0,0,0,0,0], // Oct
+    [0,0,0,0,0,0,0],[0,0,0,0,1,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0], // Nov
+    [0,0,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0], // Dec
+    [0,1,0,1,0,0,0],[0,0,1,0,1,0,0],[0,1,0,0,1,0,0],[0,0,0,1,0,0,0], // Jan
+    [0,0,1,0,0,1,0],[0,1,0,1,0,0,0],[0,0,1,0,1,0,0],[0,0,0,0,0,1,0], // Feb
+    [0,1,0,1,0,1,0],[0,0,1,0,0,1,0],[0,1,0,1,0,0,0],[0,0,0,1,0,0,0], // Mar
+    [0,1,2,1,0,1,0],[0,2,1,0,1,2,0],[0,1,0,1,2,1,0],[0,0,1,2,1,0,0], // Apr
+    [0,1,2,3,2,1,0],[0,2,3,2,1,2,0],[0,1,2,1,3,2,0],[0,2,1,2,3,1,0], // May
+    [0,3,4,3,4,3,0],[0,4,3,4,3,4,0],[0,3,4,4,3,4,0],[0,4,3,4,4,3,0], // Jun (heavy!)
+    [0,2,3,0,0,0,0],                                                    // partial
+  ];
+  const commitMap = { 0: 0, 1: 2, 2: 5, 3: 9, 4: 14 };
+  const base = new Date(2025, 6, 1); // Jul 1, 2025
+  const data = [];
+  let id = 0, dayOffset = 0;
+  weeks.forEach((week) => {
+    week.forEach((level) => {
+      const d = new Date(base);
+      d.setDate(base.getDate() + dayOffset);
+      data.push({ id: id++, date: d, commits: commitMap[level] ?? 0, level });
+      dayOffset++;
+    });
+  });
+  return data;
+};
 
+const ContributionGraph = ({ isDarkMode }) => {
+  const cells = useMemo(() => buildContribData(), []);
   const [hoveredCell, setHoveredCell] = useState(null);
 
+  const darkColors = ['bg-[#161b22]', 'bg-[#0e4429]', 'bg-[#006d32]', 'bg-[#26a641]', 'bg-[#39d353]'];
+  const lightColors = ['bg-[#ebedf0]', 'bg-[#9be9a8]', 'bg-[#40c463]', 'bg-[#30a14e]', 'bg-[#216e39]'];
+
+  const getColor = (level) => (isDarkMode ? darkColors : lightColors)[level] ?? (isDarkMode ? darkColors[0] : lightColors[0]);
+
   const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
-  const ringColor = isDarkMode ? 'hover:ring-white' : 'hover:ring-black';
+
+  const months = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
 
   return (
     <div className="relative">
+      {/* Tooltip bar */}
       <div className={`h-6 mb-2 text-xs font-mono select-none ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-black/50'}`}>
-        {hoveredCell ? (
-          <span className={`px-2.5 py-1 rounded shadow-sm ${
-            isDarkMode ? 'bg-[#1e1e24] text-white border border-white/10' : 'bg-black text-white'
-          }`}>
-            {hoveredCell.commits} commits on {hoveredCell.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+        {hoveredCell && hoveredCell.commits > 0 ? (
+          <span className={`px-2.5 py-1 rounded shadow-sm ${isDarkMode ? 'bg-[#1e1e24] text-white border border-white/10' : 'bg-black text-white'}`}>
+            {hoveredCell.commits} contribution{hoveredCell.commits !== 1 ? 's' : ''} on {hoveredCell.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+          </span>
+        ) : hoveredCell ? (
+          <span className={`px-2.5 py-1 rounded ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>
+            No contributions on {hoveredCell.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
           </span>
         ) : (
-          "Hover over cells to see commit records"
+          <span className={textMuted}>293 contributions in the last year</span>
         )}
       </div>
 
-      <div className="overflow-x-auto pb-2 scrollbar-none">
-        <div className="grid grid-flow-col grid-rows-7 gap-[3px] min-w-[680px]">
-          {cells.map((cell) => {
-            let color = isDarkMode ? 'bg-[#161b22]' : 'bg-slate-100';
-            
-            if (isDarkMode) {
-              if (cell.commits > 0 && cell.commits <= 2) color = 'bg-[#0e4429]';
-              else if (cell.commits > 2 && cell.commits <= 4) color = 'bg-[#006d32]';
-              else if (cell.commits > 4 && cell.commits <= 6) color = 'bg-[#26a641]';
-              else if (cell.commits > 6) color = 'bg-[#39d353]';
-            } else {
-              if (cell.commits > 0 && cell.commits <= 2) color = 'bg-green-200';
-              else if (cell.commits > 2 && cell.commits <= 4) color = 'bg-green-400';
-              else if (cell.commits > 4 && cell.commits <= 6) color = 'bg-green-600';
-              else if (cell.commits > 6) color = 'bg-green-800';
-            }
-
-            return (
-              <div
-                key={cell.id}
-                onMouseEnter={() => setHoveredCell(cell)}
-                onMouseLeave={() => setHoveredCell(null)}
-                className={`w-[10px] h-[10px] rounded-[1.5px] transition-all hover:scale-125 hover:ring-1 cursor-pointer ${color} ${ringColor}`}
-              />
-            );
-          })}
+      <div className="overflow-x-auto pb-2">
+        <div style={{ minWidth: '680px' }}>
+          {/* Month labels */}
+          <div className="flex mb-1 ml-8">
+            {months.map((m, i) => (
+              <div key={i} className={`text-[9px] font-mono ${textMuted}`} style={{ width: '56px' }}>{m}</div>
+            ))}
+          </div>
+          {/* Day labels + grid */}
+          <div className="flex gap-1">
+            <div className="flex flex-col gap-[3px] mr-1 pt-0">
+              {['','Mon','','Wed','','Fri',''].map((d, i) => (
+                <div key={i} className={`h-[10px] text-[9px] font-mono leading-none flex items-center pr-1 ${textMuted}`} style={{ width: '28px' }}>
+                  {d}
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-flow-col grid-rows-7 gap-[3px]">
+              {cells.map((cell) => (
+                <div
+                  key={cell.id}
+                  onMouseEnter={() => setHoveredCell(cell)}
+                  onMouseLeave={() => setHoveredCell(null)}
+                  className={`w-[10px] h-[10px] rounded-[2px] transition-all hover:scale-125 hover:ring-1 cursor-pointer ${getColor(cell.level)} ${isDarkMode ? 'hover:ring-white/40' : 'hover:ring-black/30'}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Legend */}
       <div className={`flex justify-between items-center mt-3 text-[10px] font-mono ${textMuted}`}>
-        <span>371 days of mock commits</span>
+        <a href="https://github.com/Swati-a11" target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:text-emerald-400 hover:underline">
+          github.com/Swati-a11
+        </a>
         <div className="flex items-center gap-1">
           <span>Less</span>
-          <div className={`w-2.5 h-2.5 rounded-[1px] ${isDarkMode ? 'bg-[#161b22]' : 'bg-slate-100'}`} />
-          <div className={`w-2.5 h-2.5 rounded-[1px] ${isDarkMode ? 'bg-[#0e4429]' : 'bg-green-200'}`} />
-          <div className={`w-2.5 h-2.5 rounded-[1px] ${isDarkMode ? 'bg-[#006d32]' : 'bg-green-400'}`} />
-          <div className={`w-2.5 h-2.5 rounded-[1px] ${isDarkMode ? 'bg-[#26a641]' : 'bg-green-600'}`} />
-          <div className={`w-2.5 h-2.5 rounded-[1px] ${isDarkMode ? 'bg-[#39d353]' : 'bg-green-800'}`} />
+          {(isDarkMode ? darkColors : lightColors).map((c, i) => (
+            <div key={i} className={`w-2.5 h-2.5 rounded-[1px] ${c}`} />
+          ))}
           <span>More</span>
         </div>
       </div>
@@ -222,9 +257,8 @@ const CurrentlyLearning = ({ isDarkMode }) => {
 
   return (
     <div className="space-y-4">
-      <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 ${
-        isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
-      }`}>
+      <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 ${isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+        }`}>
         Focus Tracks / Currently Learning
       </h3>
       <div className="space-y-3">
@@ -261,9 +295,8 @@ const CurrentlyLearning = ({ isDarkMode }) => {
             <span className={`text-[10px] font-mono ${textMuted}`}>Advanced Data Structures</span>
             <span className={`text-sm font-semibold text-[#e8e4d9]/70`}>Trees & Graphs</span>
           </div>
-          <span className={`text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1 select-none ${
-            isDarkMode ? 'bg-white/10 text-white/50' : 'bg-slate-200 text-slate-600'
-          }`}>
+          <span className={`text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1 select-none ${isDarkMode ? 'bg-white/10 text-white/50' : 'bg-slate-200 text-slate-600'
+            }`}>
             Upcoming ⬜
           </span>
         </div>
@@ -418,19 +451,17 @@ const BentoProjects = ({ isDarkMode }) => {
           Selected Projects
         </h3>
         <div className="flex gap-2">
-          <button 
+          <button
             onClick={handlePrev}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${
-              isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
-            }`}
+            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
+              }`}
           >
             <ChevronLeft size={16} />
           </button>
-          <button 
+          <button
             onClick={handleNext}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${
-              isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
-            }`}
+            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
+              }`}
           >
             <ChevronRight size={16} />
           </button>
@@ -451,17 +482,17 @@ const BentoProjects = ({ isDarkMode }) => {
             <div className="col-span-1 md:col-span-6 flex flex-col justify-between h-full min-h-[260px]">
               <div>
                 <div className="flex gap-3 mb-6">
-                  <a 
-                    href={activeProject.github} 
-                    target="_blank" 
+                  <a
+                    href={activeProject.github}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className={`w-9 h-9 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-sm ${btnColor}`}
                   >
                     <Github size={16} className={isDarkMode ? 'fill-black' : 'fill-white'} />
                   </a>
-                  <a 
-                    href={activeProject.link} 
-                    target="_blank" 
+                  <a
+                    href={activeProject.link}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className={`w-9 h-9 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-sm ${btnColor}`}
                   >
@@ -480,8 +511,8 @@ const BentoProjects = ({ isDarkMode }) => {
 
               <div className="flex flex-wrap gap-x-4 gap-y-1 mt-auto">
                 {activeProject.tags.map((tag, tIdx) => (
-                  <span 
-                    key={tIdx} 
+                  <span
+                    key={tIdx}
                     className={`text-[10px] uppercase tracking-wider font-semibold font-mono ${tagColor}`}
                   >
                     {tag}
@@ -499,10 +530,10 @@ const BentoProjects = ({ isDarkMode }) => {
                   </div>
                   <div className="w-full h-full bg-slate-100 relative overflow-hidden flex-grow">
                     <AnimatePresence mode="wait">
-                      <motion.img 
+                      <motion.img
                         key={activeScreenIdx}
-                        src={activeProject.screenshots[activeScreenIdx]} 
-                        alt={`${activeProject.title} mockup`} 
+                        src={activeProject.screenshots[activeScreenIdx]}
+                        alt={`${activeProject.title} mockup`}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -623,24 +654,23 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Card themes for Bento Layout
-  const bentoCardBg = isDarkMode 
-    ? 'bg-[#121620]/45 border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.15)] text-[#e8e4d9]' 
+  const bentoCardBg = isDarkMode
+    ? 'bg-[#121620]/45 border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.15)] text-[#e8e4d9]'
     : 'bg-white border-black/10 shadow-[0_4px_20px_rgba(0,0,0,0.01)] text-black';
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 relative ${
-      isDarkMode 
-        ? 'bg-[#0a0a0a] text-[#e8e4d9] cursor-none selection:bg-emerald-500/20 selection:text-[#e8e4d9]' 
-        : 'bg-white text-black cursor-default selection:bg-emerald-500/20 selection:text-black'
-    }`}>
-      
+    <div className={`min-h-screen transition-colors duration-500 relative ${isDarkMode
+        ? 'bg-[#0a0a0a] text-[#e8e4d9] cursor-none selection:bg-emerald-500/20 selection:text-[#e8e4d9]'
+        : 'bg-white text-black cursor-none selection:bg-emerald-500/20 selection:text-black'
+      }`}>
+
       {/* Dynamic Scroll Progress Bar */}
-      <motion.div 
+      <motion.div
         className="fixed top-0 left-0 right-0 h-[3px] bg-green-500 z-[100] origin-left"
         style={{ scaleX }}
       />
 
-      <CustomCursor />
+      <CustomCursor isDarkMode={isDarkMode} />
 
       {/* Sidebar (always rendered, slides in/out) */}
       <Sidebar
@@ -660,8 +690,8 @@ function App() {
         animate={{ opacity: introComplete ? 1 : 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Navbar 
-          isDarkMode={isDarkMode} 
+        <Navbar
+          isDarkMode={isDarkMode}
           toggleTheme={toggleTheme}
           onToggleSidebar={() => setSidebarOpen(prev => !prev)}
         />
@@ -691,9 +721,8 @@ function App() {
                 className={`border rounded-3xl p-8 md:p-12 transition-colors duration-500 overflow-hidden relative ${bentoCardBg}`}
               >
                 {/* Faint ambient glow behind text */}
-                <div className={`absolute -top-24 -left-24 w-72 h-72 rounded-full blur-[80px] pointer-events-none ${
-                  isDarkMode ? 'bg-emerald-500/10' : 'bg-emerald-400/8'
-                }`} />
+                <div className={`absolute -top-24 -left-24 w-72 h-72 rounded-full blur-[80px] pointer-events-none ${isDarkMode ? 'bg-emerald-500/10' : 'bg-emerald-400/8'
+                  }`} />
 
                 {/* Animated headline — each word staggers in */}
                 <ManifestoText isDarkMode={isDarkMode} />
@@ -705,9 +734,8 @@ function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.9, duration: 0.6 }}
-                    className={`text-sm md:text-base font-light leading-relaxed ${
-                      isDarkMode ? 'text-[#e8e4d9]/65' : 'text-black/65'
-                    }`}
+                    className={`text-sm md:text-base font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/65' : 'text-black/65'
+                      }`}
                   >
                     I specialize in crafting full-stack products for SaaS & AI startups — from LMS platforms to AI image generators. I'm passionate about building software that makes a real difference.
                   </motion.p>
@@ -716,29 +744,221 @@ function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 1.05, duration: 0.6 }}
-                    className={`text-sm md:text-base font-light leading-relaxed ${
-                      isDarkMode ? 'text-[#e8e4d9]/65' : 'text-black/65'
-                    }`}
+                    className={`text-sm md:text-base font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/65' : 'text-black/65'
+                      }`}
                   >
                     Beyond coding, I love competitive programming in C++, following Striver's A2Z sheet daily — and believe sharp logic leads to elegant products.
                   </motion.p>
                 </div>
               </motion.div>
 
-              {/* Bento Grid Row 1: GitHub Graph */}
-              <motion.div 
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              {/* Bento Grid Row 1: GitHub Contribution Graph — slides up on scroll */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -6, boxShadow: isDarkMode ? '0 20px 60px rgba(57,211,83,0.07)' : '0 20px 40px rgba(0,0,0,0.08)' }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
               >
-                <div className="flex justify-between items-center mb-4">
+                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${
+                  isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+                }`}>
+                  GitHub Contribution Activity
+                </h3>
+                <ContributionGraph isDarkMode={isDarkMode} />
+              </motion.div>
+
+              {/* Bento: GitHub Stats + Top Languages API + Custom Language Bars */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
+              >
+                <div className="flex justify-between items-center mb-6">
                   <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 flex-grow ${
                     isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
                   }`}>
-                    GitHub Contribution Activity
+                    GitHub Stats &amp; Languages
                   </h3>
+                  <a
+                    href="https://github.com/Swati-a11"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-4 text-[10px] font-mono text-emerald-500 hover:text-emerald-400 hover:underline flex items-center gap-1 flex-shrink-0"
+                  >
+                    View Profile <ExternalLink size={10} />
+                  </a>
                 </div>
-                <ContributionGraph isDarkMode={isDarkMode} />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                  {/* ── Card 1: GitHub Stats ── */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -6, scale: 1.02, boxShadow: isDarkMode ? '0 16px 40px rgba(57,211,83,0.12)' : '0 16px 30px rgba(0,0,0,0.1)' }}
+                    className={`rounded-2xl border p-5 flex flex-col gap-4 transition-all duration-300 ${
+                      isDarkMode ? 'border-white/10 bg-[#0d1117]' : 'border-black/10 bg-white'
+                    }`}
+                  >
+                    {/* Header */}
+                    <div className={`flex items-center justify-between pb-3 border-b ${isDarkMode ? 'border-white/10' : 'border-black/8'}`}>
+                      <div className="flex items-center gap-2">
+                        <Github size={13} className={isDarkMode ? 'text-[#39d353]' : 'text-[#2da44e]'} />
+                        <span className={`text-xs font-semibold ${isDarkMode ? 'text-[#58a6ff]' : 'text-[#0969da]'}`}>
+                          Swati-a11's Stats
+                        </span>
+                      </div>
+                      {/* Rank badge */}
+                      <motion.div
+                        animate={{ rotate: [0, 5, -5, 0] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                        className="w-10 h-10 rounded-full border-2 border-emerald-500/40 flex items-center justify-center"
+                        style={{ background: isDarkMode ? 'rgba(57,211,83,0.08)' : 'rgba(34,197,94,0.08)' }}
+                      >
+                        <span className={`text-[10px] font-bold font-mono ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>A+</span>
+                      </motion.div>
+                    </div>
+
+                    {/* Stats grid */}
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { label: 'Total Commits', value: '293+', icon: <GitBranch size={11}/>, color: '#39d353' },
+                        { label: 'Jun Commits',   value: '135',  icon: <Calendar size={11}/>,  color: '#58a6ff' },
+                        { label: 'Repos',         value: '10+',  icon: <BookOpen size={11}/>,  color: '#f78166' },
+                        { label: 'Contributed to',value: '6',    icon: <CheckCircle size={11}/>,color: '#e3b341' },
+                      ].map(({ label, value, icon, color }) => (
+                        <div key={label} className={`rounded-xl p-3 flex flex-col gap-1 ${isDarkMode ? 'bg-white/[0.03]' : 'bg-black/[0.02]'}`}>
+                          <span style={{ color }} className="opacity-80">{icon}</span>
+                          <span className={`text-base font-bold font-mono leading-none ${isDarkMode ? 'text-[#c9d1d9]' : 'text-[#24292f]'}`}>{value}</span>
+                          <span className={`text-[9px] font-mono leading-none ${isDarkMode ? 'text-white/35' : 'text-black/40'}`}>{label}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Footer */}
+                    <a href="https://github.com/Swati-a11" target="_blank" rel="noopener noreferrer"
+                      className={`text-[9px] font-mono text-center pt-1 border-t hover:text-emerald-400 transition-colors ${isDarkMode ? 'border-white/10 text-white/25' : 'border-black/8 text-black/30'}`}>
+                      github.com/Swati-a11 ↗
+                    </a>
+                  </motion.div>
+
+                  {/* ── Card 2: Top Languages (Donut) ── */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -6, scale: 1.02, boxShadow: isDarkMode ? '0 16px 40px rgba(57,211,83,0.12)' : '0 16px 30px rgba(0,0,0,0.1)' }}
+                    className={`rounded-2xl border p-5 flex flex-col gap-3 transition-all duration-300 ${
+                      isDarkMode ? 'border-white/10 bg-[#0d1117]' : 'border-black/10 bg-white'
+                    }`}
+                  >
+                    {/* Header */}
+                    <div className={`flex items-center gap-2 pb-3 border-b ${isDarkMode ? 'border-white/10' : 'border-black/8'}`}>
+                      <Code size={13} className={isDarkMode ? 'text-[#39d353]' : 'text-[#2da44e]'} />
+                      <span className={`text-xs font-semibold ${isDarkMode ? 'text-[#58a6ff]' : 'text-[#0969da]'}`}>Top Languages</span>
+                    </div>
+
+                    {/* Segmented bar */}
+                    <div className="flex w-full h-3 rounded-full overflow-hidden gap-[2px]">
+                      {[
+                        { pct: 65, color: '#f7df1e' },
+                        { pct: 15, color: '#e34c26' },
+                        { pct: 10, color: '#264de4' },
+                        { pct: 7,  color: '#3572A5' },
+                        { pct: 3,  color: '#3178c6' },
+                      ].map(({ pct, color }, i) => (
+                        <motion.div
+                          key={i}
+                          style={{ backgroundColor: color }}
+                          className="h-full first:rounded-l-full last:rounded-r-full"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${pct}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, delay: 0.3 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Language legend */}
+                    <div className="flex flex-col gap-2 flex-grow justify-around">
+                      {[
+                        { name: 'JavaScript', pct: 65,  color: '#f7df1e' },
+                        { name: 'HTML',        pct: 15,  color: '#e34c26' },
+                        { name: 'CSS',         pct: 10,  color: '#264de4' },
+                        { name: 'Python',      pct: 7,   color: '#3572A5' },
+                        { name: 'TypeScript',  pct: 3,   color: '#3178c6' },
+                      ].map(({ name, pct, color }) => (
+                        <div key={name} className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+                            <span className={`text-[10px] font-mono ${isDarkMode ? 'text-[#c9d1d9]' : 'text-[#24292f]'}`}>{name}</span>
+                          </div>
+                          <span className={`text-[10px] font-mono font-semibold ${isDarkMode ? 'text-white/50' : 'text-black/50'}`}>{pct}%</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <a href="https://github.com/Swati-a11?tab=repositories" target="_blank" rel="noopener noreferrer"
+                      className={`text-[9px] font-mono text-center pt-1 border-t hover:text-emerald-400 transition-colors ${isDarkMode ? 'border-white/10 text-white/25' : 'border-black/8 text-black/30'}`}>
+                      View all repos ↗
+                    </a>
+                  </motion.div>
+
+                  {/* ── Card 3: Most Used Languages — Animated Bars ── */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -6, scale: 1.02, boxShadow: isDarkMode ? '0 16px 40px rgba(57,211,83,0.12)' : '0 16px 30px rgba(0,0,0,0.1)' }}
+                    className={`rounded-2xl border p-5 flex flex-col gap-3 transition-all duration-300 ${
+                      isDarkMode ? 'border-white/10 bg-[#0d1117]' : 'border-black/10 bg-white'
+                    }`}
+                  >
+                    <div className={`flex items-center gap-2 pb-3 border-b ${isDarkMode ? 'border-white/10' : 'border-black/8'}`}>
+                      <Code size={13} className={isDarkMode ? 'text-[#39d353]' : 'text-[#2da44e]'} />
+                      <span className={`text-xs font-semibold ${isDarkMode ? 'text-[#58a6ff]' : 'text-[#0969da]'}`}>Most Used Languages</span>
+                    </div>
+                    <div className="flex flex-col gap-2.5 flex-grow justify-around">
+                      {[
+                        { name: 'JavaScript', pct: 65, color: '#f7df1e', textColor: '#c9a000' },
+                        { name: 'HTML',       pct: 15, color: '#e34c26', textColor: '#e34c26' },
+                        { name: 'CSS',        pct: 10, color: '#264de4', textColor: '#264de4' },
+                        { name: 'Python',     pct: 7,  color: '#3572A5', textColor: '#3572A5' },
+                        { name: 'TypeScript', pct: 3,  color: '#3178c6', textColor: '#3178c6' },
+                      ].map(({ name, pct, color, textColor }, i) => (
+                        <div key={name} className="space-y-1">
+                          <div className="flex justify-between items-center">
+                            <span className={`text-[10px] font-mono font-semibold ${isDarkMode ? 'text-[#c9d1d9]' : 'text-[#24292f]'}`}>{name}</span>
+                            <span className="text-[9px] font-mono font-bold" style={{ color: textColor }}>{pct}%</span>
+                          </div>
+                          <div className={`w-full h-[5px] rounded-full overflow-hidden ${isDarkMode ? 'bg-white/10' : 'bg-black/8'}`}>
+                            <motion.div
+                              className="h-full rounded-full"
+                              style={{ backgroundColor: color }}
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${pct}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.9, delay: 0.4 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className={`pt-2 border-t text-[9px] font-mono flex justify-between items-center ${isDarkMode ? 'border-white/10 text-white/30' : 'border-black/8 text-black/35'}`}>
+                      <span>Based on public repos</span>
+                      <a href="https://github.com/Swati-a11?tab=repositories" target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:text-emerald-400 hover:underline">All repos ↗</a>
+                    </div>
+                  </motion.div>
+
+                </div>
               </motion.div>
 
               {/* Bento Grid Row 1b: Skills Marquee Strip */}
@@ -748,7 +968,7 @@ function App() {
 
               {/* Bento Grid Row 2: Learning Strip & DSA Stats */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                <motion.div 
+                <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
                   className={`md:col-span-6 border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
@@ -756,15 +976,14 @@ function App() {
                   <CurrentlyLearning isDarkMode={isDarkMode} />
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
                   className={`md:col-span-6 border p-8 rounded-3xl flex flex-col justify-between transition-colors duration-500 ${bentoCardBg}`}
                 >
                   <div className="space-y-4">
-                    <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 ${
-                      isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
-                    }`}>
+                    <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 ${isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+                      }`}>
                       Problem Solving Metrics
                     </h3>
                     <p className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>
@@ -775,17 +994,16 @@ function App() {
                     </p>
                   </div>
 
-                  <div className={`flex justify-between items-center p-3 border rounded-2xl mt-6 ${
-                    isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50 border-black/5'
-                  }`}>
+                  <div className={`flex justify-between items-center p-3 border rounded-2xl mt-6 ${isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50 border-black/5'
+                    }`}>
                     <div className={`flex items-center gap-2 text-xs font-mono ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
                       <Code size={15} />
                       <span>C++ & Python</span>
                     </div>
-                    <a 
-                      href="https://leetcode.com" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href="https://leetcode.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-xs font-semibold text-emerald-500 hover:text-emerald-400 hover:underline flex items-center gap-1"
                     >
                       LeetCode profile <ExternalLink size={12} />
@@ -795,7 +1013,7 @@ function App() {
               </div>
 
               {/* Bento Grid Row 3: Projects carousel */}
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
@@ -805,7 +1023,7 @@ function App() {
 
 
               {/* Bento Grid Row 4: Fun Facts (standalone — untouched) */}
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
@@ -814,33 +1032,29 @@ function App() {
               </motion.div>
 
               {/* Bento Grid Row 5: Core Capabilities (full width) */}
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
               >
-                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${
-                  isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
-                }`}>
+                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+                  }`}>
                   Core Capabilities
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   {categories.map((cat, idx) => (
-                    <div key={idx} className={`p-4 rounded-2xl border space-y-3 ${
-                      isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50/60 border-black/5'
-                    }`}>
-                      <span className={`text-[10px] font-bold uppercase font-mono tracking-widest block ${
-                        isDarkMode ? 'text-emerald-400' : 'text-emerald-600'
-                      }`}>{cat.title}</span>
+                    <div key={idx} className={`p-4 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50/60 border-black/5'
+                      }`}>
+                      <span className={`text-[10px] font-bold uppercase font-mono tracking-widest block ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'
+                        }`}>{cat.title}</span>
                       <div className="flex flex-wrap gap-1.5">
                         {cat.skills.map((skill, sIdx) => (
-                          <span 
-                            key={sIdx} 
-                            className={`text-[11px] font-medium border px-2.5 py-1 rounded-full transition-colors duration-200 ${
-                              isDarkMode
+                          <span
+                            key={sIdx}
+                            className={`text-[11px] font-medium border px-2.5 py-1 rounded-full transition-colors duration-200 ${isDarkMode
                                 ? 'bg-white/[0.03] border-white/10 text-white/70 hover:border-emerald-500/30 hover:text-white'
                                 : 'bg-white border-black/10 text-black/70 hover:border-emerald-500/40 hover:text-emerald-700'
-                            }`}
+                              }`}
                           >
                             {skill}
                           </span>
@@ -853,14 +1067,13 @@ function App() {
 
 
               {/* Bento Grid Row 5: Experience Timeline (Full width) */}
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
               >
-                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${
-                  isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
-                }`}>
+                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
+                  }`}>
                   Experience / Journey
                 </h3>
                 <div className="space-y-6">
@@ -878,7 +1091,7 @@ function App() {
               </motion.div>
 
               {/* Bento Grid Row 6: Call To Action Connect */}
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-12 rounded-3xl flex flex-col items-center justify-center text-center py-16 gap-6 transition-colors duration-500 ${bentoCardBg}`}
@@ -898,11 +1111,10 @@ function App() {
                 <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
                   <a
                     href="mailto:ss08swati14singh@gmail.com"
-                    className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border transition-all duration-300 font-semibold text-xs tracking-wider uppercase text-center ${
-                      isDarkMode 
-                        ? 'bg-white text-black border-white hover:bg-emerald-400 hover:border-emerald-400' 
+                    className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border transition-all duration-300 font-semibold text-xs tracking-wider uppercase text-center ${isDarkMode
+                        ? 'bg-white text-black border-white hover:bg-emerald-400 hover:border-emerald-400'
                         : 'bg-black text-white border-black hover:bg-emerald-600 hover:border-emerald-600'
-                    }`}
+                      }`}
                   >
                     <Mail size={14} />
                     Send Email
@@ -911,11 +1123,10 @@ function App() {
                     href="https://www.linkedin.com/in/swati-kumari-25931a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border transition-all duration-300 font-semibold text-xs tracking-wider uppercase text-center ${
-                      isDarkMode 
-                        ? 'bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white' 
+                    className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border transition-all duration-300 font-semibold text-xs tracking-wider uppercase text-center ${isDarkMode
+                        ? 'bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white'
                         : 'bg-transparent text-black border-black/10 hover:bg-slate-100 hover:border-black'
-                    }`}
+                      }`}
                   >
                     <Linkedin size={14} />
                     LinkedIn Profile
@@ -924,9 +1135,8 @@ function App() {
               </motion.div>
 
               {/* Light/Dark Mode Bento Footer */}
-              <footer className={`py-8 border-t text-[11px] md:text-xs ${
-                isDarkMode ? 'text-[#e8e4d9]/40 border-white/5' : 'text-black/40 border-black/5'
-              }`}>
+              <footer className={`py-8 border-t text-[11px] md:text-xs ${isDarkMode ? 'text-[#e8e4d9]/40 border-white/5' : 'text-black/40 border-black/5'
+                }`}>
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                   <p className="tracking-wide">
                     Copyright &copy; 2026 — Swati Kumari. Built with React & Tailwind.

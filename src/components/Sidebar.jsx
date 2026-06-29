@@ -5,7 +5,7 @@ import { Github, Linkedin } from './Icons';
 import avatar from '../assets/avatar.png';
 
 const navLinks = [
-  { label: 'Hero', href: '#hero' },
+  { label: 'Introduction', href: '#hero' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
@@ -63,9 +63,8 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
                   <img
                     src={avatar}
                     alt="Swati Kumari"
-                    className={`w-9 h-9 rounded-full object-cover border ${
-                      isDarkMode ? 'border-white/20' : 'border-black/10'
-                    }`}
+                    className={`w-9 h-9 rounded-full object-cover border ${isDarkMode ? 'border-white/20' : 'border-black/10'
+                      }`}
                   />
                   <span className="absolute bottom-0 right-0 flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -121,9 +120,8 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
                   href="https://github.com/Swati-a11"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${
-                    isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
-                  }`}
+                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
+                    }`}
                 >
                   <Github size={14} />
                   GitHub
@@ -132,18 +130,16 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
                   href="https://www.linkedin.com/in/swati-kumari-25931a2a6"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${
-                    isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
-                  }`}
+                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
+                    }`}
                 >
                   <Linkedin size={14} />
                   LinkedIn
                 </a>
                 <a
                   href="mailto:ss08swati14singh@gmail.com"
-                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${
-                    isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
-                  }`}
+                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
+                    }`}
                 >
                   <Mail size={14} />
                   Email

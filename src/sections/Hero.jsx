@@ -7,7 +7,7 @@ const TypingLoop = ({ isDarkMode }) => {
   const [text, setText] = useState('');
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  
+
   useEffect(() => {
     const phrases = [
       "I build platforms.",
@@ -16,7 +16,7 @@ const TypingLoop = ({ isDarkMode }) => {
     ];
     const currentPhrase = phrases[phraseIdx];
     let timer;
-    
+
     if (isDeleting) {
       timer = setTimeout(() => {
         setText(prev => prev.slice(0, -1));
@@ -26,21 +26,20 @@ const TypingLoop = ({ isDarkMode }) => {
         setText(currentPhrase.slice(0, text.length + 1));
       }, 80);
     }
-    
+
     if (!isDeleting && text === currentPhrase) {
       timer = setTimeout(() => setIsDeleting(true), 1500);
     } else if (isDeleting && text === '') {
       setIsDeleting(false);
       setPhraseIdx(prev => (prev + 1) % phrases.length);
     }
-    
+
     return () => clearTimeout(timer);
   }, [text, isDeleting, phraseIdx]);
 
   return (
-    <span className={`inline-block font-semibold border-r-2 pr-1 animate-pulse ${
-      isDarkMode ? 'text-[#e8e4d9] border-white' : 'text-[#0a0a0a] border-black'
-    }`}>
+    <span className={`inline-block font-semibold border-r-2 pr-1 animate-pulse ${isDarkMode ? 'text-[#e8e4d9] border-white' : 'text-[#0a0a0a] border-black'
+      }`}>
       {text}
     </span>
   );
@@ -55,8 +54,8 @@ const Hero = ({ isDarkMode }) => {
   const avatarBorder = isDarkMode ? 'border-white/5' : 'border-black/5';
 
   return (
-    <section 
-      id="hero" 
+    <section
+      id="hero"
       className={`relative min-h-screen flex flex-col justify-between px-4 pt-24 pb-10 md:px-12 md:pt-32 md:pb-12 overflow-hidden transition-colors duration-500 ${bgStyle}`}
     >
       {/* Moving Background Blobs */}
@@ -73,7 +72,7 @@ const Hero = ({ isDarkMode }) => {
 
       {/* Hero Body */}
       <div className="relative flex-grow flex flex-col justify-center items-center py-8 md:py-16 select-none">
-        
+
         {/* Status badge + typing loop */}
         <div className="flex flex-col items-center gap-2 mb-4 md:mb-6 select-none z-30">
           <div className="flex items-center gap-2">
@@ -81,11 +80,10 @@ const Hero = ({ isDarkMode }) => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
             </span>
-            <span className={`text-[9px] md:text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border font-mono ${
-              isDarkMode 
-                ? 'text-emerald-400 bg-emerald-950/40 border-emerald-500/20' 
+            <span className={`text-[9px] md:text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border font-mono ${isDarkMode
+                ? 'text-emerald-400 bg-emerald-950/40 border-emerald-500/20'
                 : 'text-emerald-600 bg-emerald-50/70 border-emerald-500/10'
-            }`}>
+              }`}>
               Available for Opportunities
             </span>
           </div>
@@ -95,13 +93,12 @@ const Hero = ({ isDarkMode }) => {
         </div>
 
         {/* Background name layer */}
-        <h1 className={`font-bebas text-[28vw] sm:text-[24vw] md:text-[22vw] leading-[0.8] tracking-tighter text-center uppercase select-none pointer-events-none transition-opacity duration-300 ${
-          isDarkMode ? 'opacity-10' : 'opacity-5 text-black'
-        }`}>
+        <h1 className={`font-bebas text-[28vw] sm:text-[24vw] md:text-[22vw] leading-[0.8] tracking-tighter text-center uppercase select-none pointer-events-none transition-opacity duration-300 ${isDarkMode ? 'opacity-10' : 'opacity-5 text-black'
+          }`}>
           <div>Swati</div>
           <div>Kumari</div>
         </h1>
- 
+
         {/* Avatar */}
         <div className="absolute z-20 top-1/2 -translate-y-1/2 mt-2 md:mt-4">
           <motion.div
@@ -114,13 +111,13 @@ const Hero = ({ isDarkMode }) => {
               animate={{ backgroundColor: avatarHovered ? (isDarkMode ? '#7c3aed' : '#10b981') : (isDarkMode ? '#222' : '#f1f5f9') }}
               className={`rounded-2xl p-3 md:p-4 w-32 h-40 md:w-48 md:h-56 flex items-end justify-center overflow-hidden border shadow-2xl ${avatarBorder}`}
             >
-              <img 
-                src={avatar} 
-                alt="Swati Kumari" 
-                className="w-full h-full object-cover object-top rounded-xl filter grayscale contrast-110 hover:grayscale-0 transition-all duration-300" 
+              <img
+                src={avatar}
+                alt="Swati Kumari"
+                className="w-full h-full object-cover object-top rounded-xl filter grayscale contrast-110 hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
- 
+
             {/* Tooltip */}
             <AnimatePresence>
               {avatarHovered && (
@@ -128,9 +125,8 @@ const Hero = ({ isDarkMode }) => {
                   initial={{ opacity: 0, y: 10, x: '-50%' }}
                   animate={{ opacity: 1, y: 0, x: '-50%' }}
                   exit={{ opacity: 0, y: 10, x: '-50%' }}
-                  className={`absolute -bottom-12 left-1/2 whitespace-nowrap text-xs px-4 py-2 rounded-full font-medium shadow-md z-30 ${
-                    isDarkMode ? 'bg-[#e8e4d9] text-[#0a0a0a]' : 'bg-black text-white'
-                  }`}
+                  className={`absolute -bottom-12 left-1/2 whitespace-nowrap text-xs px-4 py-2 rounded-full font-medium shadow-md z-30 ${isDarkMode ? 'bg-[#e8e4d9] text-[#0a0a0a]' : 'bg-black text-white'
+                    }`}
                 >
                   Open to work — DM or Email me!
                 </motion.div>
