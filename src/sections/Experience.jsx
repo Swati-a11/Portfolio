@@ -37,12 +37,12 @@ const Experience = ({ isDarkMode }) => {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-4xl mx-auto"
       >
-        <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
+        <span className={`text-sm uppercase tracking-[0.25em] font-mono font-bold block mb-6 ${textMuted}`}>
           / Professional Journey
         </span>
 
         <motion.h2
-          className="font-bebas text-4xl md:text-6xl mb-16 tracking-wide uppercase"
+          className="font-bebas text-5xl md:text-7xl lg:text-8xl mb-16 tracking-wide uppercase leading-[1.05]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -56,8 +56,8 @@ const Experience = ({ isDarkMode }) => {
               key={i}
               className="inline-block mr-[0.22em] last:mr-0"
               variants={{
-                hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
+                hidden: { opacity: 0, y: 35, filter: 'blur(8px)', scale: 0.95 },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
               }}
             >
               {word}
@@ -65,26 +65,29 @@ const Experience = ({ isDarkMode }) => {
           ))}
         </motion.h2>
 
-        <div className="space-y-12">
+        <div className="space-y-14">
           {experiences.map((exp, idx) => (
-            <div 
+            <motion.div 
               key={idx} 
-              className={`grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 pb-12 border-b last:border-none last:pb-0 ${borderLine}`}
+              whileHover={{ x: 6 }}
+              transition={{ duration: 0.3 }}
+              className={`grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 pb-14 border-b-2 last:border-none last:pb-0 ${borderLine}`}
             >
               <div className="md:col-span-1">
-                <span className={`text-2xl md:text-3xl font-bebas tracking-widest ${yearColor}`}>
+                <span className={`text-4xl md:text-6xl font-bebas tracking-widest block ${yearColor}`}>
                   {exp.year}
                 </span>
               </div>
-              <div className="md:col-span-3 space-y-3">
-                <h3 className={`text-lg md:text-xl font-medium ${roleColor}`}>
-                  {exp.role} <span className={`font-light text-sm ${companyColor}`}>@ {exp.company}</span>
+              <div className="md:col-span-3 space-y-4">
+                <h3 className={`text-2xl md:text-3xl font-bold flex flex-wrap items-center gap-2 ${roleColor}`}>
+                  <span>{exp.role}</span>
+                  <span className={`font-bold text-lg md:text-2xl ${companyColor}`}>@ {exp.company}</span>
                 </h3>
-                <p className={`text-sm md:text-base font-light leading-relaxed ${descColor}`}>
+                <p className={`text-base md:text-xl font-medium leading-relaxed ${descColor}`}>
                   {exp.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </motion.div>

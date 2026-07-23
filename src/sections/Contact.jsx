@@ -21,42 +21,52 @@ const Contact = ({ isDarkMode }) => {
         className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-12"
       >
         <div className="space-y-6">
-          <span className={`text-xs uppercase tracking-[0.2em] block ${textMuted}`}>
+          <span className={`text-sm uppercase tracking-[0.25em] font-mono font-bold block ${textMuted}`}>
             / Connect
           </span>
-          <h2 className={`font-bebas text-5xl md:text-7xl lg:text-8xl tracking-wide uppercase leading-none ${titleColor}`}>
+          <motion.h2 
+            initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className={`font-bebas text-6xl md:text-8xl lg:text-[7rem] tracking-wide uppercase leading-none ${titleColor}`}
+          >
             LET'S WORK<br />TOGETHER
-          </h2>
-          <p className={`text-sm md:text-base font-light max-w-md ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-[#000000]'}`}>
+          </motion.h2>
+          <p className={`text-lg md:text-2xl font-bold leading-relaxed max-w-lg ${isDarkMode ? 'text-[#e8e4d9]/80' : 'text-[#000000]'}`}>
             Have a project in mind or looking for a full stack developer? Drop a message or reach out on social media.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row md:flex-col gap-4 w-full md:w-auto">
-          <a
+        <div className="flex flex-col sm:flex-row md:flex-col gap-5 w-full md:w-auto">
+          <motion.a
+            whileHover={{ scale: 1.06, y: -2 }}
+            whileTap={{ scale: 0.96 }}
             href="mailto:ss08swati14singh@gmail.com"
-            className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 transition-all duration-300 font-bold text-xs tracking-wider uppercase text-center ${
+            className={`flex items-center justify-center gap-3 px-10 py-5 rounded-full border-2 transition-all duration-300 font-bold text-sm md:text-base tracking-wider uppercase text-center cursor-pointer interactive ${
               isDarkMode
-                ? 'bg-white text-black border-white hover:bg-emerald-400 hover:border-emerald-400'
-                : 'bg-[#FDE02F] text-[#000000] border-[#0A4222] hover:bg-[#ebd025] shadow-md'
+                ? 'bg-white text-black border-white hover:bg-emerald-400 hover:border-emerald-400 shadow-xl'
+                : 'bg-[#FDE02F] text-[#000000] border-[#0A4222] hover:bg-[#ebd025] shadow-2xl'
             }`}
           >
-            <Mail size={16} />
+            <Mail size={18} />
             Send Email
-          </a>
-          <a
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.06, y: -2 }}
+            whileTap={{ scale: 0.96 }}
             href="https://www.linkedin.com/in/swati-kumari-25931a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android"
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 transition-all duration-300 font-bold text-xs tracking-wider uppercase text-center ${
+            className={`flex items-center justify-center gap-3 px-10 py-5 rounded-full border-2 transition-all duration-300 font-bold text-sm md:text-base tracking-wider uppercase text-center cursor-pointer interactive ${
               isDarkMode
-                ? 'bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white'
-                : 'bg-white text-[#000000] border-[#0A4222] hover:bg-slate-100 shadow-md'
+                ? 'bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white shadow-xl'
+                : 'bg-white text-[#000000] border-[#0A4222] hover:bg-slate-100 shadow-2xl'
             }`}
           >
-            <Linkedin size={16} />
+            <Linkedin size={18} />
             LinkedIn Profile
-          </a>
+          </motion.a>
         </div>
       </motion.div>
     </section>

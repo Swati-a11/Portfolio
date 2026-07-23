@@ -57,18 +57,18 @@ const DSA = ({ isDarkMode }) => {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-4xl mx-auto"
       >
-        <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
+        <span className={`text-sm uppercase tracking-[0.25em] font-mono font-bold block mb-6 ${textMuted}`}>
           / Problem Solving
         </span>
 
         <motion.h2
-          className="font-bebas text-4xl md:text-6xl mb-8 tracking-wide uppercase leading-[1.1] flex flex-wrap gap-x-[0.22em]"
+          className="font-bebas text-5xl md:text-7xl lg:text-8xl mb-10 tracking-wide uppercase leading-[1.05] flex flex-wrap gap-x-[0.25em]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={{
             hidden: {},
-            visible: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } },
+            visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
           }}
         >
           {"Solving problems, one line at a time.".split(' ').map((word, i) => (
@@ -76,8 +76,8 @@ const DSA = ({ isDarkMode }) => {
               key={i}
               className="inline-block"
               variants={{
-                hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
+                hidden: { opacity: 0, y: 35, filter: 'blur(8px)', scale: 0.95 },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
               }}
             >
               {word}
@@ -85,45 +85,46 @@ const DSA = ({ isDarkMode }) => {
           ))}
         </motion.h2>
 
-        <p className={`text-base md:text-lg font-light leading-relaxed mb-12 max-w-2xl transition-colors duration-500 ${textNormal}`}>
-          I solve DSA problems daily in C++ — currently <strong className={`font-semibold ${strongColor}`}>50+ problems solved</strong> and counting. Following <strong className={`font-semibold ${strongColor}`}>Striver's A2Z DSA Sheet</strong> systematically.
+        <p className={`text-lg md:text-2xl font-semibold leading-relaxed mb-14 max-w-3xl transition-colors duration-500 ${textNormal}`}>
+          I solve DSA problems daily in C++ — currently <strong className={`font-bold underline decoration-2 underline-offset-4 ${strongColor}`}>50+ problems solved</strong> and counting. Following <strong className={`font-bold underline decoration-2 underline-offset-4 ${strongColor}`}>Striver's A2Z DSA Sheet</strong> systematically.
         </p>
 
         {/* Progress Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-14">
           {topics.map((topic, idx) => {
             const Icon = topic.icon;
             return (
-              <div 
+              <motion.div 
                 key={idx} 
-                className={`border p-6 rounded-2xl flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 ${topic.color}`}
+                whileHover={{ scale: 1.05, y: -4 }}
+                className={`border-2 p-7 rounded-3xl flex flex-col justify-between transition-all duration-300 shadow-xl ${topic.color}`}
               >
                 <div>
-                  <h3 className="text-base font-medium tracking-wide mb-4">
+                  <h3 className="text-xl md:text-2xl font-bold tracking-wide mb-6">
                     {topic.name}
                   </h3>
-                  <div className="text-xs font-light flex items-center gap-1.5 mt-auto">
-                    <Icon size={14} />
+                  <div className="text-sm font-bold flex items-center gap-2 mt-auto">
+                    <Icon size={16} />
                     {topic.status}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Platforms and Languages */}
-        <div className={`flex flex-wrap items-center justify-between gap-6 p-6 rounded-2xl border transition-colors duration-500 ${bottomBox}`}>
+        <div className={`flex flex-wrap items-center justify-between gap-6 p-7 rounded-3xl border-2 transition-colors duration-500 shadow-xl ${bottomBox}`}>
           <div className="flex items-center gap-3">
-            <Code size={18} className={isDarkMode ? 'text-white/40' : 'text-black/40'} />
-            <span className={`text-sm font-light ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-black/60'}`}>
-              Language: <strong className={`font-medium ${isDarkMode ? 'text-[#e8e4d9]' : 'text-black'}`}>C++ / Python</strong>
+            <Code size={22} className={isDarkMode ? 'text-white' : 'text-[#0A4222]'} />
+            <span className={`text-base md:text-lg font-medium ${isDarkMode ? 'text-[#e8e4d9]' : 'text-black'}`}>
+              Language: <strong className={`font-bold ${isDarkMode ? 'text-white' : 'text-[#0A4222]'}`}>C++ / Python</strong>
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <BookOpen size={18} className={isDarkMode ? 'text-white/40' : 'text-black/40'} />
-            <span className={`text-sm font-light ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-black/60'}`}>
-              Platform: <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer" className={`underline underline-offset-4 transition-colors ${linkHover}`}>LeetCode</a>
+            <BookOpen size={22} className={isDarkMode ? 'text-white' : 'text-[#0A4222]'} />
+            <span className={`text-base md:text-lg font-medium ${isDarkMode ? 'text-[#e8e4d9]' : 'text-black'}`}>
+              Platform: <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer" className={`underline underline-offset-4 transition-colors font-bold ${linkHover}`}>LeetCode</a>
             </span>
           </div>
         </div>

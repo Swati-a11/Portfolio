@@ -1042,11 +1042,11 @@ function App() {
                     {/* Segmented bar */}
                     <div className="flex w-full h-3 rounded-full overflow-hidden gap-[2px]">
                       {[
-                        { pct: 65, color: '#f7df1e' },
-                        { pct: 15, color: '#e34c26' },
-                        { pct: 10, color: '#264de4' },
-                        { pct: 7,  color: '#3572A5' },
-                        { pct: 3,  color: '#3178c6' },
+                        { pct: 46.32, color: '#f7df1e' },
+                        { pct: 45.12, color: '#3178c6' },
+                        { pct: 4.06,  color: '#e34c26' },
+                        { pct: 3.02,  color: '#7C3AED' },
+                        { pct: 1.47,  color: '#3572A5' },
                       ].map(({ pct, color }, i) => (
                         <motion.div
                           key={i}
@@ -1063,18 +1063,18 @@ function App() {
                     {/* Language legend */}
                     <div className="flex flex-col gap-2 flex-grow justify-around">
                       {[
-                        { name: 'JavaScript', pct: 65,  color: '#f7df1e' },
-                        { name: 'HTML',        pct: 15,  color: '#e34c26' },
-                        { name: 'CSS',         pct: 10,  color: '#264de4' },
-                        { name: 'Python',      pct: 7,   color: '#3572A5' },
-                        { name: 'TypeScript',  pct: 3,   color: '#3178c6' },
+                        { name: 'JavaScript', pct: '46.32', color: '#f7df1e' },
+                        { name: 'TypeScript', pct: '45.12', color: '#3178c6' },
+                        { name: 'HTML',       pct: '4.06',  color: '#e34c26' },
+                        { name: 'CSS',        pct: '3.02',  color: '#7C3AED' },
+                        { name: 'Python',     pct: '1.47',  color: '#3572A5' },
                       ].map(({ name, pct, color }) => (
                         <div key={name} className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5">
-                            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+                            <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
                             <span className={`text-[10px] font-mono ${isDarkMode ? 'text-[#c9d1d9]' : 'text-[#24292f]'}`}>{name}</span>
                           </div>
-                          <span className={`text-[10px] font-mono font-semibold ${isDarkMode ? 'text-white/50' : 'text-black/50'}`}>{pct}%</span>
+                          <span className={`text-[10px] font-mono font-semibold ${isDarkMode ? 'text-white/70' : 'text-black/70'}`}>{pct}%</span>
                         </div>
                       ))}
                     </div>
@@ -1102,12 +1102,12 @@ function App() {
                     </div>
                     <div className="flex flex-col gap-2.5 flex-grow justify-around">
                       {[
-                        { name: 'JavaScript', pct: 65, color: '#f7df1e', textColor: '#c9a000' },
-                        { name: 'HTML',       pct: 15, color: '#e34c26', textColor: '#e34c26' },
-                        { name: 'CSS',        pct: 10, color: '#264de4', textColor: '#264de4' },
-                        { name: 'Python',     pct: 7,  color: '#3572A5', textColor: '#3572A5' },
-                        { name: 'TypeScript', pct: 3,  color: '#3178c6', textColor: '#3178c6' },
-                      ].map(({ name, pct, color, textColor }, i) => (
+                        { name: 'JavaScript', pct: '46.32', width: 46.32, color: '#f7df1e', textColor: '#c9a000' },
+                        { name: 'TypeScript', pct: '45.12', width: 45.12, color: '#3178c6', textColor: '#3178c6' },
+                        { name: 'HTML',       pct: '4.06',  width: 4.06,  color: '#e34c26', textColor: '#e34c26' },
+                        { name: 'CSS',        pct: '3.02',  width: 3.02,  color: '#7C3AED', textColor: '#7C3AED' },
+                        { name: 'Python',     pct: '1.47',  width: 1.47,  color: '#3572A5', textColor: '#3572A5' },
+                      ].map(({ name, pct, width, color, textColor }, i) => (
                         <div key={name} className="space-y-1">
                           <div className="flex justify-between items-center">
                             <span className={`text-[10px] font-mono font-semibold ${isDarkMode ? 'text-[#c9d1d9]' : 'text-[#24292f]'}`}>{name}</span>
@@ -1118,7 +1118,7 @@ function App() {
                               className="h-full rounded-full"
                               style={{ backgroundColor: color }}
                               initial={{ width: 0 }}
-                              whileInView={{ width: `${pct}%` }}
+                              whileInView={{ width: `${width}%` }}
                               viewport={{ once: true }}
                               transition={{ duration: 0.9, delay: 0.4 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                             />

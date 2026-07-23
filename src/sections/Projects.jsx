@@ -276,7 +276,7 @@ const Projects = ({ isDarkMode }) => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00c985] hover:bg-[#00b074] text-black shadow-lg shadow-[#00c985]/20 transition-all duration-300"
+                            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00c985] hover:bg-[#00b074] text-black shadow-lg shadow-[#00c985]/20 transition-all duration-300 cursor-pointer interactive"
                           >
                             Live Demo <ExternalLink size={13} />
                           </a>
@@ -284,7 +284,7 @@ const Projects = ({ isDarkMode }) => {
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#3d4659] hover:bg-[#4b566d] text-white transition-all duration-300"
+                            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#3d4659] hover:bg-[#4b566d] text-white transition-all duration-300 cursor-pointer interactive"
                           >
                             GitHub <Github size={13} />
                           </a>

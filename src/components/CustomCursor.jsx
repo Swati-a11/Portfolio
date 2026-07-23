@@ -36,7 +36,7 @@ const CustomCursor = ({ isDarkMode }) => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
+      className="fixed top-0 left-0 z-[999999] pointer-events-none hidden md:block"
       animate={{
         x: position.x - (isHovered ? 20 : 6),
         y: position.y - (isHovered ? 20 : 6),
