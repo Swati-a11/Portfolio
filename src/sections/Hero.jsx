@@ -46,13 +46,52 @@ const TypingLoop = ({ isDarkMode }) => {
   );
 };
 
+// Typewriter Text component
+const TypewriterText = ({ text, delay = 0, speed = 25, className = "" }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const startTimeout = setTimeout(() => {
+      setStarted(true);
+    }, delay);
+
+    return () => clearTimeout(startTimeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+
+    let idx = 0;
+    const interval = setInterval(() => {
+      if (idx <= text.length) {
+        setDisplayedText(text.slice(0, idx));
+        idx++;
+      } else {
+        clearInterval(interval);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [started, text, speed]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      {displayedText.length < text.length && (
+        <span className="inline-block w-[2px] h-[1em] bg-current ml-1 animate-pulse align-middle" />
+      )}
+    </span>
+  );
+};
+
 const Hero = ({ isDarkMode }) => {
   const [avatarHovered, setAvatarHovered] = useState(false);
 
   const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-[#F7BBD0] text-[#000000]';
   const blobBg1 = isDarkMode ? 'bg-white/5' : 'bg-white/40';
   const blobBg2 = isDarkMode ? 'bg-white/5' : 'bg-[#FDE02F]/30';
-  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-[#0A4222]/30 text-[#000000] font-medium';
+  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]' : 'border-[#0A4222]/30 text-[#000000]';
   const avatarBorder = isDarkMode ? 'border-white/5' : 'border-[#0A4222] shadow-xl shadow-[#0A4222]/10';
 
   return (
@@ -185,18 +224,24 @@ const Hero = ({ isDarkMode }) => {
         </div>
       </motion.div>
 
-      {/* Hero Footer */}
-      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 text-xs md:text-sm font-light tracking-wide pt-6 md:pt-8 border-t z-10 transition-colors duration-500 ${footerBorder}`}>
-        <div className="max-w-md">
+      {/* Hero Footer: Larger Font, Typewriter Effect, Right Alignment for Second Block */}
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 text-base md:text-lg lg:text-xl font-semibold tracking-wide pt-6 md:pt-10 border-t-2 z-10 transition-colors duration-500 ${footerBorder}`}>
+        <div className="max-w-xl text-left">
           <p className="leading-relaxed">
-            I'm currently a 4th year student at IKG Punjab Technical University,
-            open to internship and work opportunities.
+            <TypewriterText 
+              text="I'm currently a 4th year student at IKG Punjab Technical University, open to internship and work opportunities." 
+              speed={25}
+              delay={300}
+            />
           </p>
         </div>
-        <div className="max-w-md md:text-right">
+        <div className="max-w-xl md:ml-auto text-left md:text-right">
           <p className="leading-relaxed">
-            Focused on building websites and AI-powered products,
-            working from Kapurthala, Punjab.
+            <TypewriterText 
+              text="Focused on building websites and AI-powered products, working from Kapurthala, Punjab." 
+              speed={25}
+              delay={2800}
+            />
           </p>
         </div>
       </div>
