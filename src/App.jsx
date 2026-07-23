@@ -1175,14 +1175,14 @@ function App() {
                 </motion.div>
               </div>
 
-              {/* Bento Grid Row 3: Projects carousel */}
+              {/* Bento Grid Row 3: Projects section */}
               <motion.div
                 id="projects"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
+                className="transition-colors duration-500"
               >
-                <BentoProjects isDarkMode={isDarkMode} />
+                <Projects isDarkMode={isDarkMode} />
               </motion.div>
 
 
