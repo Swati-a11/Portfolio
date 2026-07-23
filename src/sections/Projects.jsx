@@ -11,7 +11,7 @@ import aca1 from '../assets/aca1.png';
 
 const Projects = ({ isDarkMode }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const modalRef = useRef(null);
+  const overlayRef = useRef(null);
 
   const categories = [
     {
@@ -84,11 +84,11 @@ const Projects = ({ isDarkMode }) => {
 
   const activeCategoryData = categories.find(c => c.id === selectedCategory);
 
-  // Guarantee modal opens at top of viewport and lock background scroll
+  // Guarantee modal overlay starts at top of screen without needing upward scrolling
   useEffect(() => {
     if (selectedCategory) {
-      if (modalRef.current) {
-        modalRef.current.scrollTop = 0;
+      if (overlayRef.current) {
+        overlayRef.current.scrollTop = 0;
       }
       document.body.style.overflow = 'hidden';
     } else {
@@ -155,7 +155,7 @@ const Projects = ({ isDarkMode }) => {
                     {item.description}
                   </p>
 
-                  {/* Action Button: Opens the 2 Underlying Projects */}
+                  {/* Action Button: Opens the Underlying Projects */}
                   <div className="pt-3">
                     <button
                       onClick={(e) => {
@@ -164,7 +164,7 @@ const Projects = ({ isDarkMode }) => {
                       }}
                       className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00c985] hover:bg-[#00b074] text-black shadow-lg shadow-[#00c985]/20 transition-all duration-300 cursor-pointer"
                     >
-                      <span>EXPLORE 2 PROJECTS</span>
+                      <span>EXPLORE PROJECTS</span>
                       <ArrowRight size={14} />
                     </button>
                   </div>
@@ -175,23 +175,23 @@ const Projects = ({ isDarkMode }) => {
         </div>
       </motion.div>
 
-      {/* Interactive Modal showing the two projects when a card is clicked */}
+      {/* Interactive Modal showing the projects at top of viewport when clicked */}
       <AnimatePresence>
         {selectedCategory && activeCategoryData && (
           <motion.div
+            ref={overlayRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedCategory(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/85 backdrop-blur-xl"
+            className="fixed inset-0 z-[9999] flex justify-center items-start overflow-y-auto p-4 sm:p-6 md:p-8 pt-6 sm:pt-10 bg-black/90 backdrop-blur-xl"
           >
             <motion.div
-              ref={modalRef}
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-[2.5rem] bg-[#0d121c] border border-slate-700/80 p-6 sm:p-10 shadow-2xl my-auto"
+              className="relative w-full max-w-5xl rounded-[2.5rem] bg-[#0d121c] border border-slate-700/80 p-6 sm:p-10 shadow-2xl mb-12"
             >
               {/* Close Button */}
               <button
@@ -214,7 +214,7 @@ const Projects = ({ isDarkMode }) => {
                 </p>
               </div>
 
-              {/* 2 Project Cards inside Modal */}
+              {/* Project Cards inside Modal */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {activeCategoryData.projects.map((project) => (
                   <div 
