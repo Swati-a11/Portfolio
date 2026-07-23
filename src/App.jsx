@@ -393,27 +393,27 @@ const SectionHeading = ({ text, className = '' }) => {
 
 // Fun Facts card component
 const FunFacts = ({ isDarkMode }) => {
-  const textMuted = isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5';
-  const textNormal = isDarkMode ? 'text-white/70 font-mono' : 'text-black/70 font-mono';
+  const textMuted = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const textNormal = isDarkMode ? 'text-white font-mono font-bold' : 'text-black font-mono font-bold';
 
   return (
-    <div className="flex flex-col justify-between h-full bg-transparent">
-      <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-4 ${textMuted}`}>
+    <div className="flex flex-col justify-between h-full bg-transparent space-y-4">
+      <h3 className={`text-sm md:text-base font-bold uppercase tracking-widest border-b pb-3 mb-4 text-emerald-400 font-mono ${textMuted}`}>
         Casual Facts
       </h3>
-      <div className="space-y-4 flex-grow flex flex-col justify-around">
-        <div className="flex items-center gap-3">
-          <AnimatedEmoji><span className="text-xl">☕</span></AnimatedEmoji>
-          <span className={`text-xs leading-tight ${textNormal}`}>Powered by black tea</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <AnimatedEmoji><span className="text-xl">⚡</span></AnimatedEmoji>
-          <span className={`text-xs leading-tight ${textNormal}`}>Speed-coder</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <AnimatedEmoji><span className="text-xl">🎧</span></AnimatedEmoji>
-          <span className={`text-xs leading-tight ${textNormal}`}>Lo-fi architecture playlist enthusiast</span>
-        </div>
+      <div className="space-y-5 flex-grow flex flex-col justify-around">
+        <motion.div whileHover={{ scale: 1.04, x: 6 }} transition={{ duration: 0.2 }} className="flex items-center gap-4 cursor-pointer">
+          <AnimatedEmoji><span className="text-2xl md:text-3xl">☕</span></AnimatedEmoji>
+          <span className={`text-base md:text-xl font-bold leading-tight ${textNormal}`}>Powered by black tea</span>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.04, x: 6 }} transition={{ duration: 0.2 }} className="flex items-center gap-4 cursor-pointer">
+          <AnimatedEmoji><span className="text-2xl md:text-3xl">⚡</span></AnimatedEmoji>
+          <span className={`text-base md:text-xl font-bold leading-tight ${textNormal}`}>Speed-coder</span>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.04, x: 6 }} transition={{ duration: 0.2 }} className="flex items-center gap-4 cursor-pointer">
+          <AnimatedEmoji><span className="text-2xl md:text-3xl">🎧</span></AnimatedEmoji>
+          <span className={`text-base md:text-xl font-bold leading-tight ${textNormal}`}>Lo-fi architecture playlist enthusiast</span>
+        </motion.div>
       </div>
     </div>
   );
@@ -1213,28 +1213,31 @@ function App() {
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
               >
-                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
-                  }`}>
+                <h3 className={`text-sm md:text-base font-bold uppercase tracking-widest border-b pb-3 mb-6 text-emerald-400 font-mono ${
+                  isDarkMode ? 'border-white/10' : 'border-black/10'
+                }`}>
                   Core Capabilities
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   {categories.map((cat, idx) => (
-                    <div key={idx} className={`p-4 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50/60 border-black/5'
+                    <div key={idx} className={`p-5 rounded-2xl border space-y-4 ${isDarkMode ? 'bg-white/[0.02] border-white/10' : 'bg-slate-50/80 border-black/10'
                       }`}>
-                      <span className={`text-[10px] font-bold uppercase font-mono tracking-widest block ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'
-                        }`}>{cat.title}</span>
-                      <div className="flex flex-wrap gap-1.5">
+                      <span className={`text-xs md:text-sm font-bold uppercase font-mono tracking-widest block text-emerald-400`}>
+                        {cat.title}
+                      </span>
+                      <div className="flex flex-wrap gap-2">
                         {cat.skills.map((skill, sIdx) => (
-                          <span
+                          <motion.span
                             key={sIdx}
-                            className={`text-[11px] font-medium border px-2.5 py-1 rounded-full transition-colors duration-200 flex items-center gap-1.5 ${isDarkMode
-                                ? 'bg-white/[0.03] border-white/10 text-white/70 hover:border-emerald-500/30 hover:text-white'
-                                : 'bg-white border-black/10 text-black/70 hover:border-emerald-500/40 hover:text-emerald-700'
+                            whileHover={{ scale: 1.08, y: -2 }}
+                            className={`text-xs md:text-sm font-bold border px-3 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-2 ${isDarkMode
+                                ? 'bg-white/[0.04] border-white/15 text-white/90 hover:border-emerald-400 hover:text-white shadow-md'
+                                : 'bg-white border-black/15 text-black hover:border-emerald-600 hover:text-emerald-700 shadow-md'
                               }`}
                           >
-                            {skillIconMap[skill] || <Boxes size={13} className="text-emerald-500 flex-shrink-0" />}
+                            {skillIconMap[skill] || <Boxes size={15} className="text-emerald-500 flex-shrink-0" />}
                             <span>{skill}</span>
-                          </span>
+                          </motion.span>
                         ))}
                       </div>
                     </div>
@@ -1250,20 +1253,21 @@ function App() {
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
               >
-                <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 mb-6 ${isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5'
-                  }`}>
+                <h3 className={`text-sm md:text-base font-bold uppercase tracking-widest border-b pb-3 mb-6 text-emerald-400 font-mono ${
+                  isDarkMode ? 'border-white/10' : 'border-black/10'
+                }`}>
                   Experience / Journey
                 </h3>
-                <div className="space-y-6">
+                <div className="space-y-8">
                   {experiences.map((exp, idx) => (
-                    <div key={idx} className="flex gap-4 items-start border-l-2 border-emerald-500/20 pl-4 py-1">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] font-mono text-emerald-500 font-bold">{exp.year}</span>
-                        <span className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>{exp.role}</span>
-                        <span className={`text-xs font-mono mb-1 ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>{exp.company}</span>
-                        <p className={`text-xs font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/60' : 'text-black/60'}`}>{exp.description}</p>
+                    <motion.div key={idx} whileHover={{ x: 6 }} className="flex gap-5 items-start border-l-2 border-emerald-500 pl-5 py-1">
+                      <div className="flex flex-col space-y-1.5">
+                        <span className="text-xs md:text-sm font-mono text-emerald-500 font-bold uppercase tracking-wider">{exp.year}</span>
+                        <span className={`text-base md:text-xl font-extrabold ${isDarkMode ? 'text-white' : 'text-black'}`}>{exp.role}</span>
+                        <span className={`text-xs md:text-sm font-mono font-bold ${isDarkMode ? 'text-emerald-400' : 'text-[#0A4222]'}`}>@ {exp.company}</span>
+                        <p className={`text-xs md:text-sm font-medium leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/80' : 'text-black/80'}`}>{exp.description}</p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>
@@ -1273,43 +1277,52 @@ function App() {
                 id="contact"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className={`border p-12 rounded-3xl flex flex-col items-center justify-center text-center py-16 gap-6 transition-colors duration-500 ${bentoCardBg}`}
+                className={`border p-10 md:p-14 rounded-3xl flex flex-col items-center justify-center text-center py-16 md:py-20 gap-8 transition-colors duration-500 ${bentoCardBg}`}
               >
-                <div className="space-y-3">
-                  <span className="text-xs uppercase font-bold tracking-widest text-emerald-500 font-mono">
-                    / Let's connect
+                <div className="space-y-4 max-w-2xl">
+                  {/* Very Big "/ LET'S CONNECT" text as requested */}
+                  <span className="text-2xl md:text-4xl font-mono font-extrabold tracking-[0.25em] text-emerald-400 uppercase text-center block mb-2">
+                    / LET'S CONNECT
                   </span>
-                  <h2 className={`text-4xl md:text-5xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                  <h2 className={`text-4xl md:text-6xl lg:text-7xl font-bebas tracking-wide uppercase leading-none ${isDarkMode ? 'text-white' : 'text-black'}`}>
                     LET'S DISCUSS YOUR PROJECT
                   </h2>
-                  <p className={`text-sm font-light max-w-md mx-auto leading-relaxed ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
-                    Always open to roles, project contracts, or internships in full-stack web and AI systems engineering.
+                  <p className={`text-base md:text-xl font-semibold max-w-xl mx-auto leading-relaxed min-h-[48px] ${isDarkMode ? 'text-white/80' : 'text-black/80'}`}>
+                    <TypewriterText 
+                      text="Always open to roles, project contracts, or internships in full-stack web and AI systems engineering." 
+                      speed={25}
+                      delay={400}
+                    />
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
-                  <a
+                <div className="flex flex-col sm:flex-row gap-5 mt-4 w-full sm:w-auto">
+                  <motion.a
+                    whileHover={{ scale: 1.08, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
                     href="mailto:ss08swati14singh@gmail.com"
-                    className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border transition-all duration-300 font-semibold text-xs tracking-wider uppercase text-center ${isDarkMode
-                        ? 'bg-white text-black border-white hover:bg-emerald-400 hover:border-emerald-400'
-                        : 'bg-black text-white border-black hover:bg-emerald-600 hover:border-emerald-600'
+                    className={`flex items-center justify-center gap-2.5 px-9 py-4 rounded-full border-2 transition-all duration-300 font-bold text-xs md:text-sm tracking-wider uppercase text-center cursor-pointer interactive ${isDarkMode
+                        ? 'bg-white text-black border-white hover:bg-emerald-400 hover:border-emerald-400 shadow-xl'
+                        : 'bg-[#FDE02F] text-black border-[#0A4222] hover:bg-[#ebd025] shadow-xl'
                       }`}
                   >
-                    <Mail size={14} />
+                    <Mail size={16} />
                     Send Email
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ scale: 1.08, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
                     href="https://www.linkedin.com/in/swati-kumari-25931a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full border transition-all duration-300 font-semibold text-xs tracking-wider uppercase text-center ${isDarkMode
-                        ? 'bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white'
-                        : 'bg-transparent text-black border-black/10 hover:bg-slate-100 hover:border-black'
+                    className={`flex items-center justify-center gap-2.5 px-9 py-4 rounded-full border-2 transition-all duration-300 font-bold text-xs md:text-sm tracking-wider uppercase text-center cursor-pointer interactive ${isDarkMode
+                        ? 'bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white shadow-xl'
+                        : 'bg-white text-black border-[#0A4222] hover:bg-slate-100 shadow-xl'
                       }`}
                   >
-                    <Linkedin size={14} />
+                    <Linkedin size={16} />
                     LinkedIn Profile
-                  </a>
+                  </motion.a>
                 </div>
               </motion.div>
 
