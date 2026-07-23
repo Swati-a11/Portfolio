@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch, Code2, FileCode, Palette, Wand2, Sparkles, Server, Cpu, Database, Globe, Flame, Terminal, ShieldCheck, Bot, Brain, Link as LinkSymbol, Video, Layers, Boxes, Eye, Download } from 'lucide-react';
+import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch, Code2, FileCode, Palette, Wand2, Sparkles, Server, Cpu, Database, Globe, Flame, Terminal, ShieldCheck, Bot, Brain, Link as LinkSymbol, Video, Layers, Boxes, Eye, Download, FileText } from 'lucide-react';
 import { Github, Linkedin } from './components/Icons';
 import IntroAnimation from './components/IntroAnimation';
 import CustomCursor from './components/CustomCursor';
