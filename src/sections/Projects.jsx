@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Link as LinkIcon, Sparkles, Layers } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Link as LinkIcon, Sparkles, Layers, Folder, FolderOpen } from 'lucide-react';
 import { Github } from '../components/Icons';
 import cc1 from '../assets/cc1.png';
 import cc2 from '../assets/cc2.png';
@@ -130,23 +130,65 @@ const Projects = ({ isDarkMode }) => {
     ? 'bg-[#16161a] border-white/10 text-[#e8e4d9]/60 hover:text-white hover:bg-[#222226]' 
     : 'bg-white border-black/10 text-black/60 hover:text-black hover:bg-slate-50';
 
-  const activeTabStyle = isDarkMode 
-    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-sm' 
-    : 'bg-emerald-600 text-white border-emerald-600 shadow-sm';
-
-  const inactiveTabStyle = isDarkMode 
-    ? 'bg-white/[0.03] text-white/50 border-white/10 hover:text-white hover:bg-white/[0.08]' 
-    : 'bg-slate-100 text-slate-600 border-black/5 hover:text-black hover:bg-slate-200';
-
   return (
     <section 
       id="projects" 
       className={`relative py-16 md:py-24 px-4 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
-      <div className="max-w-5xl mx-auto relative">
+      <motion.div 
+        initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-5xl mx-auto relative"
+      >
         <span className={`text-xs uppercase tracking-[0.2em] block mb-4 ${textMuted}`}>
           / Selected Work
         </span>
+
+        {/* macOS / IDE Folder-Like Structure for Categories */}
+        <div className="flex flex-wrap items-center gap-3 mb-10">
+          {categoryKeys.map((catKey) => {
+            const isActive = activeCategory === catKey;
+            const projectCount = projectCategories[catKey].length;
+
+            return (
+              <button
+                key={catKey}
+                onClick={() => setActiveCategory(catKey)}
+                className={`group relative flex items-center gap-3 px-5 py-3 rounded-2xl border text-xs md:text-sm font-semibold transition-all duration-300 ${
+                  isActive
+                    ? isDarkMode
+                      ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400 shadow-[0_4px_20px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/30'
+                      : 'bg-emerald-600 text-white border-emerald-600 shadow-md ring-1 ring-emerald-500'
+                    : isDarkMode
+                      ? 'bg-white/[0.03] border-white/10 text-white/60 hover:border-white/20 hover:text-white hover:bg-white/[0.06]'
+                      : 'bg-slate-100 border-black/10 text-slate-700 hover:border-black/20 hover:text-black hover:bg-slate-200'
+                }`}
+              >
+                {isActive ? (
+                  <FolderOpen size={18} className={isActive ? (isDarkMode ? 'text-emerald-400' : 'text-white') : 'text-slate-400'} />
+                ) : (
+                  <Folder size={18} className="text-slate-400 group-hover:text-emerald-500 transition-colors" />
+                )}
+
+                <span>{catKey}</span>
+
+                <span className={`px-2 py-0.5 text-[10px] font-mono rounded-full border ${
+                  isActive
+                    ? isDarkMode
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                      : 'bg-white/20 text-white border-white/30'
+                    : isDarkMode
+                      ? 'bg-white/5 text-white/40 border-white/10'
+                      : 'bg-slate-200 text-slate-500 border-black/5'
+                }`}>
+                  {projectCount} {projectCount === 1 ? 'project' : 'projects'}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <motion.h2
@@ -369,8 +411,7 @@ const Projects = ({ isDarkMode }) => {
             </button>
           </div>
         </div>
-
-      </div>
+      </motion.div>
     </section>
   );
 };

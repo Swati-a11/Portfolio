@@ -72,7 +72,13 @@ const Hero = ({ isDarkMode }) => {
       />
 
       {/* Hero Body */}
-      <div className="relative flex-grow flex flex-col justify-center items-center py-8 md:py-16 select-none">
+      <motion.div 
+        initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative flex-grow flex flex-col justify-center items-center py-8 md:py-16 select-none"
+      >
 
         {/* Status badge + typing loop + Resume CTAs */}
         <div className="flex flex-col items-center gap-3 mb-4 md:mb-6 select-none z-30">
@@ -176,7 +182,7 @@ const Hero = ({ isDarkMode }) => {
             <div>Kumari</div>
           </h1>
         </div>
-      </div>
+      </motion.div>
 
       {/* Hero Footer */}
       <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 text-xs md:text-sm font-light tracking-wide pt-6 md:pt-8 border-t z-10 transition-colors duration-500 ${footerBorder}`}>

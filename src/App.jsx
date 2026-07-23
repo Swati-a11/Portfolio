@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch, Code2, FileCode, Palette, Wand2, Sparkles, Server, Cpu, Database, Globe, Flame, Terminal, ShieldCheck, Bot, Brain, Link as LinkSymbol, Video, Layers, Boxes, Eye, Download, FileText } from 'lucide-react';
+import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch, Code2, FileCode, Palette, Wand2, Sparkles, Server, Cpu, Database, Globe, Flame, Terminal, ShieldCheck, Bot, Brain, Link as LinkSymbol, Video, Layers, Boxes, Eye, Download, FileText, Folder, FolderOpen } from 'lucide-react';
 import { Github, Linkedin } from './components/Icons';
 import IntroAnimation from './components/IntroAnimation';
 import CustomCursor from './components/CustomCursor';
@@ -517,20 +517,46 @@ const BentoProjects = ({ isDarkMode }) => {
           </h3>
         </div>
         
-        {/* Category Tabs */}
-        <div className="flex flex-wrap gap-1.5">
-          {categoryKeys.map((catKey) => (
-            <button
-              key={catKey}
-              onClick={() => setActiveCategory(catKey)}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-300 ${
-                activeCategory === catKey ? activeTabStyle : inactiveTabStyle
-              }`}
-            >
-              {catKey === "GenAI Projects" ? <Sparkles size={12} /> : <Layers size={12} />}
-              <span>{catKey}</span>
-            </button>
-          ))}
+        {/* Category Folder Tabs */}
+        <div className="flex flex-wrap gap-2">
+          {categoryKeys.map((catKey) => {
+            const isActive = activeCategory === catKey;
+            const projectCount = projectCategories[catKey].length;
+
+            return (
+              <button
+                key={catKey}
+                onClick={() => setActiveCategory(catKey)}
+                className={`group flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-300 ${
+                  isActive
+                    ? isDarkMode
+                      ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 shadow-sm ring-1 ring-emerald-500/30'
+                      : 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                    : isDarkMode
+                      ? 'bg-white/[0.03] border-white/10 text-white/50 hover:text-white hover:bg-white/[0.08]'
+                      : 'bg-slate-100 border-black/10 text-slate-600 hover:text-black hover:bg-slate-200'
+                }`}
+              >
+                {isActive ? (
+                  <FolderOpen size={14} className={isActive ? (isDarkMode ? 'text-emerald-400' : 'text-white') : 'text-slate-400'} />
+                ) : (
+                  <Folder size={14} className="text-slate-400 group-hover:text-emerald-500 transition-colors" />
+                )}
+                <span>{catKey}</span>
+                <span className={`px-1.5 py-0.2 text-[9px] font-mono rounded-full border ${
+                  isActive
+                    ? isDarkMode
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                      : 'bg-white/20 text-white border-white/30'
+                    : isDarkMode
+                      ? 'bg-white/5 text-white/40 border-white/10'
+                      : 'bg-slate-200 text-slate-500 border-black/5'
+                }`}>
+                  {projectCount}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         <div className="flex gap-2 self-end sm:self-auto">
@@ -841,10 +867,10 @@ function App() {
               {/* ── BENTO RESUME CARD ── Directly below About section ── */}
               <motion.div
                 id="resume"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4 }}
                 className={`border p-6 md:p-8 rounded-3xl transition-colors duration-500 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${bentoCardBg}`}
               >
@@ -852,7 +878,7 @@ function App() {
                   <div className="flex items-center gap-2">
                     <FileText size={20} className="text-emerald-500" />
                     <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>
-                      Curriculum Vitae / Resume
+                      Resume
                     </h3>
                   </div>
                   <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/60'}`}>
@@ -1307,7 +1333,13 @@ function App() {
               <Skills isDarkMode={isDarkMode} />
 
               {/* GitHub Contribution Graph — scrolling layout */}
-              <section className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}>
+              <motion.section 
+                initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}
+              >
                 <div className="max-w-4xl mx-auto">
                   <motion.span
                     initial={{ opacity: 0, y: 10 }}
@@ -1323,10 +1355,16 @@ function App() {
                     <ContributionGraph isDarkMode={isDarkMode} />
                   </div>
                 </div>
-              </section>
+              </motion.section>
 
               {/* Fun Facts — scrolling layout */}
-              <section className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}>
+              <motion.section 
+                initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className={`py-20 px-6 md:px-12 border-t transition-colors duration-500 ${isDarkMode ? 'bg-[#0a0a0a] border-white/5 text-[#e8e4d9]' : 'bg-white border-black/5 text-black'}`}
+              >
                 <div className="max-w-4xl mx-auto">
                   <motion.span
                     initial={{ opacity: 0, y: 10 }}
@@ -1364,7 +1402,7 @@ function App() {
                     </div>
                   </div>
                 </div>
-              </section>
+              </motion.section>
 
               <Projects isDarkMode={isDarkMode} />
               <DSA isDarkMode={isDarkMode} />
