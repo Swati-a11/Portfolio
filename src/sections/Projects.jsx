@@ -13,6 +13,11 @@ import mm2 from '../assets/mm2.png';
 import mm3 from '../assets/mm3.png';
 import mm4 from '../assets/mm4.png';
 import mm5 from '../assets/mm5.png';
+import aca1 from '../assets/aca1.png';
+import aca2 from '../assets/aca2.png';
+import aca3 from '../assets/aca3.png';
+import aca4 from '../assets/aca4.png';
+import aca5 from '../assets/aca5.png';
 
 const Projects = ({ isDarkMode }) => {
   const projectCategories = {
@@ -47,9 +52,9 @@ const Projects = ({ isDarkMode }) => {
         title: "Advanced Course Assistant",
         description: "An AI academic assistant featuring RAG-based document Q&A, automated lecture summarization, smart quizzes, and course material indexing.",
         tags: ["Python", "FastAPI", "OpenAI API", "Vector DB", "React", "Tailwind"],
-        link: "https://github.com/Swati-a11",
+        link: "https://rag-assignment-rouge.vercel.app",
         github: "https://github.com/Swati-a11/Advanced-Course-Assistant",
-        screenshots: [dd1, dd2, dd3]
+        screenshots: [aca1, aca2, aca3, aca4, aca5]
       }
     ]
   };
