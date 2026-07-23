@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail } from 'lucide-react';
+import { X, Mail, Eye, Download } from 'lucide-react';
 import { Github, Linkedin } from './Icons';
 import avatar from '../assets/avatar.png';
 
 const navLinks = [
-  { label: 'Introduction', href: '#hero' },
+  { label: 'Hero', href: '#hero' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
@@ -27,6 +27,10 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
   const closeBtnStyle = isDarkMode
     ? 'text-white/40 hover:text-white hover:bg-white/10'
     : 'text-black/40 hover:text-black hover:bg-black/5';
+
+  const resumeBtnStyle = isDarkMode
+    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100';
 
   const overlayClick = (e) => {
     if (e.target === e.currentTarget) onClose();
@@ -57,14 +61,15 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
             className={`fixed top-0 right-0 h-full w-64 md:w-72 z-[70] border-l flex flex-col py-6 px-5 md:py-8 md:px-6 transition-colors duration-500 ${bg}`}
           >
             {/* Top row: avatar + name + close button */}
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <img
                     src={avatar}
                     alt="Swati Kumari"
-                    className={`w-9 h-9 rounded-full object-cover border ${isDarkMode ? 'border-white/20' : 'border-black/10'
-                      }`}
+                    className={`w-9 h-9 rounded-full object-cover border ${
+                      isDarkMode ? 'border-white/20' : 'border-black/10'
+                    }`}
                   />
                   <span className="absolute bottom-0 right-0 flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -87,8 +92,36 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
               </button>
             </div>
 
+            {/* Resume Action Group */}
+            <div className="mb-6 space-y-2">
+              <p className={`text-[9px] uppercase font-bold tracking-[0.3em] ${isDarkMode ? 'text-white/25' : 'text-black/25'}`}>
+                Resume
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={onClose}
+                  className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold border transition-all duration-200 ${resumeBtnStyle}`}
+                >
+                  <Eye size={14} />
+                  View
+                </a>
+                <a
+                  href="/resume.pdf"
+                  download="Swati_Kumari_Resume.pdf"
+                  onClick={onClose}
+                  className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold border transition-all duration-200 ${resumeBtnStyle}`}
+                >
+                  <Download size={14} />
+                  Download
+                </a>
+              </div>
+            </div>
+
             {/* Navigation links */}
-            <nav className="flex-grow">
+            <nav className="flex-grow overflow-y-auto">
               <p className={`text-[9px] uppercase font-bold tracking-[0.3em] mb-4 ${isDarkMode ? 'text-white/25' : 'text-black/25'}`}>
                 Navigate
               </p>
@@ -120,8 +153,9 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
                   href="https://github.com/Swati-a11"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
-                    }`}
+                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${
+                    isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
+                  }`}
                 >
                   <Github size={14} />
                   GitHub
@@ -130,16 +164,18 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
                   href="https://www.linkedin.com/in/swati-kumari-25931a2a6"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
-                    }`}
+                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${
+                    isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
+                  }`}
                 >
                   <Linkedin size={14} />
                   LinkedIn
                 </a>
                 <a
                   href="mailto:ss08swati14singh@gmail.com"
-                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
-                    }`}
+                  className={`flex items-center gap-2 text-xs font-medium transition-colors duration-200 ${
+                    isDarkMode ? 'text-white/50 hover:text-white' : 'text-black/50 hover:text-black'
+                  }`}
                 >
                   <Mail size={14} />
                   Email

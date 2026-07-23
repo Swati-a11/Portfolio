@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch } from 'lucide-react';
+import { Mail, ChevronLeft, ChevronRight, Link as LinkIcon, Code, BookOpen, Check, RotateCw, ExternalLink, Calendar, Coffee, Bolt, Music, CheckCircle, Clock, GitBranch, Code2, FileCode, Palette, Wand2, Sparkles, Server, Cpu, Database, Globe, Flame, Terminal, ShieldCheck, Bot, Brain, Link as LinkSymbol, Video, Layers, Boxes, Eye, Download } from 'lucide-react';
 import { Github, Linkedin } from './components/Icons';
 import IntroAnimation from './components/IntroAnimation';
 import CustomCursor from './components/CustomCursor';
@@ -23,6 +23,25 @@ import cc3 from './assets/cc3.png';
 import dd1 from './assets/dd1.png';
 import dd2 from './assets/dd2.png';
 import dd3 from './assets/dd3.png';
+
+const skillIconMap = {
+  "React.js": <Code2 size={13} className="text-sky-400 flex-shrink-0" />,
+  "HTML5": <FileCode size={13} className="text-orange-500 flex-shrink-0" />,
+  "CSS3": <Palette size={13} className="text-blue-500 flex-shrink-0" />,
+  "TailwindCSS": <Wand2 size={13} className="text-cyan-400 flex-shrink-0" />,
+  "Framer Motion": <Sparkles size={13} className="text-purple-400 flex-shrink-0" />,
+  "JavaScript": <FileCode size={13} className="text-yellow-400 flex-shrink-0" />,
+  "Node.js": <Server size={13} className="text-emerald-500 flex-shrink-0" />,
+  "Express.js": <Cpu size={13} className="text-emerald-400 flex-shrink-0" />,
+  "MongoDB": <Database size={13} className="text-emerald-500 flex-shrink-0" />,
+  "REST APIs": <Globe size={13} className="text-indigo-400 flex-shrink-0" />,
+  "FastAPI": <Flame size={13} className="text-teal-400 flex-shrink-0" />,
+  "Python": <Terminal size={13} className="text-blue-400 flex-shrink-0" />,
+  "Gemini API": <Bot size={13} className="text-cyan-400 flex-shrink-0" />,
+  "OpenAI API": <Brain size={13} className="text-emerald-400 flex-shrink-0" />,
+  "YouTube API": <Video size={13} className="text-red-500 flex-shrink-0" />,
+  "RAG Architecture": <Layers size={13} className="text-purple-400 flex-shrink-0" />,
+};
 
 // Typing loop helper component
 const TypingLoop = ({ isDarkMode }) => {
@@ -389,39 +408,66 @@ const FunFacts = ({ isDarkMode }) => {
 
 // Light/Dark Mode Bento Project Carousel
 const BentoProjects = ({ isDarkMode }) => {
-  const projectsList = [
-    {
-      title: "CourseCraft",
-      description: "An AI-powered learning management system with YouTube playlist tracking, AI notes generation, streak system, and practice questions. Built with MERN stack and Gemini API.",
-      tags: ["React", "Node.js", "MongoDB", "Gemini API", "YouTube API"],
-      link: "https://course-craft-ten.vercel.app",
-      github: "https://github.com/Swati-a11/CourseCraft",
-      screenshots: [cc1, cc2, cc3]
-    },
-    {
-      title: "DreamDoodle",
-      description: "An AI image generator with Razorpay payment integration, allowing users to generate and download AI-created artwork. Features credit-based system and gallery.",
-      tags: ["React", "Node.js", "MongoDB", "Razorpay", "AI"],
-      link: "https://dream-doodle.vercel.app",
-      github: "https://github.com/Swati-a11/DreamDoodle",
-      screenshots: [dd1, dd2, dd3]
-    }
-  ];
+  const projectCategories = {
+    "MERN Stack Projects": [
+      {
+        title: "CourseCraft",
+        description: "An AI-powered learning management system with YouTube playlist tracking, AI notes generation, streak system, and practice questions. Built with MERN stack and Gemini API.",
+        tags: ["React", "Node.js", "MongoDB", "Gemini API", "YouTube API"],
+        link: "https://course-craft-ten.vercel.app",
+        github: "https://github.com/Swati-a11/CourseCraft",
+        screenshots: [cc1, cc2, cc3]
+      },
+      {
+        title: "DreamDoodle",
+        description: "An AI image generator with Razorpay payment integration, allowing users to generate and download AI-created artwork. Features credit-based system and gallery.",
+        tags: ["React", "Node.js", "MongoDB", "Razorpay", "AI"],
+        link: "https://dream-doodle.vercel.app",
+        github: "https://github.com/Swati-a11/DreamDoodle",
+        screenshots: [dd1, dd2, dd3]
+      }
+    ],
+    "GenAI Projects": [
+      {
+        title: "MultiMind AI",
+        description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic context switching, and automated code generation.",
+        tags: ["React", "FastAPI", "Gemini API", "LangChain", "RAG", "Python"],
+        link: "https://github.com/Swati-a11",
+        github: "https://github.com/Swati-a11/MultiMind-AI",
+        screenshots: [cc1, cc2, cc3]
+      },
+      {
+        title: "Advanced Course Assistant",
+        description: "An AI academic assistant featuring RAG-based document Q&A, automated lecture summarization, smart quizzes, and course material indexing.",
+        tags: ["Python", "FastAPI", "OpenAI API", "Vector DB", "React", "Tailwind"],
+        link: "https://github.com/Swati-a11",
+        github: "https://github.com/Swati-a11/Advanced-Course-Assistant",
+        screenshots: [dd1, dd2, dd3]
+      }
+    ]
+  };
 
+  const categoryKeys = Object.keys(projectCategories);
+  const [activeCategory, setActiveCategory] = useState("MERN Stack Projects");
   const [currentIdx, setCurrentIdx] = useState(0);
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  const activeProject = projectsList[currentIdx];
+  const projectsList = projectCategories[activeCategory];
+  const activeProject = projectsList[currentIdx] || projectsList[0];
+
+  useEffect(() => {
+    setCurrentIdx(0);
+  }, [activeCategory]);
 
   useEffect(() => {
     setActiveScreenIdx(0);
-    if (activeProject.screenshots.length <= 1) return;
+    if (!activeProject || activeProject.screenshots.length <= 1) return;
     const interval = setInterval(() => {
       setActiveScreenIdx((prev) => (prev + 1) % activeProject.screenshots.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, [currentIdx, activeProject.screenshots.length]);
+  }, [currentIdx, activeCategory, activeProject]);
 
   const handleNext = () => {
     setDirection(1);
@@ -444,24 +490,53 @@ const BentoProjects = ({ isDarkMode }) => {
   const btnColor = isDarkMode ? 'bg-white text-black hover:bg-emerald-400' : 'bg-black text-white hover:bg-emerald-600';
   const tagColor = isDarkMode ? 'text-white/40' : 'text-black/40';
 
+  const activeTabStyle = isDarkMode 
+    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-sm' 
+    : 'bg-emerald-600 text-white border-emerald-600 shadow-sm';
+
+  const inactiveTabStyle = isDarkMode 
+    ? 'bg-white/[0.03] text-white/50 border-white/10 hover:text-white hover:bg-white/[0.08]' 
+    : 'bg-slate-100 text-slate-600 border-black/5 hover:text-black hover:bg-slate-200';
+
   return (
     <div className="relative">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 flex-grow mr-12 ${textMuted}`}>
-          Selected Projects
-        </h3>
-        <div className="flex gap-2">
-          <button
-            onClick={handlePrev}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="flex items-center gap-2 flex-grow">
+          <h3 className={`text-xs font-semibold uppercase tracking-widest border-b pb-2 flex-grow ${textMuted}`}>
+            Featured Projects / {activeCategory}
+          </h3>
+        </div>
+        
+        {/* Category Tabs */}
+        <div className="flex flex-wrap gap-1.5">
+          {categoryKeys.map((catKey) => (
+            <button
+              key={catKey}
+              onClick={() => setActiveCategory(catKey)}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-300 ${
+                activeCategory === catKey ? activeTabStyle : inactiveTabStyle
               }`}
+            >
+              {catKey === "GenAI Projects" ? <Sparkles size={12} /> : <Layers size={12} />}
+              <span>{catKey}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="flex gap-2 self-end sm:self-auto">
+          <button 
+            onClick={handlePrev}
+            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${
+              isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
+            }`}
           >
             <ChevronLeft size={16} />
           </button>
-          <button
+          <button 
             onClick={handleNext}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
-              }`}
+            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-300 shadow-sm ${
+              isDarkMode ? 'border-white/10 hover:bg-white hover:text-black text-white' : 'border-black/10 hover:bg-black hover:text-white text-black'
+            }`}
           >
             <ChevronRight size={16} />
           </button>
@@ -471,7 +546,7 @@ const BentoProjects = ({ isDarkMode }) => {
       <div className="min-h-[420px] overflow-hidden">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
-            key={currentIdx}
+            key={`${activeCategory}-${currentIdx}`}
             custom={direction}
             variants={slideVariants}
             initial="enter"
@@ -482,17 +557,17 @@ const BentoProjects = ({ isDarkMode }) => {
             <div className="col-span-1 md:col-span-6 flex flex-col justify-between h-full min-h-[260px]">
               <div>
                 <div className="flex gap-3 mb-6">
-                  <a
-                    href={activeProject.github}
-                    target="_blank"
+                  <a 
+                    href={activeProject.github} 
+                    target="_blank" 
                     rel="noopener noreferrer"
                     className={`w-9 h-9 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-sm ${btnColor}`}
                   >
                     <Github size={16} className={isDarkMode ? 'fill-black' : 'fill-white'} />
                   </a>
-                  <a
-                    href={activeProject.link}
-                    target="_blank"
+                  <a 
+                    href={activeProject.link} 
+                    target="_blank" 
                     rel="noopener noreferrer"
                     className={`w-9 h-9 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-sm ${btnColor}`}
                   >
@@ -511,8 +586,8 @@ const BentoProjects = ({ isDarkMode }) => {
 
               <div className="flex flex-wrap gap-x-4 gap-y-1 mt-auto">
                 {activeProject.tags.map((tag, tIdx) => (
-                  <span
-                    key={tIdx}
+                  <span 
+                    key={tIdx} 
                     className={`text-[10px] uppercase tracking-wider font-semibold font-mono ${tagColor}`}
                   >
                     {tag}
@@ -1051,12 +1126,13 @@ function App() {
                         {cat.skills.map((skill, sIdx) => (
                           <span
                             key={sIdx}
-                            className={`text-[11px] font-medium border px-2.5 py-1 rounded-full transition-colors duration-200 ${isDarkMode
+                            className={`text-[11px] font-medium border px-2.5 py-1 rounded-full transition-colors duration-200 flex items-center gap-1.5 ${isDarkMode
                                 ? 'bg-white/[0.03] border-white/10 text-white/70 hover:border-emerald-500/30 hover:text-white'
                                 : 'bg-white border-black/10 text-black/70 hover:border-emerald-500/40 hover:text-emerald-700'
                               }`}
                           >
-                            {skill}
+                            {skillIconMap[skill] || <Boxes size={13} className="text-emerald-500 flex-shrink-0" />}
+                            <span>{skill}</span>
                           </span>
                         ))}
                       </div>

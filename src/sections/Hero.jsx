@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, Download } from 'lucide-react';
 import avatar from '../assets/avatar.png';
 
 // Typing loop helper component
@@ -73,20 +74,53 @@ const Hero = ({ isDarkMode }) => {
       {/* Hero Body */}
       <div className="relative flex-grow flex flex-col justify-center items-center py-8 md:py-16 select-none">
 
-        {/* Status badge + typing loop */}
-        <div className="flex flex-col items-center gap-2 mb-4 md:mb-6 select-none z-30">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-            </span>
-            <span className={`text-[9px] md:text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border font-mono ${isDarkMode
-                ? 'text-emerald-400 bg-emerald-950/40 border-emerald-500/20'
-                : 'text-emerald-600 bg-emerald-50/70 border-emerald-500/10'
+        {/* Status badge + typing loop + Resume CTAs */}
+        <div className="flex flex-col items-center gap-3 mb-4 md:mb-6 select-none z-30">
+          <div className="flex flex-wrap justify-center items-center gap-2">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+              </span>
+              <span className={`text-[9px] md:text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border font-mono ${
+                isDarkMode 
+                  ? 'text-emerald-400 bg-emerald-950/40 border-emerald-500/20' 
+                  : 'text-emerald-600 bg-emerald-50/70 border-emerald-500/10'
               }`}>
-              Available for Opportunities
-            </span>
+                Available for Opportunities
+              </span>
+            </div>
+
+            {/* Resume Buttons in Hero */}
+            <div className="flex items-center gap-1.5 ml-1">
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold border transition-all duration-200 ${
+                  isDarkMode 
+                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20' 
+                    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100'
+                }`}
+              >
+                <Eye size={12} />
+                View Resume
+              </a>
+              <a
+                href="/resume.pdf"
+                download="Swati_Kumari_Resume.pdf"
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold border transition-all duration-200 ${
+                  isDarkMode 
+                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20' 
+                    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100'
+                }`}
+              >
+                <Download size={12} />
+                Download
+              </a>
+            </div>
           </div>
+
           <div className="text-xs md:text-sm font-light flex items-center min-h-[20px]">
             <TypingLoop isDarkMode={isDarkMode} />
           </div>

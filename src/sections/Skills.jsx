@@ -1,5 +1,42 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { 
+  Code2, FileCode, Palette, Wand2, Sparkles, Server, Cpu, Database, 
+  Globe, Flame, Terminal, ShieldCheck, Bot, Brain, Link, Mail, 
+  Video, Layers, Code, GitBranch, Cloud, Send, CheckCircle, Zap, Boxes
+} from 'lucide-react';
+
+const skillIconMap = {
+  "React.js": <Code2 size={16} className="text-sky-400 flex-shrink-0" />,
+  "HTML5": <FileCode size={16} className="text-orange-500 flex-shrink-0" />,
+  "CSS3": <Palette size={16} className="text-blue-500 flex-shrink-0" />,
+  "TailwindCSS": <Wand2 size={16} className="text-cyan-400 flex-shrink-0" />,
+  "Framer Motion": <Sparkles size={16} className="text-purple-400 flex-shrink-0" />,
+  "JavaScript (ES6+)": <FileCode size={16} className="text-yellow-400 flex-shrink-0" />,
+  "Redux Toolkit": <Layers size={16} className="text-indigo-400 flex-shrink-0" />,
+  "Vite": <Zap size={16} className="text-amber-400 flex-shrink-0" />,
+  "Node.js": <Server size={16} className="text-emerald-500 flex-shrink-0" />,
+  "Express.js": <Cpu size={16} className="text-emerald-400 flex-shrink-0" />,
+  "MongoDB": <Database size={16} className="text-emerald-500 flex-shrink-0" />,
+  "REST APIs": <Globe size={16} className="text-indigo-400 flex-shrink-0" />,
+  "FastAPI": <Flame size={16} className="text-teal-400 flex-shrink-0" />,
+  "Python": <Terminal size={16} className="text-blue-400 flex-shrink-0" />,
+  "JWT Auth": <ShieldCheck size={16} className="text-rose-400 flex-shrink-0" />,
+  "Mongoose": <Database size={16} className="text-rose-500 flex-shrink-0" />,
+  "Gemini API": <Bot size={16} className="text-cyan-400 flex-shrink-0" />,
+  "OpenAI API": <Brain size={16} className="text-emerald-400 flex-shrink-0" />,
+  "LangChain (basics)": <Link size={16} className="text-teal-300 flex-shrink-0" />,
+  "Resend": <Mail size={16} className="text-slate-400 flex-shrink-0" />,
+  "YouTube API": <Video size={16} className="text-red-500 flex-shrink-0" />,
+  "RAG Architecture": <Layers size={16} className="text-purple-400 flex-shrink-0" />,
+  "C++": <Code size={16} className="text-blue-500 flex-shrink-0" />,
+  "Git/GitHub": <GitBranch size={16} className="text-orange-400 flex-shrink-0" />,
+  "Vercel": <Cloud size={16} className="text-slate-300 flex-shrink-0" />,
+  "Render": <Server size={16} className="text-cyan-400 flex-shrink-0" />,
+  "MongoDB Atlas": <Database size={16} className="text-emerald-600 flex-shrink-0" />,
+  "Postman": <Send size={16} className="text-orange-500 flex-shrink-0" />,
+  "DSA (50+ solved)": <CheckCircle size={16} className="text-emerald-400 flex-shrink-0" />,
+};
 
 const Skills = ({ isDarkMode }) => {
   const categories = [
@@ -23,15 +60,14 @@ const Skills = ({ isDarkMode }) => {
 
   const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
   const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
-  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15 hover:bg-white/[0.02]' : 'border-black/5 bg-slate-50 hover:border-emerald-500/10 hover:bg-emerald-500/5';
+  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15' : 'border-black/5 bg-slate-50 hover:border-emerald-500/10 hover:bg-emerald-500/5';
   const cardHeader = isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5';
-  const dotColor = isDarkMode ? 'bg-orange-400/40' : 'bg-emerald-500';
-  const listColor = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/70';
+  const itemBorder = isDarkMode ? 'border-white/5 bg-white/[0.02] text-[#e8e4d9]/80 hover:text-white hover:border-emerald-500/30' : 'border-black/5 bg-white text-black/80 hover:text-emerald-700 hover:border-emerald-500/40';
 
   return (
     <section 
       id="skills" 
-      className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
+      className={`py-24 px-4 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -77,11 +113,14 @@ const Skills = ({ isDarkMode }) => {
               <h3 className={`text-xs font-semibold tracking-widest uppercase mb-6 pb-2 border-b ${cardHeader}`}>
                 {category.title}
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {category.skills.map((skill, sIdx) => (
-                  <li key={sIdx} className={`text-sm font-light tracking-wide flex items-center gap-2 ${listColor}`}>
-                    <span className={`w-1 h-1 rounded-full ${dotColor}`} />
-                    {skill}
+                  <li 
+                    key={sIdx} 
+                    className={`text-xs md:text-sm font-medium tracking-wide flex items-center gap-2.5 px-3 py-2 rounded-xl border transition-all duration-200 ${itemBorder}`}
+                  >
+                    {skillIconMap[skill] || <Boxes size={16} className="text-emerald-500 flex-shrink-0" />}
+                    <span className="truncate">{skill}</span>
                   </li>
                 ))}
               </ul>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Sun, Moon, AlignRight } from 'lucide-react';
+import { Mail, Sun, Moon, AlignRight, FileText, Eye, Download } from 'lucide-react';
 import { Github, Linkedin } from './Icons';
 import avatar from '../assets/avatar.png';
 
@@ -16,12 +16,16 @@ const Navbar = ({ isDarkMode, toggleTheme, onToggleSidebar }) => {
     ? 'hover:bg-white/10 text-white'
     : 'hover:bg-black/5 text-emerald-600';
 
+  const resumeBtnStyle = isDarkMode
+    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100';
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-12 md:py-4 flex justify-between items-center backdrop-blur-md border-b transition-colors duration-500 ${navBg}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 px-3 py-2.5 md:px-12 md:py-4 flex justify-between items-center backdrop-blur-md border-b transition-colors duration-500 ${navBg}`}>
       {/* Logo / Brand */}
       <a 
         href="#hero" 
-        className="flex items-center gap-2.5 text-xs md:text-sm font-semibold tracking-[0.18em] transition-colors duration-300 uppercase"
+        className="flex items-center gap-2 text-xs md:text-sm font-semibold tracking-[0.18em] transition-colors duration-300 uppercase"
       >
         <div className="relative flex-shrink-0">
           <img 
@@ -36,37 +40,63 @@ const Navbar = ({ isDarkMode, toggleTheme, onToggleSidebar }) => {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
         </div>
-        <span className="hidden xs:inline sm:inline">SWATI KUMARI</span>
+        <span className="inline font-bold">SWATI KUMARI</span>
       </a>
 
       {/* Right side controls */}
-      <div className="flex gap-2 md:gap-4 items-center text-xs md:text-sm">
-        {/* Desktop nav links — hidden on mobile */}
+      <div className="flex gap-1.5 md:gap-4 items-center text-xs md:text-sm">
+        {/* Nav links — responsive on mobile & desktop */}
         <a 
           href="https://github.com/Swati-a11" 
           target="_blank" 
           rel="noopener noreferrer"
-          className={`hidden md:flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          className={`flex items-center gap-1 p-1.5 md:p-0 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          title="GitHub"
         >
           <Github size={15} />
-          <span>GitHub</span>
+          <span className="hidden sm:inline">GitHub</span>
         </a>
         <a 
           href="https://www.linkedin.com/in/swati-kumari-25931a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android" 
           target="_blank" 
           rel="noopener noreferrer"
-          className={`hidden md:flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          className={`flex items-center gap-1 p-1.5 md:p-0 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          title="LinkedIn"
         >
           <Linkedin size={15} />
-          <span>LinkedIn</span>
+          <span className="hidden sm:inline">LinkedIn</span>
         </a>
         <a 
           href="mailto:ss08swati14singh@gmail.com"
-          className={`hidden md:flex items-center gap-1.5 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          className={`flex items-center gap-1 p-1.5 md:p-0 hover:translate-y-[-1px] transition-all duration-300 ${linkColor}`}
+          title="Email"
         >
           <Mail size={15} />
-          <span>Email</span>
+          <span className="hidden sm:inline">Email</span>
         </a>
+
+        {/* Resume Actions Dropdown / Buttons */}
+        <div className="flex items-center gap-1">
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center gap-1 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-[11px] md:text-xs font-semibold border transition-all duration-200 ${resumeBtnStyle}`}
+            title="View Resume"
+          >
+            <Eye size={13} />
+            <span className="hidden xs:inline">View</span> Resume
+          </a>
+          <a
+            href="/resume.pdf"
+            download="Swati_Kumari_Resume.pdf"
+            className={`p-1.5 md:px-2.5 md:py-1.5 rounded-full text-[11px] md:text-xs font-semibold border transition-all duration-200 ${resumeBtnStyle}`}
+            title="Download Resume"
+          >
+            <Download size={13} />
+            <span className="hidden md:inline">Download</span>
+          </a>
+        </div>
 
         {/* Theme toggle */}
         <button 
