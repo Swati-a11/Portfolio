@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ArrowRight } from 'lucide-react';
 import { Github } from '../components/Icons';
@@ -11,6 +11,7 @@ import aca1 from '../assets/aca1.png';
 
 const Projects = ({ isDarkMode }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const modalRef = useRef(null);
 
   const categories = [
     {
@@ -82,6 +83,21 @@ const Projects = ({ isDarkMode }) => {
     : 'bg-[#f4f5f9] border-4 border-[#5b3bf7] shadow-2xl';
 
   const activeCategoryData = categories.find(c => c.id === selectedCategory);
+
+  // Guarantee modal opens at top of viewport and lock background scroll
+  useEffect(() => {
+    if (selectedCategory) {
+      if (modalRef.current) {
+        modalRef.current.scrollTop = 0;
+      }
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [selectedCategory]);
 
   return (
     <section 
@@ -167,14 +183,15 @@ const Projects = ({ isDarkMode }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedCategory(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/85 backdrop-blur-xl"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              ref={modalRef}
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl rounded-[2.5rem] bg-[#0d121c] border border-slate-700/80 p-6 sm:p-10 shadow-2xl my-auto"
+              className="relative w-full max-w-5xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-[2.5rem] bg-[#0d121c] border border-slate-700/80 p-6 sm:p-10 shadow-2xl my-auto"
             >
               {/* Close Button */}
               <button
@@ -185,7 +202,7 @@ const Projects = ({ isDarkMode }) => {
               </button>
 
               {/* Modal Header */}
-              <div className="mb-10 text-center space-y-2">
+              <div className="mb-10 text-center space-y-2 pt-2">
                 <span className="text-xs uppercase tracking-[0.25em] font-mono font-bold text-emerald-400 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 inline-block">
                   {activeCategoryData.subtitle}
                 </span>
