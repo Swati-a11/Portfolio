@@ -7,6 +7,7 @@ import avatar from '../assets/avatar.png';
 const navLinks = [
   { label: 'Hero', href: '#hero' },
   { label: 'About', href: '#about' },
+  { label: 'Resume', href: '#resume' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'DSA', href: '#dsa' },
@@ -34,6 +35,15 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
 
   const overlayClick = (e) => {
     if (e.target === e.currentTarget) onClose();
+  };
+
+  const handleNavClick = (e, href) => {
+    onClose();
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      e.preventDefault();
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -130,7 +140,7 @@ const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      onClick={onClose}
+                      onClick={(e) => handleNavClick(e, link.href)}
                       className={`flex items-center justify-between py-2.5 text-sm font-medium tracking-wide border-b transition-all duration-200 ${linkColor} ${divider}`}
                     >
                       <span>{link.label}</span>

@@ -8,6 +8,11 @@ import cc3 from '../assets/cc3.png';
 import dd1 from '../assets/dd1.png';
 import dd2 from '../assets/dd2.png';
 import dd3 from '../assets/dd3.png';
+import mm1 from '../assets/mm1.png';
+import mm2 from '../assets/mm2.png';
+import mm3 from '../assets/mm3.png';
+import mm4 from '../assets/mm4.png';
+import mm5 from '../assets/mm5.png';
 
 const Projects = ({ isDarkMode }) => {
   const projectCategories = {
@@ -34,9 +39,9 @@ const Projects = ({ isDarkMode }) => {
         title: "MultiMind AI",
         description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic context switching, and automated code generation.",
         tags: ["React", "FastAPI", "Gemini API", "LangChain", "RAG", "Python"],
-        link: "https://github.com/Swati-a11",
+        link: "https://assignment2-gen-ai.vercel.app",
         github: "https://github.com/Swati-a11/MultiMind-AI",
-        screenshots: [cc1, cc2, cc3]
+        screenshots: [mm1, mm2, mm3, mm4, mm5]
       },
       {
         title: "Advanced Course Assistant",

@@ -75,28 +75,7 @@ const Navbar = ({ isDarkMode, toggleTheme, onToggleSidebar }) => {
           <span className="hidden sm:inline">Email</span>
         </a>
 
-        {/* Resume Actions Dropdown / Buttons */}
-        <div className="flex items-center gap-1">
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`flex items-center gap-1 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-[11px] md:text-xs font-semibold border transition-all duration-200 ${resumeBtnStyle}`}
-            title="View Resume"
-          >
-            <Eye size={13} />
-            <span className="hidden xs:inline">View</span> Resume
-          </a>
-          <a
-            href="/resume.pdf"
-            download="Swati_Kumari_Resume.pdf"
-            className={`p-1.5 md:px-2.5 md:py-1.5 rounded-full text-[11px] md:text-xs font-semibold border transition-all duration-200 ${resumeBtnStyle}`}
-            title="Download Resume"
-          >
-            <Download size={13} />
-            <span className="hidden md:inline">Download</span>
-          </a>
-        </div>
+
 
         {/* Theme toggle */}
         <button 

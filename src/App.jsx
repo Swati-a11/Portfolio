@@ -23,6 +23,11 @@ import cc3 from './assets/cc3.png';
 import dd1 from './assets/dd1.png';
 import dd2 from './assets/dd2.png';
 import dd3 from './assets/dd3.png';
+import mm1 from './assets/mm1.png';
+import mm2 from './assets/mm2.png';
+import mm3 from './assets/mm3.png';
+import mm4 from './assets/mm4.png';
+import mm5 from './assets/mm5.png';
 
 const skillIconMap = {
   "React.js": <Code2 size={13} className="text-sky-400 flex-shrink-0" />,
@@ -432,9 +437,9 @@ const BentoProjects = ({ isDarkMode }) => {
         title: "MultiMind AI",
         description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic context switching, and automated code generation.",
         tags: ["React", "FastAPI", "Gemini API", "LangChain", "RAG", "Python"],
-        link: "https://github.com/Swati-a11",
+        link: "https://assignment2-gen-ai.vercel.app",
         github: "https://github.com/Swati-a11/MultiMind-AI",
-        screenshots: [cc1, cc2, cc3]
+        screenshots: [mm1, mm2, mm3, mm4, mm5]
       },
       {
         title: "Advanced Course Assistant",
@@ -787,8 +792,9 @@ function App() {
               transition={{ duration: 0.4 }}
               className="max-w-5xl mx-auto px-4 md:px-6 pb-16 space-y-4 md:space-y-6 select-none"
             >
-              {/* ── MANIFESTO BANNER ── Word-by-word stagger reveal ── */}
+              {/* ── MANIFESTO BANNER / ABOUT ── Word-by-word stagger reveal ── */}
               <motion.div
+                id="about"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
@@ -824,6 +830,57 @@ function App() {
                   >
                     Beyond coding, I love competitive programming in C++, following Striver's A2Z sheet daily — and believe sharp logic leads to elegant products.
                   </motion.p>
+                </div>
+              </motion.div>
+
+              {/* ── BENTO RESUME CARD ── Directly below About section ── */}
+              <motion.div
+                id="resume"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -4 }}
+                className={`border p-6 md:p-8 rounded-3xl transition-colors duration-500 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${bentoCardBg}`}
+              >
+                <div className="space-y-2 max-w-xl">
+                  <div className="flex items-center gap-2">
+                    <FileText size={20} className="text-emerald-500" />
+                    <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                      Curriculum Vitae / Resume
+                    </h3>
+                  </div>
+                  <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/60'}`}>
+                    View or download my resume covering software engineering experience, technical stack, key projects, and academic background.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                  <a
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
+                      isDarkMode
+                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/30'
+                        : 'bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700'
+                    }`}
+                  >
+                    <Eye size={16} />
+                    View Resume
+                  </a>
+                  <a
+                    href="/resume.pdf"
+                    download="Swati_Kumari_Resume.pdf"
+                    className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
+                      isDarkMode
+                        ? 'bg-white/10 text-white border-white/20 hover:bg-white/20'
+                        : 'bg-white text-black border-black/20 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Download size={16} />
+                    Download
+                  </a>
                 </div>
               </motion.div>
 
@@ -1089,6 +1146,7 @@ function App() {
 
               {/* Bento Grid Row 3: Projects carousel */}
               <motion.div
+                id="projects"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
@@ -1108,6 +1166,7 @@ function App() {
 
               {/* Bento Grid Row 5: Core Capabilities (full width) */}
               <motion.div
+                id="skills"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
@@ -1144,6 +1203,7 @@ function App() {
 
               {/* Bento Grid Row 5: Experience Timeline (Full width) */}
               <motion.div
+                id="experience"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-8 rounded-3xl transition-colors duration-500 ${bentoCardBg}`}
@@ -1168,6 +1228,7 @@ function App() {
 
               {/* Bento Grid Row 6: Call To Action Connect */}
               <motion.div
+                id="contact"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className={`border p-12 rounded-3xl flex flex-col items-center justify-center text-center py-16 gap-6 transition-colors duration-500 ${bentoCardBg}`}
