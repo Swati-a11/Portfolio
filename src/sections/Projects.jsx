@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Menu, X, Eye, ArrowRight } from 'lucide-react';
+import { ExternalLink, X, ArrowRight } from 'lucide-react';
 import { Github } from '../components/Icons';
 import ws1 from '../assets/ws1.png';
 import ws2 from '../assets/ws2.png';
@@ -55,7 +55,7 @@ const Projects = ({ isDarkMode }) => {
           title: "MultiMind AI",
           subtitle: "Multi-LLM Intelligence Platform",
           description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic context switching, and automated code generation.",
-          tags: ["React", "FastAPI", "Gemini API", "LangChain", "RAG", "Python"],
+          tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Gemini API", "LangChain", "RAG"],
           link: "https://assignment2-gen-ai.vercel.app",
           github: "https://github.com/Swati-a11/MultiMind-AI",
           image: mm1,
@@ -65,7 +65,7 @@ const Projects = ({ isDarkMode }) => {
           title: "Advanced Course Assistant",
           subtitle: "RAG Document & Lecture Q&A",
           description: "An AI academic assistant featuring RAG-based document Q&A, automated lecture summarization, smart quizzes, and indexed course material search.",
-          tags: ["Python", "FastAPI", "OpenAI API", "Vector DB", "React", "Tailwind"],
+          tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "OpenAI API", "Vector DB", "RAG"],
           link: "https://rag-assignment-rouge.vercel.app",
           github: "https://github.com/Swati-a11/Advanced-Course-Assistant",
           image: aca1,
@@ -95,11 +95,6 @@ const Projects = ({ isDarkMode }) => {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className={`max-w-6xl mx-auto relative rounded-[2.5rem] p-6 sm:p-10 md:p-14 ${outerFrameBg}`}
       >
-        {/* Menu Icon Top-Right (Exact Match to User Screenshot) */}
-        <div className="absolute top-8 right-8 z-30 p-2.5 rounded-xl border border-slate-700/60 bg-[#121824]/80 text-emerald-400 shadow-md">
-          <Menu size={22} />
-        </div>
-
         {/* Centered Heading with Watermark */}
         <div className="relative text-center mb-16 select-none pt-2">
           <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bebas text-7xl md:text-9xl lg:text-[13rem] font-bold tracking-widest pointer-events-none text-slate-500/10">
