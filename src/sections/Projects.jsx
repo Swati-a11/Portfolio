@@ -170,91 +170,124 @@ const Projects = ({ isDarkMode }) => {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-20 md:space-y-28"
           >
-            {projectsList.map((project, idx) => (
-              <div 
-                key={project.title}
-                className="relative grid grid-cols-1 lg:grid-cols-12 items-center"
-              >
-                {/* Left Side: Large Portrait Workspace Image Container (Matching Reference Image) */}
-                <div className={`lg:col-span-6 relative rounded-3xl overflow-hidden shadow-2xl group border transition-all duration-500 z-10 ${
-                  isDarkMode ? 'border-white/10 bg-[#121620]' : 'border-[#FFBE91]/40 bg-[#FFDDB0]'
-                }`}>
-                  <div className="aspect-[4/3] md:aspect-[4/5] w-full overflow-hidden relative">
-                    <img 
-                      src={project.mainImage || project.screenshots[0]} 
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 pointer-events-none" />
-
-                    {/* Screenshot Preview Badge */}
-                    <div className="absolute bottom-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20">
-                      <Eye size={12} className="text-emerald-400" />
-                      <span>{project.screenshots.length} Screens Included</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Side: Overlapping Elevated Content Card (Exact Match to Reference Image) */}
-                <div className={`lg:col-span-7 lg:-ml-20 lg:mt-12 z-20 p-8 md:p-12 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${cardBg}`}>
-                  <div className="space-y-5">
-                    <span className={`text-[10px] uppercase tracking-[0.2em] font-mono font-bold px-3.5 py-1.5 rounded-full inline-block border ${
-                      isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-[#FFBE91]/30 text-[#D97736] border-[#FFBE91]'
-                    }`}>
-                      {project.subtitle}
-                    </span>
-
-                    <h3 className={`text-3xl md:text-5xl font-bold tracking-tight ${titleColor}`}>
-                      {project.title}
-                    </h3>
-
-                    <p className={`text-xs md:text-sm font-light leading-relaxed ${descColor}`}>
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack Badges */}
-                    <div className="flex flex-wrap gap-2 pt-2 pb-4">
-                      {project.tags.map((tag) => (
-                        <span 
-                          key={tag}
-                          className={`text-[11px] font-medium px-3 py-1 rounded-full border transition-colors ${
-                            isDarkMode 
-                              ? 'bg-white/5 text-white/70 border-white/10' 
-                              : 'bg-[#FFFCE1] text-[#3D2E2B]/80 border-[#FFBE91]/50'
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Action Buttons (Pill Buttons matching Reference Image) */}
-                    <div className="flex flex-wrap items-center gap-3 pt-2">
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${btnPrimary}`}
-                      >
-                        Live Demo
-                      </a>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${btnSecondary}`}
-                      >
-                        GitHub <ExternalLink size={14} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {projectsList.map((project, idx) => {
+              // Local screenshot state for each project
+              return (
+                <ProjectCard 
+                  key={project.title}
+                  project={project}
+                  idx={idx}
+                  isDarkMode={isDarkMode}
+                  cardBg={cardBg}
+                  titleColor={titleColor}
+                  descColor={descColor}
+                  btnPrimary={btnPrimary}
+                  btnSecondary={btnSecondary}
+                />
+              );
+            })}
           </motion.div>
         </AnimatePresence>
       </motion.div>
     </section>
+  );
+};
+
+const ProjectCard = ({ project, idx, isDarkMode, cardBg, titleColor, descColor, btnPrimary, btnSecondary }) => {
+  const [activeScreenIdx, setActiveScreenIdx] = useState(0);
+
+  useEffect(() => {
+    if (!project.screenshots || project.screenshots.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveScreenIdx((prev) => (prev + 1) % project.screenshots.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [project]);
+
+  return (
+    <div className="relative grid grid-cols-1 lg:grid-cols-12 items-center">
+      {/* Left Side: Portrait Workspace Image Card (Exact Reference Image Match) */}
+      <div className={`lg:col-span-6 relative rounded-3xl overflow-hidden shadow-2xl group border transition-all duration-500 z-10 ${
+        isDarkMode ? 'border-white/10 bg-[#121620]' : 'border-white/80 bg-white/70 shadow-xl shadow-sky-500/10'
+      }`}>
+        <div className="aspect-[4/3] md:aspect-[4/5] w-full overflow-hidden relative">
+          <AnimatePresence mode="wait">
+            <motion.img 
+              key={activeScreenIdx}
+              src={project.screenshots[activeScreenIdx] || project.mainImage} 
+              alt={project.title}
+              initial={{ opacity: 0.8, scale: 1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0.8 }}
+              transition={{ duration: 0.6 }}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 pointer-events-none" />
+
+          {/* Screenshot Counter Badge */}
+          <div className="absolute bottom-4 left-4 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20">
+            <Eye size={12} className="text-[#87CEEB]" />
+            <span>Screen {activeScreenIdx + 1} / {project.screenshots.length}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side: Overlapping Floating Card (Exact Reference Image Match) */}
+      <div className={`lg:col-span-7 lg:-ml-20 lg:mt-12 z-20 p-8 md:p-12 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${cardBg}`}>
+        <div className="space-y-5">
+          <span className={`text-[10px] uppercase tracking-[0.2em] font-mono font-bold px-3.5 py-1.5 rounded-full inline-block border ${
+            isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-[#FFBE91]/30 text-[#0284c7] border-[#87CEEB]/50'
+          }`}>
+            {project.subtitle}
+          </span>
+
+          <h3 className={`text-3xl md:text-5xl font-bold tracking-tight ${titleColor}`}>
+            {project.title}
+          </h3>
+
+          <p className={`text-xs md:text-sm font-light leading-relaxed ${descColor}`}>
+            {project.description}
+          </p>
+
+          {/* Tech Stack Badges */}
+          <div className="flex flex-wrap gap-2 pt-2 pb-4">
+            {project.tags.map((tag) => (
+              <span 
+                key={tag}
+                className={`text-[11px] font-medium px-3 py-1 rounded-full border transition-colors ${
+                  isDarkMode 
+                    ? 'bg-white/5 text-white/70 border-white/10' 
+                    : 'bg-[#FFFCE1] text-[#1F2937]/80 border-[#FFDDB0]'
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Action Buttons (Pill Buttons matching Reference Image) */}
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${btnPrimary}`}
+            >
+              Live Demo
+            </a>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${btnSecondary}`}
+            >
+              GitHub <ExternalLink size={14} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
