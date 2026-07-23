@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Link as LinkIcon, Sparkles, Layers, Folder, FolderOpen, ExternalLink, Eye } from 'lucide-react';
+import { ExternalLink, Eye, Folder, FolderOpen, Sparkles, Layers } from 'lucide-react';
 import { Github } from '../components/Icons';
 import cc1 from '../assets/cc1.png';
 import cc2 from '../assets/cc2.png';
@@ -26,7 +26,7 @@ const Projects = ({ isDarkMode }) => {
     "MERN STACK": [
       {
         title: "CourseCraft",
-        subtitle: "AI Learning Management Platform",
+        subtitle: "AI Learning Management System",
         description: "An AI-powered learning management system with YouTube playlist tracking, automated AI notes generation, streak system, and interactive practice questions.",
         tags: ["React", "Node.js", "MongoDB", "Gemini API", "YouTube API"],
         link: "https://course-craft-ten.vercel.app",
@@ -48,8 +48,8 @@ const Projects = ({ isDarkMode }) => {
     "GEN AI": [
       {
         title: "MultiMind AI",
-        subtitle: "Multi-LLM Intelligence Engine",
-        description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic model synthesis (Gemini, Groq, OpenRouter), and automated code generation.",
+        subtitle: "Multi-LLM Intelligence Platform",
+        description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic context switching, and automated code generation.",
         tags: ["React", "FastAPI", "Gemini API", "LangChain", "RAG", "Python"],
         link: "https://assignment2-gen-ai.vercel.app",
         github: "https://github.com/Swati-a11/MultiMind-AI",
@@ -58,7 +58,7 @@ const Projects = ({ isDarkMode }) => {
       },
       {
         title: "Advanced Course Assistant",
-        subtitle: "RAG Lecture & Document Q&A",
+        subtitle: "RAG Document & Lecture Q&A",
         description: "An AI academic assistant featuring RAG-based document Q&A, automated lecture summarization, smart quizzes, and indexed course material search.",
         tags: ["Python", "FastAPI", "OpenAI API", "Vector DB", "React", "Tailwind"],
         link: "https://rag-assignment-rouge.vercel.app",
@@ -71,40 +71,20 @@ const Projects = ({ isDarkMode }) => {
 
   const categoryKeys = Object.keys(projectCategories);
   const [activeCategory, setActiveCategory] = useState("MERN STACK");
-  const [currentIdx, setCurrentIdx] = useState(0);
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
 
   const projectsList = projectCategories[activeCategory];
-  const activeProject = projectsList[currentIdx] || projectsList[0];
-
-  useEffect(() => {
-    setCurrentIdx(0);
-  }, [activeCategory]);
 
   useEffect(() => {
     setActiveScreenIdx(0);
-    if (!activeProject || activeProject.screenshots.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setActiveScreenIdx((prev) => (prev + 1) % activeProject.screenshots.length);
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, [currentIdx, activeCategory, activeProject]);
-
-  const handleNext = () => {
-    setCurrentIdx((prev) => (prev + 1) % projectsList.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIdx((prev) => (prev === 0 ? projectsList.length - 1 : prev - 1));
-  };
+  }, [activeCategory]);
 
   // Theme tokens
   const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
-  const cardBg = isDarkMode ? 'bg-[#121620]/90 border-white/10 shadow-2xl' : 'bg-[#FFDDB0]/50 border-[#FFBE91]/40 shadow-xl';
-  const tagBg = isDarkMode ? 'bg-white/5 text-white/70 border-white/10' : 'bg-[#FFFCE1] text-[#3D2E2B]/80 border-[#FFBE91]/50';
+  const watermarkColor = isDarkMode ? 'text-white/[0.03]' : 'text-[#3D2E2B]/[0.05]';
+  const cardBg = isDarkMode 
+    ? 'bg-[#121620]/95 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' 
+    : 'bg-[#FFFCE1] border-[#FFBE91]/40 shadow-2xl shadow-[#FFBE91]/20';
   const titleColor = isDarkMode ? 'text-white' : 'text-[#3D2E2B]';
   const descColor = isDarkMode ? 'text-[#e8e4d9]/75' : 'text-[#3D2E2B]/80';
 
@@ -114,7 +94,7 @@ const Projects = ({ isDarkMode }) => {
 
   const btnSecondary = isDarkMode
     ? 'bg-white/10 hover:bg-white/20 text-white border-white/20'
-    : 'bg-[#FFFCE1] hover:bg-white text-[#3D2E2B] border-[#FFBE91]/50';
+    : 'bg-[#FFDDB0]/60 hover:bg-[#FFDDB0] text-[#3D2E2B] border-[#FFBE91]/50';
 
   return (
     <section 
@@ -128,18 +108,18 @@ const Projects = ({ isDarkMode }) => {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-6xl mx-auto relative"
       >
-        {/* Section Tag */}
-        <span className={`text-xs uppercase tracking-[0.25em] block mb-4 font-mono font-bold ${textMuted}`}>
-          / Featured Work
-        </span>
+        {/* Centered Heading with Background Watermark (Matching Reference Image) */}
+        <div className="relative text-center mb-12 select-none">
+          <span className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bebas text-7xl md:text-9xl lg:text-[13rem] font-bold tracking-widest pointer-events-none ${watermarkColor}`}>
+            PROJECTS
+          </span>
+          <h2 className="relative z-10 font-bebas text-5xl md:text-7xl lg:text-8xl tracking-wider uppercase leading-none font-bold">
+            PROJECTS
+          </h2>
+        </div>
 
-        {/* Section Heading */}
-        <h2 className="font-bebas text-4xl md:text-6xl lg:text-7xl mb-8 tracking-wide uppercase leading-none">
-          Selected Projects
-        </h2>
-
-        {/* Category Folder Tabs */}
-        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-12">
+        {/* Category Folder Tabs directly below header */}
+        <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 mb-16 relative z-10">
           {categoryKeys.map((catKey) => {
             const isActive = activeCategory === catKey;
             const projectCount = projectCategories[catKey].length;
@@ -148,10 +128,10 @@ const Projects = ({ isDarkMode }) => {
               <button
                 key={catKey}
                 onClick={() => setActiveCategory(catKey)}
-                className={`group relative flex items-center gap-3 px-6 py-3.5 rounded-2xl border text-xs md:text-sm font-bold tracking-wider uppercase transition-all duration-300 backdrop-blur-md ${
+                className={`group relative flex items-center gap-3 px-7 py-3.5 rounded-full border text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300 backdrop-blur-md ${
                   isActive
                     ? isDarkMode
-                      ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.2)] ring-1 ring-emerald-500/40'
+                      ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-2 ring-emerald-500/40'
                       : 'bg-[#FFBE91] border-[#FFBE91] text-[#3D2E2B] shadow-lg shadow-[#FFBE91]/30 ring-2 ring-[#FFBE91]'
                     : isDarkMode
                       ? 'bg-white/[0.03] border-white/10 text-white/50 hover:border-white/20 hover:text-white hover:bg-white/[0.08]'
@@ -184,47 +164,47 @@ const Projects = ({ isDarkMode }) => {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, filter: 'blur(12px)', y: 20 }}
+            initial={{ opacity: 0, filter: 'blur(14px)', y: 20 }}
             animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
-            exit={{ opacity: 0, filter: 'blur(12px)', y: -20 }}
+            exit={{ opacity: 0, filter: 'blur(14px)', y: -20 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-12 md:space-y-16"
+            className="space-y-20 md:space-y-28"
           >
             {projectsList.map((project, idx) => (
               <div 
                 key={project.title}
-                className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-0 items-center"
+                className="relative grid grid-cols-1 lg:grid-cols-12 items-center"
               >
-                {/* Left Side: Large Image Container */}
-                <div className={`lg:col-span-7 relative rounded-3xl overflow-hidden shadow-2xl group border transition-all duration-500 z-10 ${
+                {/* Left Side: Large Portrait Workspace Image Container (Matching Reference Image) */}
+                <div className={`lg:col-span-6 relative rounded-3xl overflow-hidden shadow-2xl group border transition-all duration-500 z-10 ${
                   isDarkMode ? 'border-white/10 bg-[#121620]' : 'border-[#FFBE91]/40 bg-[#FFDDB0]'
                 }`}>
-                  <div className="aspect-[16/10] w-full overflow-hidden relative">
+                  <div className="aspect-[4/3] md:aspect-[4/5] w-full overflow-hidden relative">
                     <img 
-                      src={project.screenshots[activeScreenIdx] || project.mainImage} 
+                      src={project.mainImage || project.screenshots[0]} 
                       alt={project.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 pointer-events-none" />
 
-                    {/* Screenshot Counter Pill */}
+                    {/* Screenshot Preview Badge */}
                     <div className="absolute bottom-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20">
                       <Eye size={12} className="text-emerald-400" />
-                      <span>Screen {activeScreenIdx + 1} / {project.screenshots.length}</span>
+                      <span>{project.screenshots.length} Screens Included</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Right Side: Overlapping Elevated Content Card */}
-                <div className={`lg:col-span-6 lg:-ml-12 z-20 p-6 md:p-10 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${cardBg}`}>
-                  <div className="space-y-4">
-                    <span className={`text-[10px] uppercase tracking-[0.2em] font-mono font-bold px-3 py-1 rounded-full inline-block border ${
-                      isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-[#FFFCE1] text-[#D97736] border-[#FFBE91]'
+                {/* Right Side: Overlapping Elevated Content Card (Exact Match to Reference Image) */}
+                <div className={`lg:col-span-7 lg:-ml-20 lg:mt-12 z-20 p-8 md:p-12 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${cardBg}`}>
+                  <div className="space-y-5">
+                    <span className={`text-[10px] uppercase tracking-[0.2em] font-mono font-bold px-3.5 py-1.5 rounded-full inline-block border ${
+                      isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-[#FFBE91]/30 text-[#D97736] border-[#FFBE91]'
                     }`}>
                       {project.subtitle}
                     </span>
 
-                    <h3 className={`text-2xl md:text-4xl font-bold tracking-tight ${titleColor}`}>
+                    <h3 className={`text-3xl md:text-5xl font-bold tracking-tight ${titleColor}`}>
                       {project.title}
                     </h3>
 
@@ -232,37 +212,39 @@ const Projects = ({ isDarkMode }) => {
                       {project.description}
                     </p>
 
-                    {/* Tech Stack Tags */}
+                    {/* Tech Stack Badges */}
                     <div className="flex flex-wrap gap-2 pt-2 pb-4">
                       {project.tags.map((tag) => (
                         <span 
                           key={tag}
-                          className={`text-[11px] font-medium px-3 py-1 rounded-full border transition-colors ${tagBg}`}
+                          className={`text-[11px] font-medium px-3 py-1 rounded-full border transition-colors ${
+                            isDarkMode 
+                              ? 'bg-white/5 text-white/70 border-white/10' 
+                              : 'bg-[#FFFCE1] text-[#3D2E2B]/80 border-[#FFBE91]/50'
+                          }`}
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    {/* Action Buttons */}
+                    {/* Action Buttons (Pill Buttons matching Reference Image) */}
                     <div className="flex flex-wrap items-center gap-3 pt-2">
                       <a
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs uppercase tracking-wider transition-all duration-300 ${btnPrimary}`}
+                        className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${btnPrimary}`}
                       >
-                        <ExternalLink size={15} />
                         Live Demo
                       </a>
                       <a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider border transition-all duration-300 ${btnSecondary}`}
+                        className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${btnSecondary}`}
                       >
-                        <Github size={15} />
-                        GitHub
+                        GitHub <ExternalLink size={14} />
                       </a>
                     </div>
                   </div>
@@ -277,4 +259,5 @@ const Projects = ({ isDarkMode }) => {
 };
 
 export default Projects;
+
 
