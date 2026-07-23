@@ -39,8 +39,8 @@ const skillIconMap = {
 };
 
 const Skills = ({ isDarkMode }) => {
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#6B7280]';
 
   const categories = [
     {
@@ -59,10 +59,10 @@ const Skills = ({ isDarkMode }) => {
 
   const itemBorder = isDarkMode 
     ? 'border-white/5 bg-white/[0.02] text-[#e8e4d9]/80 hover:text-white hover:border-emerald-500/30' 
-    : 'border-[#FFDDB0] bg-[#FFDDB0]/30 text-[#3D2E2B]/90 hover:text-[#3D2E2B] hover:border-[#FFBE91]';
+    : 'border-[#FFDDB0]/60 bg-[#FFFCE1]/80 text-[#1F2937] hover:border-[#87CEEB] hover:shadow-[0_0_15px_rgba(135,206,235,0.3)]';
 
-  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15' : 'border-[#FFDDB0] bg-white/40 hover:border-[#FFBE91]';
-  const cardHeader = isDarkMode ? 'text-white/40 border-white/5' : 'text-[#3D2E2B]/40 border-[#FFDDB0]';
+  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15' : 'border-white/80 bg-white/70 backdrop-blur-xl shadow-xl shadow-sky-500/5 hover:border-[#87CEEB]';
+  const cardHeader = isDarkMode ? 'text-white/40 border-white/5' : 'text-[#1F2937]/50 border-[#FFDDB0]/60';
 
   return (
     <section 

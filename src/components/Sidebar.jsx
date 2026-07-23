@@ -18,20 +18,20 @@ const navLinks = [
 const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
   const bg = isDarkMode
     ? 'bg-[#0c0c10] border-white/5 text-[#e8e4d9]'
-    : 'bg-[#FFFCE1] border-[#FFDDB0] text-[#3D2E2B]';
+    : 'bg-[#FFFCE1]/95 backdrop-blur-xl border-[#FFDDB0] text-[#1F2937] shadow-2xl';
 
   const linkColor = isDarkMode
     ? 'text-[#e8e4d9]/60 hover:text-white hover:pl-5'
-    : 'text-[#3D2E2B]/70 hover:text-[#D97736] hover:pl-5';
+    : 'text-[#1F2937]/70 hover:text-[#0284c7] hover:pl-5';
 
-  const divider = isDarkMode ? 'border-white/5' : 'border-[#FFDDB0]';
+  const divider = isDarkMode ? 'border-white/5' : 'border-[#FFDDB0]/60';
   const closeBtnStyle = isDarkMode
     ? 'text-white/40 hover:text-white hover:bg-white/10'
-    : 'text-[#3D2E2B]/40 hover:text-[#3D2E2B] hover:bg-[#FFDDB0]/50';
+    : 'text-[#1F2937]/40 hover:text-[#1F2937] hover:bg-[#87CEEB]/30';
 
   const resumeBtnStyle = isDarkMode
     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
-    : 'bg-[#FFDDB0]/50 border-[#FFBE91]/40 text-[#D97736] hover:bg-[#FFBE91]/30';
+    : 'bg-gradient-to-r from-[#FFBE91] to-[#FFDDB0] text-[#1F2937] border-[#FFBE91]/50 hover:shadow-md font-semibold';
 
   const overlayClick = (e) => {
     if (e.target === e.currentTarget) onClose();

@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Eye, Download, FileText } from 'lucide-react';
 
 const About = ({ isDarkMode }) => {
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
-  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-[#3D2E2B]/85';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#6B7280]';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-[#1F2937]';
   const highlightGradient = isDarkMode 
     ? 'from-orange-400 via-yellow-200 to-amber-400' 
-    : 'from-[#D97736] via-[#FFBE91] to-[#E58344]';
+    : 'from-[#FFBE91] via-[#D97736] to-[#0284c7]';
 
   return (
     <section 
@@ -101,16 +101,16 @@ const About = ({ isDarkMode }) => {
           <div className={`p-6 md:p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-500 ${
             isDarkMode 
               ? 'bg-[#121620]/70 border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.2)]' 
-              : 'bg-[#FFDDB0]/50 border-[#FFBE91]/40 shadow-md'
+              : 'bg-white/70 backdrop-blur-xl border-white/80 shadow-xl shadow-sky-500/5'
           }`}>
             <div className="space-y-2 max-w-xl">
               <div className="flex items-center gap-2">
-                <FileText size={20} className={isDarkMode ? "text-emerald-500" : "text-[#D97736]"} />
-                <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-[#3D2E2B]'}`}>
+                <FileText size={20} className={isDarkMode ? "text-emerald-500" : "text-[#0284c7]"} />
+                <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-[#1F2937]'}`}>
                   Resume
                 </h3>
               </div>
-              <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#3D2E2B]/80'}`}>
+              <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#6B7280]'}`}>
                 View or download my resume covering software engineering experience, technical stack, key projects, and academic background.
               </p>
             </div>
@@ -123,7 +123,7 @@ const About = ({ isDarkMode }) => {
                 className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
                   isDarkMode
                     ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/30'
-                    : 'bg-[#FFBE91] text-[#3D2E2B] border-[#FFBE91] hover:bg-[#ffa970] font-bold shadow-sm'
+                    : 'bg-gradient-to-r from-[#FFBE91] to-[#ffa970] text-[#1F2937] border-[#FFBE91] hover:shadow-[0_0_20px_rgba(255,190,145,0.5)] font-bold'
                 }`}
               >
                 <Eye size={16} />
@@ -135,7 +135,7 @@ const About = ({ isDarkMode }) => {
                 className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
                   isDarkMode
                     ? 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-                    : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFBE91]/50 hover:bg-white font-semibold'
+                    : 'bg-gradient-to-r from-[#87CEEB]/20 to-[#87CEEB]/40 text-[#1F2937] border-[#87CEEB]/50 hover:shadow-[0_0_20px_rgba(135,206,235,0.4)] font-semibold'
                 }`}
               >
                 <Download size={16} />

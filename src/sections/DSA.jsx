@@ -38,12 +38,12 @@ const DSA = ({ isDarkMode }) => {
     },
   ];
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
-  const textNormal = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/70';
-  const strongColor = isDarkMode ? 'text-white' : 'text-black';
-  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-[#FFDDB0] bg-[#FFFCE1]';
-  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-[#D97736]';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#6B7280]';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#1F2937]';
+  const strongColor = isDarkMode ? 'text-white' : 'text-[#1F2937]';
+  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-white/80 bg-white/70 backdrop-blur-xl shadow-xl shadow-sky-500/5';
+  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-[#0284c7]';
 
   return (
     <section 

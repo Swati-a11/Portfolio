@@ -49,26 +49,27 @@ const TypingLoop = ({ isDarkMode }) => {
 const Hero = ({ isDarkMode }) => {
   const [avatarHovered, setAvatarHovered] = useState(false);
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-[#FFFCE1] text-[#3D2E2B]';
-  const blobBg = isDarkMode ? 'bg-white/5' : 'bg-[#FFBE91]/25';
-  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-[#FFDDB0] text-[#3D2E2B]/75';
-  const avatarBorder = isDarkMode ? 'border-white/5' : 'border-[#FFDDB0]';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-[#FFFCE1] text-[#1F2937]';
+  const blobBg1 = isDarkMode ? 'bg-white/5' : 'bg-[#FFBE91]/30';
+  const blobBg2 = isDarkMode ? 'bg-white/5' : 'bg-[#87CEEB]/30';
+  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-[#FFDDB0] text-[#6B7280]';
+  const avatarBorder = isDarkMode ? 'border-white/5' : 'border-[#FFBE91]/40 shadow-lg shadow-[#87CEEB]/20';
 
   return (
     <section
       id="hero"
       className={`relative min-h-screen flex flex-col justify-between px-4 pt-24 pb-10 md:px-12 md:pt-32 md:pb-12 overflow-hidden transition-colors duration-500 ${bgStyle}`}
     >
-      {/* Moving Background Blobs */}
+      {/* Moving Background Blobs (Peach & Sky Blue) */}
       <motion.div
         animate={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className={`absolute top-0 left-0 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl pointer-events-none ${blobBg}`}
+        className={`absolute top-0 left-0 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl pointer-events-none ${blobBg1}`}
       />
       <motion.div
         animate={{ x: [0, -80, 0], y: [0, 60, 0], scale: [1, 0.8, 1] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className={`absolute top-0 right-0 w-48 h-48 md:w-80 md:h-80 rounded-full blur-3xl pointer-events-none ${blobBg}`}
+        className={`absolute top-0 right-0 w-48 h-48 md:w-80 md:h-80 rounded-full blur-3xl pointer-events-none ${blobBg2}`}
       />
 
       {/* Hero Body */}

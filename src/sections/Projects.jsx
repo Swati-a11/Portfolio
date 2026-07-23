@@ -80,21 +80,21 @@ const Projects = ({ isDarkMode }) => {
   }, [activeCategory]);
 
   // Theme tokens
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
-  const watermarkColor = isDarkMode ? 'text-white/[0.03]' : 'text-[#3D2E2B]/[0.05]';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
+  const watermarkColor = isDarkMode ? 'text-white/[0.03]' : 'text-[#87CEEB]/25';
   const cardBg = isDarkMode 
     ? 'bg-[#121620]/95 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' 
-    : 'bg-[#FFFCE1] border-[#FFBE91]/40 shadow-2xl shadow-[#FFBE91]/20';
-  const titleColor = isDarkMode ? 'text-white' : 'text-[#3D2E2B]';
-  const descColor = isDarkMode ? 'text-[#e8e4d9]/75' : 'text-[#3D2E2B]/80';
+    : 'bg-white/70 backdrop-blur-xl border-white/80 shadow-2xl shadow-sky-500/10';
+  const titleColor = isDarkMode ? 'text-white' : 'text-[#1F2937]';
+  const descColor = isDarkMode ? 'text-[#e8e4d9]/75' : 'text-[#6B7280]';
 
   const btnPrimary = isDarkMode
     ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-lg shadow-emerald-500/20'
-    : 'bg-[#FFBE91] hover:bg-[#ffa970] text-[#3D2E2B] shadow-md shadow-[#FFBE91]/30 font-bold';
+    : 'bg-gradient-to-r from-[#FFBE91] to-[#ffa970] text-[#1F2937] border-[#FFBE91] hover:shadow-[0_0_20px_rgba(255,190,145,0.5)] font-bold';
 
   const btnSecondary = isDarkMode
     ? 'bg-white/10 hover:bg-white/20 text-white border-white/20'
-    : 'bg-[#FFDDB0]/60 hover:bg-[#FFDDB0] text-[#3D2E2B] border-[#FFBE91]/50';
+    : 'bg-gradient-to-r from-[#87CEEB]/20 to-[#87CEEB]/40 text-[#1F2937] border-[#87CEEB]/50 hover:shadow-[0_0_20px_rgba(135,206,235,0.4)] font-semibold';
 
   return (
     <section 
@@ -132,26 +132,26 @@ const Projects = ({ isDarkMode }) => {
                   isActive
                     ? isDarkMode
                       ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-2 ring-emerald-500/40'
-                      : 'bg-[#FFBE91] border-[#FFBE91] text-[#3D2E2B] shadow-lg shadow-[#FFBE91]/30 ring-2 ring-[#FFBE91]'
+                      : 'bg-gradient-to-r from-[#FFBE91] to-[#FFDDB0] border-[#FFBE91] text-[#1F2937] shadow-lg shadow-sky-500/10 ring-2 ring-[#87CEEB]'
                     : isDarkMode
                       ? 'bg-white/[0.03] border-white/10 text-white/50 hover:border-white/20 hover:text-white hover:bg-white/[0.08]'
-                      : 'bg-[#FFDDB0]/40 border-[#FFDDB0] text-[#3D2E2B]/60 hover:text-[#3D2E2B] hover:bg-[#FFDDB0]/80'
+                      : 'bg-white/70 border-[#FFDDB0] text-[#1F2937]/70 hover:text-[#1F2937] hover:bg-white hover:border-[#87CEEB]'
                 }`}
               >
                 {isActive ? (
-                  <FolderOpen size={18} className={isActive ? (isDarkMode ? 'text-emerald-400' : 'text-[#3D2E2B]') : 'text-slate-400'} />
+                  <FolderOpen size={18} className={isActive ? (isDarkMode ? 'text-emerald-400' : 'text-[#0284c7]') : 'text-slate-400'} />
                 ) : (
-                  <Folder size={18} className="text-slate-400 group-hover:text-emerald-500 transition-colors" />
+                  <Folder size={18} className="text-slate-400 group-hover:text-[#0284c7] transition-colors" />
                 )}
                 <span>{catKey}</span>
                 <span className={`px-2 py-0.5 text-[10px] font-mono rounded-full border ${
                   isActive
                     ? isDarkMode
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                      : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFBE91]'
+                      : 'bg-white/80 text-[#1F2937] border-[#87CEEB]/50'
                     : isDarkMode
                       ? 'bg-white/5 text-white/40 border-white/10'
-                      : 'bg-[#FFFCE1]/70 text-[#3D2E2B]/50 border-[#FFDDB0]'
+                      : 'bg-[#FFFCE1] text-[#6B7280] border-[#FFDDB0]'
                 }`}>
                   {projectCount}
                 </span>
