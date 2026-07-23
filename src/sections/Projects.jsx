@@ -9,6 +9,7 @@ import cc1 from '../assets/cc1.png';
 import dd1 from '../assets/dd1.png';
 import mm1 from '../assets/mm1.png';
 import aca1 from '../assets/aca1.png';
+import chai1 from '../assets/chai1.png';
 
 const Projects = ({ isDarkMode }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -49,7 +50,7 @@ const Projects = ({ isDarkMode }) => {
       id: "gen-ai",
       title: "GenAI Projects",
       subtitle: "Generative AI & LLM Systems",
-      description: "Advanced Generative AI platforms featuring MultiMind AI multi-modal LLM intelligence engine and RAG-based Advanced Course Assistant for lecture summarization, document Q&A, and vector search.",
+      description: "Advanced Generative AI platforms featuring MultiMind AI multi-modal LLM engine, Chai GPT conversational assistant, and RAG-based Advanced Course Assistant for lecture summarization and vector search.",
       image: ws2,
       imageAlt: "Laptop with code editor and coffee workspace setup",
       projects: [
@@ -62,6 +63,16 @@ const Projects = ({ isDarkMode }) => {
           github: "https://github.com/Swati-a11/MultiMind-AI",
           image: mm1,
           imageAlt: "MultiMind AI platform screenshot preview"
+        },
+        {
+          title: "Chai GPT",
+          subtitle: "ChatGPT Clone & AI Assistant",
+          description: "A full-stack ChatGPT clone featuring real-time AI streaming responses, conversational chat history, custom system prompts, and responsive dark UI.",
+          tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "OpenAI API"],
+          link: "https://chai-gpt-alpha.vercel.app",
+          github: "https://github.com/Swati-a11/Chai-gpt.git",
+          image: chai1,
+          imageAlt: "Chai GPT platform screenshot preview"
         },
         {
           title: "Advanced Course Assistant",
@@ -217,7 +228,7 @@ const Projects = ({ isDarkMode }) => {
                 </div>
 
                 {/* Project Cards inside Modal */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className={`grid grid-cols-1 ${activeCategoryData.projects.length > 2 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'} gap-8`}>
                   {activeCategoryData.projects.map((project) => (
                     <div 
                       key={project.title}

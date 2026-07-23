@@ -33,6 +33,7 @@ import aca2 from './assets/aca2.png';
 import aca3 from './assets/aca3.png';
 import aca4 from './assets/aca4.png';
 import aca5 from './assets/aca5.png';
+import chai1 from './assets/chai1.png';
 
 const skillIconMap = {
   "Next.js": <Globe size={13} className="text-[#000000] dark:text-white flex-shrink-0" />,
@@ -443,15 +444,23 @@ const BentoProjects = ({ isDarkMode }) => {
       {
         title: "MultiMind AI",
         description: "An intelligent multi-modal GenAI platform integrating LLM chat, document analysis (RAG), dynamic context switching, and automated code generation.",
-        tags: ["React", "FastAPI", "Gemini API", "LangChain", "RAG", "Python"],
+        tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Gemini API", "LangChain", "RAG"],
         link: "https://assignment2-gen-ai.vercel.app",
         github: "https://github.com/Swati-a11/MultiMind-AI",
         screenshots: [mm1, mm2, mm3, mm4, mm5]
       },
       {
+        title: "Chai GPT",
+        description: "A full-stack ChatGPT clone featuring real-time AI streaming responses, conversational chat history, custom system prompts, and responsive dark UI.",
+        tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "OpenAI API"],
+        link: "https://chai-gpt-alpha.vercel.app",
+        github: "https://github.com/Swati-a11/Chai-gpt.git",
+        screenshots: [chai1]
+      },
+      {
         title: "Advanced Course Assistant",
         description: "An AI academic assistant featuring RAG-based document Q&A, automated lecture summarization, smart quizzes, and course material indexing.",
-        tags: ["Python", "FastAPI", "OpenAI API", "Vector DB", "React", "Tailwind"],
+        tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "OpenAI API", "Vector DB", "RAG"],
         link: "https://rag-assignment-rouge.vercel.app",
         github: "https://github.com/Swati-a11/Advanced-Course-Assistant",
         screenshots: [aca1, aca2, aca3, aca4, aca5]
