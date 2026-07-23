@@ -391,6 +391,45 @@ const SectionHeading = ({ text, className = '' }) => {
   );
 };
 
+// Typewriter Text component
+const TypewriterText = ({ text, delay = 0, speed = 25, className = "" }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const startTimeout = setTimeout(() => {
+      setStarted(true);
+    }, delay);
+
+    return () => clearTimeout(startTimeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+
+    let idx = 0;
+    const interval = setInterval(() => {
+      if (idx <= text.length) {
+        setDisplayedText(text.slice(0, idx));
+        idx++;
+      } else {
+        clearInterval(interval);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [started, text, speed]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      {displayedText.length < text.length && (
+        <span className="inline-block w-[2px] h-[1em] bg-current ml-1 animate-pulse align-middle" />
+      )}
+    </span>
+  );
+};
+
 // Fun Facts card component
 const FunFacts = ({ isDarkMode }) => {
   const textMuted = isDarkMode ? 'border-white/10' : 'border-black/10';
