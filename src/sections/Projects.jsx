@@ -92,10 +92,10 @@ const Projects = ({ isDarkMode }) => {
           {cards.map((item) => (
             <div 
               key={item.id}
-              className="relative grid grid-cols-1 lg:grid-cols-12 items-center"
+              className="relative flex flex-col lg:grid lg:grid-cols-12 items-center"
             >
               {/* Left Side: Portrait Keyboard & Laptop Image Container (Matching Reference Image) */}
-              <div className={`lg:col-span-6 relative rounded-3xl overflow-hidden shadow-2xl group border transition-all duration-500 z-10 ${
+              <div className={`w-full lg:col-span-6 relative rounded-3xl overflow-hidden shadow-2xl group border transition-all duration-500 z-10 ${
                 isDarkMode ? 'border-white/10 bg-[#121620]' : 'border-2 border-[#5b3bf7]/30 bg-white shadow-xl shadow-[#5b3bf7]/10'
               }`}>
                 <div className="aspect-[4/3] md:aspect-[4/5] w-full overflow-hidden relative">
@@ -114,16 +114,16 @@ const Projects = ({ isDarkMode }) => {
                 </div>
               </div>
 
-              {/* Right Side: Overlapping Floating Content Card (Exact Match to Reference Image) */}
-              <div className={`lg:col-span-7 lg:-ml-20 lg:mt-12 z-20 p-8 md:p-12 rounded-3xl backdrop-blur-xl transition-all duration-500 ${cardBg}`}>
-                <div className="space-y-5">
+              {/* Right Side: Overlapping Floating Content Card (Exact Match to Reference Image on Mobile & Desktop) */}
+              <div className={`w-[92%] sm:w-[88%] lg:w-auto lg:col-span-7 -mt-20 sm:-mt-28 lg:mt-12 lg:-ml-20 z-20 p-6 sm:p-10 md:p-12 rounded-3xl backdrop-blur-xl transition-all duration-500 ${cardBg}`}>
+                <div className="space-y-4 md:space-y-5">
                   <span className={`text-[10px] uppercase tracking-[0.2em] font-mono font-bold px-3.5 py-1.5 rounded-full inline-block border ${
                     isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-[#5b3bf7]/10 text-[#5b3bf7] border-[#5b3bf7]/30'
                   }`}>
                     {item.subtitle}
                   </span>
 
-                  <h3 className={`text-3xl md:text-5xl font-bold tracking-tight ${titleColor}`}>
+                  <h3 className={`text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight ${titleColor}`}>
                     {item.title}
                   </h3>
 
@@ -153,7 +153,7 @@ const Projects = ({ isDarkMode }) => {
                       href={item.primaryLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs uppercase tracking-wider transition-all duration-300 ${btnPrimary}`}
+                      className={`flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-full text-xs uppercase tracking-wider transition-all duration-300 ${btnPrimary}`}
                     >
                       {item.primaryLabel} <ExternalLink size={14} />
                     </a>
@@ -161,7 +161,7 @@ const Projects = ({ isDarkMode }) => {
                       href={item.secondaryLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center justify-center gap-2 px-7 py-3 rounded-full text-xs uppercase tracking-wider transition-all duration-300 ${btnSecondary}`}
+                      className={`flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-full text-xs uppercase tracking-wider transition-all duration-300 ${btnSecondary}`}
                     >
                       {item.secondaryLabel} <ExternalLink size={14} />
                     </a>
