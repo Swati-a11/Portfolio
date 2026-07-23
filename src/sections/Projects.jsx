@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ArrowRight } from 'lucide-react';
 import { Github } from '../components/Icons';
@@ -175,115 +176,118 @@ const Projects = ({ isDarkMode }) => {
         </div>
       </motion.div>
 
-      {/* Interactive Modal showing the projects at top of viewport when clicked */}
-      <AnimatePresence>
-        {selectedCategory && activeCategoryData && (
-          <motion.div
-            ref={overlayRef}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedCategory(null)}
-            className="fixed inset-0 z-[9999] flex justify-center items-start overflow-y-auto p-4 sm:p-6 md:p-8 pt-6 sm:pt-10 bg-black/90 backdrop-blur-xl"
-          >
+      {/* Interactive Modal Portal mounted directly to document.body for 100% viewport visibility */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {selectedCategory && activeCategoryData && (
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl rounded-[2.5rem] bg-[#0d121c] border border-slate-700/80 p-6 sm:p-10 shadow-2xl mb-12"
+              ref={overlayRef}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedCategory(null)}
+              className="fixed inset-0 z-[99999] flex justify-center items-start overflow-y-auto p-4 sm:p-6 md:p-8 pt-8 sm:pt-12 bg-black/90 backdrop-blur-xl"
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer border border-white/20 z-20"
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-5xl rounded-[2.5rem] bg-[#0d121c] border border-slate-700/80 p-6 sm:p-10 shadow-2xl mb-12 my-0"
               >
-                <X size={20} />
-              </button>
+                {/* Close Button */}
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer border border-white/20 z-20"
+                >
+                  <X size={20} />
+                </button>
 
-              {/* Modal Header */}
-              <div className="mb-10 text-center space-y-2 pt-2">
-                <span className="text-xs uppercase tracking-[0.25em] font-mono font-bold text-emerald-400 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 inline-block">
-                  {activeCategoryData.subtitle}
-                </span>
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
-                  {activeCategoryData.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto font-light">
-                  Explore live deployments, interactive features, tech stacks, and source code.
-                </p>
-              </div>
+                {/* Modal Header */}
+                <div className="mb-10 text-center space-y-2 pt-2">
+                  <span className="text-xs uppercase tracking-[0.25em] font-mono font-bold text-emerald-400 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 inline-block">
+                    {activeCategoryData.subtitle}
+                  </span>
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
+                    {activeCategoryData.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto font-light">
+                    Explore live deployments, interactive features, tech stacks, and source code.
+                  </p>
+                </div>
 
-              {/* Project Cards inside Modal */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {activeCategoryData.projects.map((project) => (
-                  <div 
-                    key={project.title}
-                    className="flex flex-col rounded-3xl bg-[#171f2e] border border-slate-700/60 overflow-hidden shadow-xl hover:border-emerald-500/40 transition-all duration-300"
-                  >
-                    {/* Project Screenshot Container */}
-                    <div className="aspect-video w-full overflow-hidden relative group">
-                      <img 
-                        src={project.image} 
-                        alt={project.imageAlt}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                      <div className="absolute bottom-3 left-4 text-[10px] uppercase font-mono font-bold tracking-widest text-emerald-400 bg-black/60 px-3 py-1 rounded-full border border-emerald-500/30 backdrop-blur-md">
-                        {project.subtitle}
-                      </div>
-                    </div>
-
-                    {/* Project Details */}
-                    <div className="p-6 flex flex-col flex-grow justify-between space-y-5">
-                      <div className="space-y-3">
-                        <h4 className="text-2xl font-bold tracking-tight text-white">
-                          {project.title}
-                        </h4>
-                        <p className="text-xs text-slate-300 font-light leading-relaxed">
-                          {project.description}
-                        </p>
-
-                        {/* Tech Stack Pills */}
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {project.tags.map((tag) => (
-                            <span 
-                              key={tag}
-                              className="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 border border-slate-700/50"
-                            >
-                              {tag}
-                            </span>
-                          ))}
+                {/* Project Cards inside Modal */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {activeCategoryData.projects.map((project) => (
+                    <div 
+                      key={project.title}
+                      className="flex flex-col rounded-3xl bg-[#171f2e] border border-slate-700/60 overflow-hidden shadow-xl hover:border-emerald-500/40 transition-all duration-300"
+                    >
+                      {/* Project Screenshot Container */}
+                      <div className="aspect-video w-full overflow-hidden relative group">
+                        <img 
+                          src={project.image} 
+                          alt={project.imageAlt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-3 left-4 text-[10px] uppercase font-mono font-bold tracking-widest text-emerald-400 bg-black/60 px-3 py-1 rounded-full border border-emerald-500/30 backdrop-blur-md">
+                          {project.subtitle}
                         </div>
                       </div>
 
-                      {/* Live Demo & GitHub Action Buttons */}
-                      <div className="flex items-center gap-3 pt-4 border-t border-slate-700/40">
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00c985] hover:bg-[#00b074] text-black shadow-lg shadow-[#00c985]/20 transition-all duration-300"
-                        >
-                          Live Demo <ExternalLink size={13} />
-                        </a>
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#3d4659] hover:bg-[#4b566d] text-white transition-all duration-300"
-                        >
-                          GitHub <Github size={13} />
-                        </a>
+                      {/* Project Details */}
+                      <div className="p-6 flex flex-col flex-grow justify-between space-y-5">
+                        <div className="space-y-3">
+                          <h4 className="text-2xl font-bold tracking-tight text-white">
+                            {project.title}
+                          </h4>
+                          <p className="text-xs text-slate-300 font-light leading-relaxed">
+                            {project.description}
+                          </p>
+
+                          {/* Tech Stack Pills */}
+                          <div className="flex flex-wrap gap-1.5 pt-1">
+                            {project.tags.map((tag) => (
+                              <span 
+                                key={tag}
+                                className="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 border border-slate-700/50"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Live Demo & GitHub Action Buttons */}
+                        <div className="flex items-center gap-3 pt-4 border-t border-slate-700/40">
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00c985] hover:bg-[#00b074] text-black shadow-lg shadow-[#00c985]/20 transition-all duration-300"
+                          >
+                            Live Demo <ExternalLink size={13} />
+                          </a>
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#3d4659] hover:bg-[#4b566d] text-white transition-all duration-300"
+                          >
+                            GitHub <Github size={13} />
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 };
