@@ -7,6 +7,9 @@ import {
 } from 'lucide-react';
 
 const skillIconMap = {
+  "Next.js": <Globe size={16} className="text-[#000000] dark:text-white flex-shrink-0" />,
+  "TypeScript (TS)": <Code2 size={16} className="text-blue-600 flex-shrink-0" />,
+  "TypeScript": <Code2 size={16} className="text-blue-600 flex-shrink-0" />,
   "React.js": <Code2 size={16} className="text-sky-400 flex-shrink-0" />,
   "HTML5": <FileCode size={16} className="text-orange-500 flex-shrink-0" />,
   "CSS3": <Palette size={16} className="text-blue-500 flex-shrink-0" />,
@@ -45,7 +48,7 @@ const Skills = ({ isDarkMode }) => {
   const categories = [
     {
       title: "Frontend Tools",
-      skills: ["React.js", "HTML5", "CSS3", "TailwindCSS", "Framer Motion", "JavaScript (ES6+)"]
+      skills: ["Next.js", "TypeScript (TS)", "React.js", "HTML5", "CSS3", "TailwindCSS", "Framer Motion", "JavaScript (ES6+)"]
     },
     {
       title: "Backend Tools",

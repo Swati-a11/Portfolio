@@ -35,6 +35,8 @@ import aca4 from './assets/aca4.png';
 import aca5 from './assets/aca5.png';
 
 const skillIconMap = {
+  "Next.js": <Globe size={13} className="text-[#000000] dark:text-white flex-shrink-0" />,
+  "TypeScript": <Code2 size={13} className="text-blue-600 flex-shrink-0" />,
   "React.js": <Code2 size={13} className="text-sky-400 flex-shrink-0" />,
   "HTML5": <FileCode size={13} className="text-orange-500 flex-shrink-0" />,
   "CSS3": <Palette size={13} className="text-blue-500 flex-shrink-0" />,
@@ -749,7 +751,7 @@ function App() {
   const categories = [
     {
       title: "Frontend Tools",
-      skills: ["React.js", "HTML5", "CSS3", "TailwindCSS", "Framer Motion", "JavaScript"]
+      skills: ["Next.js", "TypeScript", "React.js", "HTML5", "CSS3", "TailwindCSS", "Framer Motion", "JavaScript"]
     },
     {
       title: "Backend Tools",
