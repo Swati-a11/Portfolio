@@ -39,15 +39,16 @@ const skillIconMap = {
 };
 
 const Skills = ({ isDarkMode }) => {
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
+
   const categories = [
     {
       title: "Frontend Tools",
-      skills: ["React.js", "HTML5", "CSS3", "TailwindCSS", "Framer Motion", "JavaScript (ES6+)", "Redux Toolkit", "Vite"]
+      skills: ["React.js", "HTML5", "CSS3", "TailwindCSS", "Framer Motion", "JavaScript (ES6+)"]
     },
     {
       title: "Backend Tools",
-      skills: ["Node.js", "Express.js", "MongoDB", "REST APIs", "FastAPI", "Python", "JWT Auth", "Mongoose"]
-    },
       skills: ["Node.js", "Express.js", "MongoDB", "REST APIs", "FastAPI", "Python"]
     },
     {
