@@ -49,10 +49,10 @@ const TypingLoop = ({ isDarkMode }) => {
 const Hero = ({ isDarkMode }) => {
   const [avatarHovered, setAvatarHovered] = useState(false);
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-white text-black';
-  const blobBg = isDarkMode ? 'bg-white/5' : 'bg-emerald-500/5';
-  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-black/10 text-black/70';
-  const avatarBorder = isDarkMode ? 'border-white/5' : 'border-black/5';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-[#FFFCE1] text-[#3D2E2B]';
+  const blobBg = isDarkMode ? 'bg-white/5' : 'bg-[#FFBE91]/25';
+  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-[#FFDDB0] text-[#3D2E2B]/75';
+  const avatarBorder = isDarkMode ? 'border-white/5' : 'border-[#FFDDB0]';
 
   return (
     <section
@@ -73,10 +73,10 @@ const Hero = ({ isDarkMode }) => {
 
       {/* Hero Body */}
       <motion.div 
-        initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+        initial={{ opacity: 0, filter: 'blur(20px)', scale: 0.95, y: 40 }}
         whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="relative flex-grow flex flex-col justify-center items-center py-8 md:py-16 select-none"
       >
 

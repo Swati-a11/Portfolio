@@ -48,21 +48,20 @@ const Skills = ({ isDarkMode }) => {
       title: "Backend Tools",
       skills: ["Node.js", "Express.js", "MongoDB", "REST APIs", "FastAPI", "Python", "JWT Auth", "Mongoose"]
     },
-    {
-      title: "AI & Integration",
-      skills: ["Gemini API", "OpenAI API", "LangChain (basics)", "Resend", "YouTube API", "RAG Architecture"]
+      skills: ["Node.js", "Express.js", "MongoDB", "REST APIs", "FastAPI", "Python"]
     },
     {
-      title: "Other & Core",
-      skills: ["C++", "Git/GitHub", "Vercel", "Render", "MongoDB Atlas", "Postman", "DSA (50+ solved)"]
+      title: "AI Integration",
+      skills: ["Gemini API", "OpenAI API", "YouTube API", "RAG Architecture"]
     }
   ];
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
-  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15' : 'border-black/5 bg-slate-50 hover:border-emerald-500/10 hover:bg-emerald-500/5';
-  const cardHeader = isDarkMode ? 'text-white/40 border-white/5' : 'text-black/40 border-black/5';
-  const itemBorder = isDarkMode ? 'border-white/5 bg-white/[0.02] text-[#e8e4d9]/80 hover:text-white hover:border-emerald-500/30' : 'border-black/5 bg-white text-black/80 hover:text-emerald-700 hover:border-emerald-500/40';
+  const itemBorder = isDarkMode 
+    ? 'border-white/5 bg-white/[0.02] text-[#e8e4d9]/80 hover:text-white hover:border-emerald-500/30' 
+    : 'border-[#FFDDB0] bg-[#FFDDB0]/30 text-[#3D2E2B]/90 hover:text-[#3D2E2B] hover:border-[#FFBE91]';
+
+  const cardBorder = isDarkMode ? 'border-white/5 bg-white/[0.01] hover:border-white/15' : 'border-[#FFDDB0] bg-white/40 hover:border-[#FFBE91]';
+  const cardHeader = isDarkMode ? 'text-white/40 border-white/5' : 'text-[#3D2E2B]/40 border-[#FFDDB0]';
 
   return (
     <section 
@@ -70,10 +69,10 @@ const Skills = ({ isDarkMode }) => {
       className={`py-24 px-4 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
-        initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+        initial={{ opacity: 0, filter: 'blur(20px)', scale: 0.95, y: 40 }}
         whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-5xl mx-auto"
       >
         <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>

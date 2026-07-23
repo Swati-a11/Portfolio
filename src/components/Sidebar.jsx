@@ -18,20 +18,20 @@ const navLinks = [
 const Sidebar = ({ isOpen, onClose, isDarkMode }) => {
   const bg = isDarkMode
     ? 'bg-[#0c0c10] border-white/5 text-[#e8e4d9]'
-    : 'bg-white border-black/5 text-black';
+    : 'bg-[#FFFCE1] border-[#FFDDB0] text-[#3D2E2B]';
 
   const linkColor = isDarkMode
     ? 'text-[#e8e4d9]/60 hover:text-white hover:pl-5'
-    : 'text-black/50 hover:text-emerald-600 hover:pl-5';
+    : 'text-[#3D2E2B]/70 hover:text-[#D97736] hover:pl-5';
 
-  const divider = isDarkMode ? 'border-white/5' : 'border-black/5';
+  const divider = isDarkMode ? 'border-white/5' : 'border-[#FFDDB0]';
   const closeBtnStyle = isDarkMode
     ? 'text-white/40 hover:text-white hover:bg-white/10'
-    : 'text-black/40 hover:text-black hover:bg-black/5';
+    : 'text-[#3D2E2B]/40 hover:text-[#3D2E2B] hover:bg-[#FFDDB0]/50';
 
   const resumeBtnStyle = isDarkMode
     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
-    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100';
+    : 'bg-[#FFDDB0]/50 border-[#FFBE91]/40 text-[#D97736] hover:bg-[#FFBE91]/30';
 
   const overlayClick = (e) => {
     if (e.target === e.currentTarget) onClose();

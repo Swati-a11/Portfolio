@@ -767,12 +767,12 @@ function App() {
   // Card themes for Bento Layout
   const bentoCardBg = isDarkMode
     ? 'bg-[#121620]/45 border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.15)] text-[#e8e4d9]'
-    : 'bg-white border-black/10 shadow-[0_4px_20px_rgba(0,0,0,0.01)] text-black';
+    : 'bg-[#FFDDB0]/40 border-[#FFBE91]/40 shadow-md text-[#3D2E2B]';
 
   return (
     <div className={`min-h-screen transition-colors duration-500 relative ${isDarkMode
         ? 'bg-[#0a0a0a] text-[#e8e4d9] cursor-none selection:bg-emerald-500/20 selection:text-[#e8e4d9]'
-        : 'bg-white text-black cursor-none selection:bg-emerald-500/20 selection:text-black'
+        : 'bg-[#FFFCE1] text-[#3D2E2B] cursor-none selection:bg-[#FFBE91]/30 selection:text-[#3D2E2B]'
       }`}>
 
       {/* Dynamic Scroll Progress Bar */}

@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Eye, Download, FileText } from 'lucide-react';
 
 const About = ({ isDarkMode }) => {
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
-  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-black/75';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-[#3D2E2B]/85';
   const highlightGradient = isDarkMode 
     ? 'from-orange-400 via-yellow-200 to-amber-400' 
-    : 'from-emerald-600 via-teal-500 to-green-600';
+    : 'from-[#D97736] via-[#FFBE91] to-[#E58344]';
 
   return (
     <section 
@@ -16,10 +16,10 @@ const About = ({ isDarkMode }) => {
       className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
-        initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+        initial={{ opacity: 0, filter: 'blur(20px)', scale: 0.95, y: 40 }}
         whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-4xl mx-auto"
       >
         {/* Section Label */}
@@ -101,16 +101,16 @@ const About = ({ isDarkMode }) => {
           <div className={`p-6 md:p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-500 ${
             isDarkMode 
               ? 'bg-[#121620]/70 border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.2)]' 
-              : 'bg-emerald-50/70 border-emerald-500/20 shadow-sm'
+              : 'bg-[#FFDDB0]/50 border-[#FFBE91]/40 shadow-md'
           }`}>
             <div className="space-y-2 max-w-xl">
               <div className="flex items-center gap-2">
-                <FileText size={20} className="text-emerald-500" />
-                <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                <FileText size={20} className={isDarkMode ? "text-emerald-500" : "text-[#D97736]"} />
+                <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-[#3D2E2B]'}`}>
                   Resume
                 </h3>
               </div>
-              <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/60'}`}>
+              <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#3D2E2B]/80'}`}>
                 View or download my resume covering software engineering experience, technical stack, key projects, and academic background.
               </p>
             </div>
@@ -123,7 +123,7 @@ const About = ({ isDarkMode }) => {
                 className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
                   isDarkMode
                     ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/30'
-                    : 'bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700'
+                    : 'bg-[#FFBE91] text-[#3D2E2B] border-[#FFBE91] hover:bg-[#ffa970] font-bold shadow-sm'
                 }`}
               >
                 <Eye size={16} />
@@ -135,7 +135,7 @@ const About = ({ isDarkMode }) => {
                 className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
                   isDarkMode
                     ? 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-                    : 'bg-white text-black border-black/20 hover:bg-slate-100'
+                    : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFBE91]/50 hover:bg-white font-semibold'
                 }`}
               >
                 <Download size={16} />

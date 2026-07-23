@@ -38,12 +38,12 @@ const DSA = ({ isDarkMode }) => {
     },
   ];
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-white text-black border-black/5';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-black/40';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#3D2E2B] border-[#FFDDB0]';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#3D2E2B]/50';
   const textNormal = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-black/70';
   const strongColor = isDarkMode ? 'text-white' : 'text-black';
-  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-black/5 bg-slate-50';
-  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-emerald-600';
+  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-[#FFDDB0] bg-[#FFFCE1]';
+  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-[#D97736]';
 
   return (
     <section 
@@ -51,10 +51,10 @@ const DSA = ({ isDarkMode }) => {
       className={`py-24 px-6 md:px-12 overflow-hidden border-t transition-colors duration-500 ${bgStyle}`}
     >
       <motion.div
-        initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95, y: 25 }}
+        initial={{ opacity: 0, filter: 'blur(20px)', scale: 0.95, y: 40 }}
         whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-4xl mx-auto"
       >
         <span className={`text-xs uppercase tracking-[0.2em] block mb-6 ${textMuted}`}>
