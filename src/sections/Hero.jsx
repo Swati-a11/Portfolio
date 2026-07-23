@@ -49,18 +49,18 @@ const TypingLoop = ({ isDarkMode }) => {
 const Hero = ({ isDarkMode }) => {
   const [avatarHovered, setAvatarHovered] = useState(false);
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-[#FFFCE1] text-[#1F2937]';
-  const blobBg1 = isDarkMode ? 'bg-white/5' : 'bg-[#FFBE91]/30';
-  const blobBg2 = isDarkMode ? 'bg-white/5' : 'bg-[#87CEEB]/30';
-  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-[#FFDDB0] text-[#6B7280]';
-  const avatarBorder = isDarkMode ? 'border-white/5' : 'border-[#FFBE91]/40 shadow-lg shadow-[#87CEEB]/20';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9]' : 'bg-[#F7BBD0] text-[#000000]';
+  const blobBg1 = isDarkMode ? 'bg-white/5' : 'bg-white/40';
+  const blobBg2 = isDarkMode ? 'bg-white/5' : 'bg-[#FDE02F]/30';
+  const footerBorder = isDarkMode ? 'border-white/10 text-[#e8e4d9]/70' : 'border-[#0A4222]/30 text-[#000000] font-medium';
+  const avatarBorder = isDarkMode ? 'border-white/5' : 'border-[#0A4222] shadow-xl shadow-[#0A4222]/10';
 
   return (
     <section
       id="hero"
       className={`relative min-h-screen flex flex-col justify-between px-4 pt-24 pb-10 md:px-12 md:pt-32 md:pb-12 overflow-hidden transition-colors duration-500 ${bgStyle}`}
     >
-      {/* Moving Background Blobs (Peach & Sky Blue) */}
+      {/* Moving Background Blobs (White & Yellow Accents) */}
       <motion.div
         animate={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
@@ -92,7 +92,7 @@ const Hero = ({ isDarkMode }) => {
               <span className={`text-[9px] md:text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border font-mono ${
                 isDarkMode 
                   ? 'text-emerald-400 bg-emerald-950/40 border-emerald-500/20' 
-                  : 'text-emerald-600 bg-emerald-50/70 border-emerald-500/10'
+                  : 'text-[#000000] bg-[#FDE02F] border-2 border-[#0A4222]'
               }`}>
                 Available for Opportunities
               </span>
@@ -104,10 +104,10 @@ const Hero = ({ isDarkMode }) => {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold border transition-all duration-200 ${
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider border transition-all duration-200 ${
                   isDarkMode 
                     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20' 
-                    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100'
+                    : 'bg-[#FDE02F] border-2 border-[#0A4222] text-[#000000] hover:bg-[#ebd025]'
                 }`}
               >
                 <Eye size={12} />
@@ -116,10 +116,10 @@ const Hero = ({ isDarkMode }) => {
               <a
                 href="/resume.pdf"
                 download="Swati_Kumari_Resume.pdf"
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold border transition-all duration-200 ${
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider border transition-all duration-200 ${
                   isDarkMode 
                     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20' 
-                    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100'
+                    : 'bg-white border-2 border-[#0A4222] text-[#000000] hover:bg-slate-100'
                 }`}
               >
                 <Download size={12} />

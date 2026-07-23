@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Eye, Download, FileText } from 'lucide-react';
 
 const About = ({ isDarkMode }) => {
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#6B7280]';
-  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-[#1F2937]';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#F7BBD0] text-[#000000] border-[#0A4222]/30';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#000000]/70 font-semibold';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/80' : 'text-[#000000]';
   const highlightGradient = isDarkMode 
     ? 'from-orange-400 via-yellow-200 to-amber-400' 
-    : 'from-[#FFBE91] via-[#D97736] to-[#0284c7]';
+    : 'from-[#0A4222] via-[#0A4222] to-[#0A4222]';
 
   return (
     <section 
@@ -69,7 +69,7 @@ const About = ({ isDarkMode }) => {
                   transition: { duration: 0.6, ease: [0.215, 0.610, 0.355, 1] }
                 }
               }} 
-              className={`inline-block text-transparent bg-clip-text bg-gradient-to-r ${highlightGradient}`}
+              className={`inline-block text-[#0A4222] font-bold`}
             >
               {word}
             </motion.span>
@@ -97,20 +97,20 @@ const About = ({ isDarkMode }) => {
         </div>
 
         {/* Dedicated Resume Section directly below About */}
-        <div id="resume" className="mt-16 pt-10 border-t border-emerald-500/20">
+        <div id="resume" className="mt-16 pt-10 border-t border-[#0A4222]/30">
           <div className={`p-6 md:p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-500 ${
             isDarkMode 
               ? 'bg-[#121620]/70 border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.2)]' 
-              : 'bg-white/70 backdrop-blur-xl border-white/80 shadow-xl shadow-sky-500/5'
+              : 'bg-white border-2 border-[#0A4222] shadow-xl text-[#000000]'
           }`}>
             <div className="space-y-2 max-w-xl">
               <div className="flex items-center gap-2">
-                <FileText size={20} className={isDarkMode ? "text-emerald-500" : "text-[#0284c7]"} />
-                <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-[#1F2937]'}`}>
+                <FileText size={20} className={isDarkMode ? "text-emerald-500" : "text-[#0A4222]"} />
+                <h3 className={`text-xl md:text-2xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-[#000000]'}`}>
                   Resume
                 </h3>
               </div>
-              <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#6B7280]'}`}>
+              <p className={`text-xs md:text-sm font-light leading-relaxed ${isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#000000]/80'}`}>
                 View or download my resume covering software engineering experience, technical stack, key projects, and academic background.
               </p>
             </div>
@@ -120,10 +120,10 @@ const About = ({ isDarkMode }) => {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border-2 transition-all duration-300 ${
                   isDarkMode
                     ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/30'
-                    : 'bg-gradient-to-r from-[#FFBE91] to-[#ffa970] text-[#1F2937] border-[#FFBE91] hover:shadow-[0_0_20px_rgba(255,190,145,0.5)] font-bold'
+                    : 'bg-[#FDE02F] text-[#000000] border-[#0A4222] hover:bg-[#ebd025] font-bold shadow-md'
                 }`}
               >
                 <Eye size={16} />
@@ -132,10 +132,10 @@ const About = ({ isDarkMode }) => {
               <a
                 href="/resume.pdf"
                 download="Swati_Kumari_Resume.pdf"
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border-2 transition-all duration-300 ${
                   isDarkMode
                     ? 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-                    : 'bg-gradient-to-r from-[#87CEEB]/20 to-[#87CEEB]/40 text-[#1F2937] border-[#87CEEB]/50 hover:shadow-[0_0_20px_rgba(135,206,235,0.4)] font-semibold'
+                    : 'bg-white text-[#000000] border-[#0A4222] hover:bg-slate-100 font-bold shadow-md'
                 }`}
               >
                 <Download size={16} />

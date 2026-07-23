@@ -6,19 +6,15 @@ import avatar from '../assets/avatar.png';
 const Navbar = ({ isDarkMode, toggleTheme, onToggleSidebar }) => {
   const navBg = isDarkMode 
     ? 'bg-[#0a0a0a]/80 border-white/5 text-[#e8e4d9]' 
-    : 'bg-[#FFFCE1]/80 border-white/50 text-[#1F2937] shadow-sm';
+    : 'bg-[#F7BBD0]/90 border-[#0A4222]/30 text-[#000000] shadow-sm';
 
   const linkColor = isDarkMode
     ? 'text-[#e8e4d9]/70 hover:text-[#e8e4d9]'
-    : 'text-[#1F2937]/75 hover:text-[#0284c7]';
+    : 'text-[#000000]/80 hover:text-[#0A4222] font-semibold';
 
   const btnHover = isDarkMode
     ? 'hover:bg-white/10 text-white'
-    : 'hover:bg-[#87CEEB]/30 text-[#0284c7]';
-
-  const resumeBtnStyle = isDarkMode
-    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
-    : 'bg-emerald-50 border-emerald-500/20 text-emerald-700 hover:bg-emerald-100';
+    : 'hover:bg-[#FDE02F] text-[#000000] border border-[#0A4222]/40';
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 px-3 py-2.5 md:px-12 md:py-4 flex justify-between items-center backdrop-blur-md border-b transition-colors duration-500 ${navBg}`}>

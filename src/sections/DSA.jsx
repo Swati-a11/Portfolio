@@ -10,7 +10,7 @@ const DSA = ({ isDarkMode }) => {
       icon: CheckCircle, 
       color: isDarkMode 
         ? "border-emerald-500/20 bg-emerald-500/[0.01] text-emerald-400" 
-        : "border-emerald-500/20 bg-emerald-50/70 text-emerald-700" 
+        : "border-2 border-[#0A4222] bg-[#FDE02F] text-[#000000] font-bold shadow-md" 
     },
     { 
       name: "Strings", 
@@ -18,7 +18,7 @@ const DSA = ({ isDarkMode }) => {
       icon: Clock, 
       color: isDarkMode 
         ? "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
-        : "border-black/5 bg-slate-50 text-black/40" 
+        : "border-2 border-[#0A4222] bg-white text-[#000000] font-medium shadow-sm" 
     },
     { 
       name: "Linked Lists", 
@@ -26,7 +26,7 @@ const DSA = ({ isDarkMode }) => {
       icon: Clock, 
       color: isDarkMode 
         ? "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
-        : "border-black/5 bg-slate-50 text-black/40" 
+        : "border-2 border-[#0A4222] bg-white text-[#000000] font-medium shadow-sm" 
     },
     { 
       name: "Trees & Graphs", 
@@ -34,16 +34,16 @@ const DSA = ({ isDarkMode }) => {
       icon: Clock, 
       color: isDarkMode 
         ? "border-white/5 bg-white/[0.005] text-[#e8e4d9]/50" 
-        : "border-black/5 bg-slate-50 text-black/40" 
+        : "border-2 border-[#0A4222] bg-white text-[#000000] font-medium shadow-sm" 
     },
   ];
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#6B7280]';
-  const textNormal = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#1F2937]';
-  const strongColor = isDarkMode ? 'text-white' : 'text-[#1F2937]';
-  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-white/80 bg-white/70 backdrop-blur-xl shadow-xl shadow-sky-500/5';
-  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-[#0284c7]';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#F7BBD0] text-[#000000] border-[#0A4222]/30';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#000000]/70 font-semibold';
+  const textNormal = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#000000]';
+  const strongColor = isDarkMode ? 'text-white' : 'text-[#000000] font-bold';
+  const bottomBox = isDarkMode ? 'border-white/5 bg-white/[0.005]' : 'border-2 border-[#0A4222] bg-white shadow-xl text-[#000000]';
+  const linkHover = isDarkMode ? 'hover:text-white' : 'hover:text-[#0A4222] font-bold';
 
   return (
     <section 

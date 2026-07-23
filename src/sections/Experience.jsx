@@ -17,13 +17,13 @@ const Experience = ({ isDarkMode }) => {
     }
   ];
 
-  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#FFFCE1] text-[#1F2937] border-[#FFDDB0]';
-  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#6B7280]';
-  const yearColor = isDarkMode ? 'text-[#e8e4d9]/30' : 'text-[#6B7280]/60';
-  const roleColor = isDarkMode ? 'text-white' : 'text-[#1F2937]';
-  const companyColor = isDarkMode ? 'text-[#e8e4d9]/40' : 'text-[#0284c7]';
-  const descColor = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#6B7280]';
-  const borderLine = isDarkMode ? 'border-white/5' : 'border-[#FFDDB0]/60';
+  const bgStyle = isDarkMode ? 'bg-[#0a0a0a] text-[#e8e4d9] border-white/5' : 'bg-[#F7BBD0] text-[#000000] border-[#0A4222]/30';
+  const textMuted = isDarkMode ? 'text-[#e8e4d9]/45' : 'text-[#000000]/70 font-semibold';
+  const yearColor = isDarkMode ? 'text-[#e8e4d9]/30' : 'text-[#0A4222] font-bold';
+  const roleColor = isDarkMode ? 'text-white' : 'text-[#000000] font-bold';
+  const companyColor = isDarkMode ? 'text-[#e8e4d9]/40' : 'text-[#0A4222] font-bold';
+  const descColor = isDarkMode ? 'text-[#e8e4d9]/70' : 'text-[#000000]';
+  const borderLine = isDarkMode ? 'border-white/5' : 'border-[#0A4222]/30';
 
   return (
     <section 

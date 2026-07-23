@@ -77,11 +77,11 @@ const Projects = ({ isDarkMode }) => {
     }
   ];
 
-  // Theme tokens matching the user's screenshot 100%
-  const sectionBg = isDarkMode ? 'bg-[#0a0d14] text-[#e8e4d9]' : 'bg-[#FFFCE1] text-[#1F2937]';
+  // Theme tokens
+  const sectionBg = isDarkMode ? 'bg-[#0a0d14] text-[#e8e4d9]' : 'bg-[#F7BBD0] text-[#000000]';
   const outerFrameBg = isDarkMode 
     ? 'bg-[#0f141e] border border-slate-800 shadow-2xl' 
-    : 'bg-[#f4f5f9] border-4 border-[#5b3bf7] shadow-2xl';
+    : 'bg-[#FFFFFF] border-4 border-[#0A4222] shadow-2xl text-[#000000]';
 
   const activeCategoryData = categories.find(c => c.id === selectedCategory);
 

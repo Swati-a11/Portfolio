@@ -724,7 +724,7 @@ function App() {
     } else {
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
-      document.body.style.backgroundColor = '#ffffff';
+      document.body.style.backgroundColor = '#F7BBD0';
       document.body.style.color = '#000000';
     }
   }, [isDarkMode]);
@@ -767,12 +767,12 @@ function App() {
   // Card themes for Bento Layout
   const bentoCardBg = isDarkMode
     ? 'bg-[#121620]/45 border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.15)] text-[#e8e4d9]'
-    : 'bg-white/70 backdrop-blur-xl border-white/80 shadow-xl shadow-sky-500/5 hover:border-[#87CEEB] hover:shadow-sky-500/15 text-[#1F2937]';
+    : 'bg-white border-2 border-[#0A4222] shadow-xl text-[#000000]';
 
   return (
     <div className={`min-h-screen transition-colors duration-500 relative ${isDarkMode
         ? 'bg-[#0a0a0a] text-[#e8e4d9] cursor-none selection:bg-emerald-500/20 selection:text-[#e8e4d9]'
-        : 'bg-gradient-to-b from-[#FFFCE1] via-[#FFFCE1] to-[#FFDDB0]/30 text-[#1F2937] cursor-none selection:bg-[#87CEEB]/30 selection:text-[#1F2937]'
+        : 'bg-[#F7BBD0] text-[#000000] cursor-none selection:bg-[#FDE02F] selection:text-[#000000]'
       }`}>
 
       {/* Dynamic Scroll Progress Bar */}
